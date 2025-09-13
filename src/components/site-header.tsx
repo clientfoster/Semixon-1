@@ -98,7 +98,7 @@ export function SiteHeader() {
       <div className="container flex h-16 items-center">
         <div className="mr-4 flex">
           <Link href="/" className="flex items-center space-x-2">
-            <Logo className="h-6 w-auto" />
+            <Logo className="h-8 w-auto" />
           </Link>
         </div>
         <nav className="hidden md:flex items-center space-x-1 text-sm font-medium">
@@ -172,7 +172,7 @@ export function SiteHeader() {
               <div className="flex flex-col h-full py-6">
                 <div className="px-4">
                   <Link href="/" className="flex items-center" onClick={() => setIsOpen(false)}>
-                    <Logo className="h-6 w-auto" />
+                    <Logo className="h-8 w-auto" />
                   </Link>
                 </div>
                 <nav className="flex flex-col items-start space-y-4 mt-8 px-4">

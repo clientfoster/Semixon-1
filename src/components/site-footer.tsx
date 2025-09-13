@@ -18,7 +18,7 @@ export function SiteFooter() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
           <div className="col-span-2 md:col-span-1">
              <Link href="/" className="flex items-center space-x-2">
-                <Logo className="h-8 w-auto" />
+                <Logo className="h-10 w-auto" />
              </Link>
             <p className="mt-4 text-sm text-muted-foreground">
               Engineering the future of semiconductors.
@@ -49,5 +49,3 @@ export function SiteFooter() {
     </footer>
   );
 }
-
-    
