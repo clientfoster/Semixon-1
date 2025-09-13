@@ -66,11 +66,8 @@ const navLinks = [
       }
     ]
   },
-  { href: '/products',label: 'Products' },
-  { href: '/team', label: 'Team' },
+  { href: '/industries',label: 'Industries' },
   { href: '/contact', label: 'Contact' },
-  { href: '/ai-copy-suggester', label: 'AI Suggester' },
-  { href: '/admin', label: 'Admin' },
 ];
 
 export function SiteHeader() {
