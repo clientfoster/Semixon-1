@@ -1,7 +1,10 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
-import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
-import { Eye, Target, Gem } from 'lucide-react';
+import { team } from '@/lib/data';
+import { Card, CardHeader, CardTitle, CardContent, CardFooter } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Eye, Target, Gem, Linkedin, ArrowRight } from 'lucide-react';
 
 export default function AboutPage() {
   const aboutImage = PlaceHolderImages.find(img => img.id === 'about-overview');
@@ -99,6 +102,56 @@ export default function AboutPage() {
                 <p className="text-muted-foreground">We are committed to the highest standards of quality and performance in everything we do.</p>
               </CardContent>
             </Card>
+          </div>
+        </div>
+      </section>
+
+      <section className="py-16 md:py-24 bg-card">
+        <div className="container mx-auto">
+          <div className="text-center">
+            <h2 className="font-headline text-3xl md:text-4xl font-semibold text-primary">Meet Our Leadership</h2>
+            <p className="mt-2 max-w-2xl mx-auto text-muted-foreground">
+              The experts guiding our mission forward.
+            </p>
+          </div>
+          <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {team.slice(0, 3).map((member) => {
+              const teamImage = PlaceHolderImages.find(img => img.id === member.imageId);
+              return (
+                <Card key={member.id} className="text-center flex flex-col items-center pt-8 shadow-sm hover:shadow-xl transition-shadow duration-300">
+                  <CardHeader className="p-0">
+                    {teamImage && (
+                      <Image
+                        src={teamImage.imageUrl}
+                        alt={teamImage.description}
+                        width={160}
+                        height={160}
+                        className="rounded-full border-4 border-background outline-accent outline"
+                        data-ai-hint={teamImage.imageHint}
+                      />
+                    )}
+                  </CardHeader>
+                  <CardContent className="mt-4">
+                    <h3 className="font-headline text-xl font-semibold">{member.name}</h3>
+                    <p className="text-accent font-medium">{member.role}</p>
+                  </CardContent>
+                  <CardFooter className="mt-auto pb-6">
+                    <Button asChild variant="ghost" size="icon">
+                      <Link href={member.linkedinUrl} target="_blank" aria-label={`${member.name}'s LinkedIn`}>
+                        <Linkedin className="h-6 w-6 text-muted-foreground hover:text-primary" />
+                      </Link>
+                    </Button>
+                  </CardFooter>
+                </Card>
+              );
+            })}
+          </div>
+          <div className="text-center mt-12">
+            <Button asChild size="lg">
+              <Link href="/team">
+                See Full Team <ArrowRight className="ml-2 h-5 w-5" />
+              </Link>
+            </Button>
           </div>
         </div>
       </section>
