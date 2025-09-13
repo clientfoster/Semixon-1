@@ -3,115 +3,97 @@
     {
       "id": "hero",
       "description": "A futuristic semiconductor factory interior",
-      "imageUrl": "https://picsum.photos/seed/hero/1920/1080",
+      "imageUrl": "/hero.jpeg",
       "imageHint": "semiconductor factory"
     },
     {
       "id": "about-summary",
       "description": "A team of engineers collaborating in a modern office",
-      "imageUrl": "https://picsum.photos/seed/aboutsummary/600/400",
+      "imageUrl": "/about.jpeg",
       "imageHint": "engineers collaborating"
     },
     {
       "id": "about-overview",
       "description": "A wide shot of a modern office space with people working",
-      "imageUrl": "https://picsum.photos/seed/aboutoverview/1200/800",
+      "imageUrl": "/about.jpeg",
       "imageHint": "modern office"
     },
     {
       "id": "service-1",
       "description": "Close-up of a complex microchip",
-      "imageUrl": "https://picsum.photos/seed/service1/600/400",
+      "imageUrl": "/hero.jpeg",
       "imageHint": "microchip closeup"
     },
     {
       "id": "service-2",
       "description": "Automated robotic arms working on a silicon wafer",
-      "imageUrl": "https://picsum.photos/seed/service2/600/400",
+      "imageUrl": "/hero.jpeg",
       "imageHint": "robotic arms"
     },
     {
       "id": "service-3",
       "description": "An engineer in a cleanroom suit inspecting a wafer",
-      "imageUrl": "https://picsum.photos/seed/service3/600/400",
+      "imageUrl": "/about.jpeg",
       "imageHint": "cleanroom engineer"
     },
     {
       "id": "service-4",
       "description": "Glowing circuits on a motherboard",
-      "imageUrl": "https://picsum.photos/seed/service4/600/400",
+      "imageUrl": "/hero.jpeg",
       "imageHint": "glowing circuits"
     },
     {
       "id": "product-1",
       "description": "A powerful microprocessor unit",
-      "imageUrl": "https://picsum.photos/seed/product1/500/500",
+      "imageUrl": "/hero.jpeg",
       "imageHint": "microprocessor unit"
     },
     {
       "id": "product-2",
       "description": "A set of memory modules",
-      "imageUrl": "https://picsum.photos/seed/product2/500/500",
+      "imageUrl": "/hero.jpeg",
       "imageHint": "memory modules"
     },
     {
       "id": "product-3",
       "description": "A custom ASIC chip",
-      "imageUrl": "https://picsum.photos/seed/product3/500/500",
+      "imageUrl": "/hero.jpeg",
       "imageHint": "ASIC chip"
     },
     {
       "id": "product-4",
       "description": "A sensor for IoT devices",
-      "imageUrl": "https://picsum.photos/seed/product4/500/500",
+      "imageUrl": "/about.jpeg",
       "imageHint": "IoT sensor"
     },
     {
       "id": "product-5",
       "description": "A high-frequency RF component",
-      "imageUrl": "https://picsum.photos/seed/product5/500/500",
+      "imageUrl": "/hero.jpeg",
       "imageHint": "RF component"
     },
     {
       "id": "product-6",
       "description": "A power management IC",
-      "imageUrl": "https://picsum.photos/seed/product6/500/500",
+      "imageUrl": "/about.jpeg",
       "imageHint": "power management"
     },
     {
       "id": "team-1",
-      "description": "Professional headshot of Jane Doe",
-      "imageUrl": "https://picsum.photos/seed/team1/400/400",
+      "description": "Professional headshot of Team Member 1",
+      "imageUrl": "/about.jpeg",
       "imageHint": "professional headshot"
     },
     {
       "id": "team-2",
-      "description": "Professional headshot of John Smith",
-      "imageUrl": "https://picsum.photos/seed/team2/400/400",
+      "description": "Professional headshot of Team Member 2",
+      "imageUrl": "/about.jpeg",
       "imageHint": "professional headshot"
     },
     {
       "id": "team-3",
-      "description": "Professional headshot of Emily Jones",
-      "imageUrl": "https://picsum.photos/seed/team3/400/400",
-      "imageHint": "professional headshot"
-    },
-    {
-      "id": "team-4",
-      "description": "Professional headshot of Michael Johnson",
-      "imageUrl": "https://picsum.photos/seed/team4/400/400",
-      "imageHint": "professional headshot"
-    },
-    {
-      "id": "team-5",
-      "description": "Professional headshot of Sarah Williams",
-      "imageUrl": "https://picsum.photos/seed/team5/400/400",
-      "imageHint": "professional headshot"
-    },
-    {
-      "id": "team-6",
-      "description": "Professional headshot of David Brown",
-      "imageUrl": "https://picsum.photos/seed/team6/400/400",
+      "description": "Professional headshot of Team Member 3",
+      "imageUrl": "/about.jpeg",
       "imageHint": "professional headshot"
     }
   ]

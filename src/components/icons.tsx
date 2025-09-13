@@ -1,25 +1,14 @@
-import type { SVGProps } from "react";
+import Image from 'next/image';
 
-export function Logo(props: SVGProps<SVGSVGElement>) {
+export function Logo(props: { className?: string }) {
   return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 200 40"
-      width="150"
-      height="40"
-      {...props}
-    >
-      <text
-        x="10"
-        y="28"
-        fontFamily="'Space Grotesk', sans-serif"
-        fontSize="24"
-        fontWeight="bold"
-        fill="hsl(var(--primary))"
-        className="fill-primary"
-      >
-        Semixion
-      </text>
-    </svg>
+    <Image
+      src="/logo.png"
+      alt="Semixion Logo"
+      width={32}
+      height={32}
+      className={props.className || "h-8 w-8"}
+      priority
+    />
   );
 }

@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { Menu, ChevronDown } from 'lucide-react';
 import { Logo } from './icons';
+import { ThemeSwitcher } from './theme-switcher';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -100,8 +101,8 @@ export function SiteHeader() {
           {/* Logo */}
           <div className="flex items-center">
             <Link href="/" className="flex items-center space-x-3 group">
-              <div className="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center group-hover:scale-110 transition-all duration-300 shadow-lg">
-                <Logo className="h-6 w-6 text-white" />
+              <div className="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center group-hover:scale-110 transition-all duration-300 shadow-lg p-1">
+                <Logo className="h-6 w-6" />
               </div>
               <span className="text-2xl font-bold text-slate-900 group-hover:text-blue-600 transition-colors duration-300">Semixion</span>
             </Link>
@@ -167,14 +168,9 @@ export function SiteHeader() {
             ))}
           </nav>
           
-          {/* CTA Button */}
+          {/* Theme Switcher */}
           <div className="flex items-center space-x-2">
-            <Button asChild className="hidden lg:flex bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 text-base font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300">
-              <Link href="/contact">Get a Quote</Link>
-            </Button>
-            <Button asChild className="lg:hidden bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 text-sm font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300">
-              <Link href="/contact">Quote</Link>
-            </Button>
+            <ThemeSwitcher />
             <Sheet open={isOpen} onOpenChange={setIsOpen}>
               <SheetTrigger asChild className="lg:hidden">
                 <Button variant="ghost" size="icon" className="text-slate-600 hover:bg-blue-50 hover:text-blue-600">
@@ -186,8 +182,8 @@ export function SiteHeader() {
                 <div className="flex flex-col h-full py-6">
                   <div className="px-4 pb-6 border-b border-slate-200">
                     <Link href="/" className="flex items-center space-x-3" onClick={() => setIsOpen(false)}>
-                      <div className="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center">
-                        <Logo className="h-6 w-6 text-white" />
+                      <div className="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center p-1">
+                        <Logo className="h-6 w-6" />
                       </div>
                       <span className="text-2xl font-bold text-slate-900">Semixion</span>
                     </Link>
@@ -208,9 +204,9 @@ export function SiteHeader() {
                     ))}
                   </nav>
                   <div className="mt-auto px-4 pt-6 border-t border-slate-200">
-                    <Button asChild className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg shadow-lg" onClick={() => setIsOpen(false)}>
-                       <Link href="/contact">Get a Quote</Link>
-                    </Button>
+                    <div className="flex justify-center">
+                      <ThemeSwitcher />
+                    </div>
                   </div>
                 </div>
               </SheetContent>

@@ -30,8 +30,8 @@ export default function Home() {
         )}
         
         {/* Professional overlay */}
-        <div className="absolute inset-0 bg-gradient-to-br from-slate-900/80 via-blue-900/70 to-slate-800/80" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(59,130,246,0.1)_0%,transparent_70%)]" />
+        <div className="absolute inset-0 bg-gradient-to-br from-slate-900/60 via-blue-900/50 to-slate-800/60" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(59,130,246,0.05)_0%,transparent_70%)]" />
         
         {/* Content */}
         <div className="relative z-10 flex items-center min-h-[70vh] py-20">
@@ -39,7 +39,7 @@ export default function Home() {
             <div className="max-w-4xl mx-auto text-center">
               {/* Badge */}
               <div className="mb-8 animate-fade-in-up">
-                <span className="inline-flex items-center px-4 py-2 bg-blue-600/20 backdrop-blur-sm border border-blue-400/30 rounded-full text-blue-200 text-sm font-medium">
+                <span className="inline-flex items-center px-4 py-2 bg-blue-600/10 backdrop-blur-sm border border-blue-400/20 rounded-full text-blue-200 text-sm font-medium">
                   <div className="w-2 h-2 bg-blue-400 rounded-full mr-2 animate-pulse"></div>
                   Innovation in Every Circuit
                 </span>
@@ -118,7 +118,7 @@ export default function Home() {
                     </Link>
                   </Button>
                   <Button asChild variant="outline" className="border-2 border-slate-300 text-slate-700 hover:bg-slate-50 px-8 py-4 text-lg font-semibold rounded-lg transition-all duration-300">
-                    <Link href="/team">Our Team</Link>
+                    <Link href="/about#team-section">Our Team</Link>
                   </Button>
                 </div>
               </div>
@@ -239,9 +239,6 @@ export default function Home() {
             <div className="flex flex-col sm:flex-row gap-6 justify-center">
               <Button asChild size="lg" className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 text-lg font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300">
                 <Link href="/contact">Contact Our Experts</Link>
-              </Button>
-              <Button asChild size="lg" variant="outline" className="border-2 border-white/30 text-white hover:bg-white/10 px-8 py-4 text-lg font-semibold rounded-lg backdrop-blur-sm transition-all duration-300">
-                <Link href="/ai-copy-suggester">AI Content Assistant</Link>
               </Button>
             </div>
           </div>

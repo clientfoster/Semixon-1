@@ -9,8 +9,8 @@ import { Download } from 'lucide-react';
 export default function ProductsPage() {
   return (
     <div>
-      <section className="py-20 md:py-32 gradient-royal relative overflow-hidden">
-        <div className="absolute inset-0 bg-royal-pattern opacity-30"></div>
+      <section className="py-20 md:py-32 relative overflow-hidden bg-gradient-to-br from-blue-900/80 via-blue-700/70 to-blue-900/80">
+        <div className="absolute inset-0 bg-royal-pattern opacity-20"></div>
         <div className="container mx-auto text-center relative z-10">
           <div className="max-w-4xl mx-auto">
             <h1 className="font-headline text-5xl md:text-7xl font-bold text-white mb-6 leading-tight">

@@ -18,7 +18,7 @@ export default function AboutPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const q = query(collection(db, 'team'), orderBy('name'), limit(3));
+    const q = query(collection(db, 'team'), orderBy('name'));
     const unsubscribe = onSnapshot(q, (snapshot) => {
       const teamData: TeamMember[] = [];
       snapshot.forEach((doc) => {
@@ -33,8 +33,8 @@ export default function AboutPage() {
 
   return (
     <div>
-      <section className="py-20 md:py-32 gradient-royal relative overflow-hidden">
-        <div className="absolute inset-0 bg-royal-pattern opacity-30"></div>
+      <section className="py-20 md:py-32 relative overflow-hidden bg-gradient-to-br from-blue-900/80 via-blue-700/70 to-blue-900/80">
+        <div className="absolute inset-0 bg-royal-pattern opacity-20"></div>
         <div className="container mx-auto text-center relative z-10">
           <div className="max-w-4xl mx-auto">
             <h1 className="font-headline text-5xl md:text-7xl font-bold text-white mb-6 leading-tight">
@@ -136,12 +136,12 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="py-16 md:py-24 bg-card">
+      <section id="team-section" className="py-16 md:py-24 bg-card scroll-mt-24">
         <div className="container mx-auto">
           <div className="text-center">
-            <h2 className="font-headline text-3xl md:text-4xl font-semibold text-primary">Meet Our Leadership</h2>
+            <h2 className="font-headline text-3xl md:text-4xl font-semibold text-primary">Meet Our Team</h2>
             <p className="mt-2 max-w-2xl mx-auto text-muted-foreground">
-              The experts guiding our mission forward.
+              Our focused team of 3 experts is dedicated to pushing the boundaries of semiconductor technology with precision and innovation.
             </p>
           </div>
           {loading ? (
@@ -193,13 +193,6 @@ export default function AboutPage() {
               })}
             </div>
           )}
-          <div className="text-center mt-12">
-            <Button asChild size="lg">
-              <Link href="/team">
-                See Full Team <ArrowRight className="ml-2 h-5 w-5" />
-              </Link>
-            </Button>
-          </div>
         </div>
       </section>
     </div>
