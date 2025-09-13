@@ -66,7 +66,22 @@ const navLinks = [
       }
     ]
   },
-  { href: '/industries',label: 'Industries' },
+  { 
+    href: '/industries',
+    label: 'Industries',
+    dropdown: [
+      {
+        items: [
+          { href: '/industries/semiconductor', label: 'Semiconductor' },
+          { href: '/industries/bfsi', label: 'BFSI' },
+          { href: '/industries/insurance', label: 'Insurance' },
+          { href: '/industries/retail', label: 'Retail' },
+          { href: '/industries/automotive', label: 'Automotive' },
+          { href: '/industries/telecom-and-network', label: 'Telecom and Network' },
+        ]
+      }
+    ]
+  },
   { href: '/contact', label: 'Contact' },
 ];
 
@@ -99,8 +114,9 @@ export function SiteHeader() {
                     <ChevronDown className="h-4 w-4" />
                   </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent className="w-[50rem] p-4">
-                    <div className="grid grid-cols-3 gap-8">
+                <DropdownMenuContent className={cn("p-4", link.label === 'Services' ? "w-[50rem]" : "w-56")}>
+                  {link.label === 'Services' ? (
+                     <div className="grid grid-cols-3 gap-8">
                       {link.dropdown.map(group => (
                         <DropdownMenuGroup key={group.heading} className="flex flex-col gap-2">
                           <DropdownMenuLabel className="p-0 mb-1 font-semibold text-base">{group.heading}</DropdownMenuLabel>
@@ -112,9 +128,18 @@ export function SiteHeader() {
                         </DropdownMenuGroup>
                       ))}
                     </div>
-                    <DropdownMenuSeparator className="my-4" />
+                  ) : (
+                     <DropdownMenuGroup>
+                      {link.dropdown[0].items.map(item => (
+                        <DropdownMenuItem key={item.href} asChild>
+                          <Link href={item.href}>{item.label}</Link>
+                        </DropdownMenuItem>
+                      ))}
+                    </DropdownMenuGroup>
+                  )}
+                   <DropdownMenuSeparator className="my-4" />
                     <DropdownMenuItem asChild>
-                      <Link href="/services" className="font-semibold focus:bg-accent">View All Services</Link>
+                      <Link href={link.href} className="font-semibold focus:bg-accent">{`View All ${link.label}`}</Link>
                     </DropdownMenuItem>
                   </DropdownMenuContent>
               </DropdownMenu>
