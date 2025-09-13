@@ -94,111 +94,128 @@ export function SiteHeader() {
   }
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container flex h-16 items-center">
-        <div className="mr-4 flex">
-          <Link href="/" className="flex items-center space-x-2">
-            <Logo className="h-8 w-auto" />
-          </Link>
-        </div>
-        <nav className="hidden md:flex items-center space-x-1 text-sm font-medium">
-          {navLinks.map((link) => (
-            link.dropdown ? (
-              <DropdownMenu key={link.href}>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" className={cn(
-                    "flex items-center gap-1 transition-colors hover:text-foreground/80 focus-visible:ring-0",
-                    pathname.startsWith(link.href) ? 'text-foreground' : 'text-foreground/60'
-                  )}>
-                    {link.label}
-                    <ChevronDown className="h-4 w-4" />
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent className={cn("p-4", link.label === 'Services' ? "w-[50rem]" : "w-56")}>
-                  {link.label === 'Services' ? (
-                     <div className="grid grid-cols-3 gap-8">
-                      {link.dropdown.map(group => (
-                        <DropdownMenuGroup key={group.heading} className="flex flex-col gap-2">
-                          <DropdownMenuLabel className="p-0 mb-1 font-semibold text-base">{group.heading}</DropdownMenuLabel>
-                          {group.items.map(item => (
-                            <DropdownMenuItem key={item.href} asChild>
-                              <Link href={item.href}>{item.label}</Link>
-                            </DropdownMenuItem>
-                          ))}
-                        </DropdownMenuGroup>
-                      ))}
-                    </div>
-                  ) : (
-                     <DropdownMenuGroup>
-                      {link.dropdown[0].items.map(item => (
-                        <DropdownMenuItem key={item.href} asChild>
-                          <Link href={item.href}>{item.label}</Link>
-                        </DropdownMenuItem>
-                      ))}
-                    </DropdownMenuGroup>
-                  )}
-                   <DropdownMenuSeparator className="my-4" />
-                    <DropdownMenuItem asChild>
-                      <Link href={link.href} className="font-semibold focus:bg-accent">{`View All ${link.label}`}</Link>
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-              </DropdownMenu>
-            ) : (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={cn(
-                  'transition-colors hover:text-foreground/80 px-3 py-2',
-                  pathname === link.href ? 'text-foreground' : 'text-foreground/60'
-                )}
-              >
-                {link.label}
-              </Link>
-            )
-          ))}
-        </nav>
-        <div className="flex flex-1 items-center justify-end">
-          <Button asChild className="hidden md:flex">
-            <Link href="/contact">Get a Quote</Link>
-          </Button>
-          <Sheet open={isOpen} onOpenChange={setIsOpen}>
-            <SheetTrigger asChild className="md:hidden">
-              <Button variant="ghost" size="icon">
-                <Menu />
-                <span className="sr-only">Toggle Menu</span>
-              </Button>
-            </SheetTrigger>
-            <SheetContent side="left">
-              <div className="flex flex-col h-full py-6">
-                <div className="px-4">
-                  <Link href="/" className="flex items-center" onClick={() => setIsOpen(false)}>
-                    <Logo className="h-8 w-auto" />
-                  </Link>
-                </div>
-                <nav className="flex flex-col items-start space-y-4 mt-8 px-4">
-                  {navLinks.map((link) => (
-                    // Simple mobile nav, no dropdown for now
-                    <Link
-                      key={link.href}
-                      href={link.href}
-                      onClick={() => setIsOpen(false)}
-                      className={cn(
-                        'text-lg font-medium transition-colors hover:text-foreground/80',
-                        pathname === link.href ? 'text-foreground' : 'text-foreground/60'
-                      )}
-                    >
-                      {link.label}
-                    </Link>
-                  ))}
-                </nav>
-                <div className="mt-auto px-4">
-                  <Button asChild className="w-full" onClick={() => setIsOpen(false)}>
-                     <Link href="/contact">Get a Quote</Link>
-                  </Button>
-                </div>
+    <header className="sticky top-0 z-50 w-full border-b border-slate-200 bg-white/95 backdrop-blur-md shadow-lg">
+      <div className="container mx-auto px-4">
+        <div className="flex h-20 items-center justify-between">
+          {/* Logo */}
+          <div className="flex items-center">
+            <Link href="/" className="flex items-center space-x-3 group">
+              <div className="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center group-hover:scale-110 transition-all duration-300 shadow-lg">
+                <Logo className="h-6 w-6 text-white" />
               </div>
-            </SheetContent>
-          </Sheet>
+              <span className="text-2xl font-bold text-slate-900 group-hover:text-blue-600 transition-colors duration-300">Semixion</span>
+            </Link>
+          </div>
+          
+          {/* Centered Navigation */}
+          <nav className="hidden lg:flex items-center space-x-1 text-base font-medium">
+            {navLinks.map((link) => (
+              link.dropdown ? (
+                <DropdownMenu key={link.href}>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="ghost" className={cn(
+                      "flex items-center gap-1 px-4 py-2 rounded-lg transition-all duration-300 hover:bg-blue-50 hover:text-blue-600 focus-visible:ring-0 font-medium text-base",
+                      pathname.startsWith(link.href) ? 'text-blue-600 bg-blue-50' : 'text-slate-600 hover:text-blue-600'
+                    )}>
+                      {link.label}
+                      <ChevronDown className="h-5 w-5" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className={cn("p-6 shadow-xl border border-slate-200 bg-white rounded-xl", link.label === 'Services' ? "w-[50rem]" : "w-64")}>
+                    {link.label === 'Services' ? (
+                       <div className="grid grid-cols-3 gap-8">
+                        {link.dropdown.map((group, index) => (
+                          <DropdownMenuGroup key={'heading' in group ? group.heading : `group-${index}`} className="flex flex-col gap-3">
+                            {'heading' in group && group.heading && (
+                              <DropdownMenuLabel className="p-0 mb-2 text-lg font-bold text-slate-900">{group.heading}</DropdownMenuLabel>
+                            )}
+                            {group.items.map(item => (
+                              <DropdownMenuItem key={item.href} asChild className="p-0">
+                                <Link href={item.href} className="block px-3 py-2 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition-colors duration-200 text-slate-600 hover:text-blue-600">{item.label}</Link>
+                              </DropdownMenuItem>
+                            ))}
+                          </DropdownMenuGroup>
+                        ))}
+                      </div>
+                    ) : (
+                       <DropdownMenuGroup>
+                        {link.dropdown[0].items.map(item => (
+                          <DropdownMenuItem key={item.href} asChild className="p-0">
+                            <Link href={item.href} className="block px-3 py-2 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition-colors duration-200 text-slate-600 hover:text-blue-600">{item.label}</Link>
+                          </DropdownMenuItem>
+                        ))}
+                      </DropdownMenuGroup>
+                    )}
+                     <DropdownMenuSeparator className="my-6 bg-slate-200" />
+                      <DropdownMenuItem asChild className="p-0">
+                        <Link href={link.href} className="block px-3 py-2 rounded-lg font-semibold text-blue-600 hover:bg-blue-50 transition-colors duration-200">{`View All ${link.label}`}</Link>
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                </DropdownMenu>
+              ) : (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className={cn(
+                    'px-4 py-2 rounded-lg transition-all duration-300 hover:bg-blue-50 hover:text-blue-600 font-medium text-base',
+                    pathname === link.href ? 'text-blue-600 bg-blue-50' : 'text-slate-600 hover:text-blue-600'
+                  )}
+                >
+                  {link.label}
+                </Link>
+              )
+            ))}
+          </nav>
+          
+          {/* CTA Button */}
+          <div className="flex items-center space-x-2">
+            <Button asChild className="hidden lg:flex bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 text-base font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300">
+              <Link href="/contact">Get a Quote</Link>
+            </Button>
+            <Button asChild className="lg:hidden bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 text-sm font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300">
+              <Link href="/contact">Quote</Link>
+            </Button>
+            <Sheet open={isOpen} onOpenChange={setIsOpen}>
+              <SheetTrigger asChild className="lg:hidden">
+                <Button variant="ghost" size="icon" className="text-slate-600 hover:bg-blue-50 hover:text-blue-600">
+                  <Menu className="h-6 w-6" />
+                  <span className="sr-only">Toggle Menu</span>
+                </Button>
+              </SheetTrigger>
+              <SheetContent side="left" className="w-80 bg-white border-r border-slate-200">
+                <div className="flex flex-col h-full py-6">
+                  <div className="px-4 pb-6 border-b border-slate-200">
+                    <Link href="/" className="flex items-center space-x-3" onClick={() => setIsOpen(false)}>
+                      <div className="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center">
+                        <Logo className="h-6 w-6 text-white" />
+                      </div>
+                      <span className="text-2xl font-bold text-slate-900">Semixion</span>
+                    </Link>
+                  </div>
+                  <nav className="flex flex-col items-start space-y-2 mt-8 px-4 flex-1">
+                    {navLinks.map((link) => (
+                      <Link
+                        key={link.href}
+                        href={link.href}
+                        onClick={() => setIsOpen(false)}
+                        className={cn(
+                          'w-full px-4 py-3 rounded-lg text-base font-medium transition-all duration-300 hover:bg-blue-50 hover:text-blue-600',
+                          pathname === link.href ? 'text-blue-600 bg-blue-50' : 'text-slate-600 hover:text-blue-600'
+                        )}
+                      >
+                        {link.label}
+                      </Link>
+                    ))}
+                  </nav>
+                  <div className="mt-auto px-4 pt-6 border-t border-slate-200">
+                    <Button asChild className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg shadow-lg" onClick={() => setIsOpen(false)}>
+                       <Link href="/contact">Get a Quote</Link>
+                    </Button>
+                  </div>
+                </div>
+              </SheetContent>
+            </Sheet>
+          </div>
         </div>
       </div>
     </header>

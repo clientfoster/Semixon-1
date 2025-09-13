@@ -71,9 +71,10 @@ export function AiSuggesterForm() {
   }
 
   return (
-    <Card className="shadow-lg">
-      <CardHeader>
-        <CardTitle className="font-headline text-2xl text-primary">Improve Your Website Copy</CardTitle>
+    <Card className="shadow-royal-lg border-0 bg-white/95 backdrop-blur-sm">
+      <CardHeader className="pb-6">
+        <CardTitle className="font-headline text-3xl text-gradient-royal">Improve Your Website Copy</CardTitle>
+        <p className="text-muted-foreground text-lg mt-2">Get AI-powered suggestions to enhance your content</p>
       </CardHeader>
       <CardContent>
         <Form {...form}>
@@ -119,22 +120,22 @@ export function AiSuggesterForm() {
                 </FormItem>
               )}
             />
-            <Button type="submit" className="w-full" disabled={isLoading}>
+            <Button type="submit" className="w-full bg-primary text-primary-foreground hover:bg-primary/90 shadow-royal py-3 text-lg font-semibold" disabled={isLoading}>
               {isLoading ? (
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                <Loader2 className="mr-2 h-5 w-5 animate-spin" />
               ) : (
-                <Sparkles className="mr-2 h-4 w-4" />
+                <Sparkles className="mr-2 h-5 w-5" />
               )}
-              {isLoading ? 'Generating...' : 'Get Suggestions'}
+              {isLoading ? 'Generating...' : 'Get AI Suggestions'}
             </Button>
           </form>
         </Form>
 
         {suggestion && (
-          <div className="mt-8 pt-6 border-t">
-            <h3 className="font-headline text-xl font-semibold text-primary mb-4">AI-Powered Suggestion</h3>
-            <div className="bg-accent/10 p-4 rounded-md border border-accent/20">
-              <p className="text-foreground whitespace-pre-wrap">{suggestion.improvedCopy}</p>
+          <div className="mt-8 pt-8 border-t border-primary/20">
+            <h3 className="font-headline text-2xl font-bold text-gradient-royal mb-6">AI-Powered Suggestion</h3>
+            <div className="bg-gradient-to-br from-primary/5 to-accent/5 p-6 rounded-2xl border border-primary/20 shadow-royal">
+              <p className="text-foreground whitespace-pre-wrap text-lg leading-relaxed">{suggestion.improvedCopy}</p>
             </div>
           </div>
         )}

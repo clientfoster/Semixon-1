@@ -1,57 +1,269 @@
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { ArrowRight, Microscope, Target, Zap, TrendingUp, Shield, Cpu } from 'lucide-react';
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { CheckCircle } from "lucide-react";
+const capabilities = [
+  {
+    title: 'Electrical Characterization',
+    description: 'Comprehensive electrical testing and measurement services',
+    icon: Cpu,
+    features: ['DC measurements', 'AC characterization', 'Frequency response', 'Noise analysis']
+  },
+  {
+    title: 'Thermal Analysis',
+    description: 'Thermal characterization and reliability testing',
+    icon: Zap,
+    features: ['Temperature testing', 'Thermal cycling', 'Junction temperature', 'Thermal modeling']
+  },
+  {
+    title: 'Reliability Testing',
+    description: 'Long-term reliability and stress testing',
+    icon: Shield,
+    features: ['Burn-in testing', 'HTOL testing', 'ESD testing', 'Latch-up testing']
+  },
+  {
+    title: 'Performance Validation',
+    description: 'Performance validation against specifications',
+    icon: Target,
+    features: ['Specification verification', 'Performance benchmarking', 'Yield analysis', 'Quality metrics']
+  }
+];
 
-export default function ServicePage() {
+const benefits = [
+  {
+    title: 'Accurate Characterization',
+    description: 'Precise measurements and comprehensive analysis',
+    icon: Target
+  },
+  {
+    title: 'Quality Assurance',
+    description: 'Ensure device meets specifications and quality standards',
+    icon: Shield
+  },
+  {
+    title: 'Risk Mitigation',
+    description: 'Identify potential issues before production',
+    icon: TrendingUp
+  }
+];
+
+export default function BenchCharacterizationPage() {
   return (
-    <div className="container mx-auto py-16 px-4">
-      <h1 className="text-4xl md:text-5xl font-bold font-headline text-primary mb-6 text-center">Bench Characterization</h1>
-      <p className="text-lg md:text-xl text-muted-foreground mb-12 text-center max-w-3xl mx-auto">
-        We offer comprehensive bench characterization services to validate your silicon, providing the in-depth performance data needed to ensure your device meets and exceeds specifications before production.
-      </p>
-
-      <div className="grid md:grid-cols-2 gap-12 items-center">
-        <div>
-          <h2 className="text-3xl font-semibold font-headline text-primary mb-4">Deep Performance Insights</h2>
-          <p className="text-muted-foreground mb-6 leading-relaxed">
-            First-silicon bring-up is a critical milestone. Our bench characterization lab is equipped with high-end instrumentation to perform detailed electrical and functional validation. We work systematically to bring-up, debug, and fully characterize your device across process, voltage, and temperature (PVT), giving you full confidence in your design.
-          </p>
-          <ul className="space-y-4">
-            <li className="flex items-start">
-              <CheckCircle className="h-6 w-6 text-accent mr-3 mt-1 shrink-0" />
-              <div>
-                <h4 className="font-semibold">Automated Test Environment</h4>
-                <p className="text-muted-foreground text-sm">Leveraging automation scripts (Python, LabVIEW) for efficient and repeatable measurements.</p>
-              </div>
-            </li>
-            <li className="flex items-start">
-              <CheckCircle className="h-6 w-6 text-accent mr-3 mt-1 shrink-0" />
-              <div>
-                <h4 className="font-semibold">Comprehensive Reporting</h4>
-                <p className="text-muted-foreground text-sm">Delivering detailed characterization reports with clear pass/fail analysis against datasheet specs.</p>
-              </div>
-            </li>
-            <li className="flex items-start">
-              <CheckCircle className="h-6 w-6 text-accent mr-3 mt-1 shrink-0" />
-              <div>
-                <h4 className="font-semibold">Failure Analysis Support</h4>
-                <p className="text-muted-foreground text-sm">Collaborating with design and failure analysis teams to rapidly identify root causes of issues.</p>
-              </div>
-            </li>
-          </ul>
+    <div className="min-h-screen bg-slate-50">
+      {/* Hero Section */}
+      <section className="bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 py-20">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto text-center">
+            <div className="mb-8">
+              <span className="inline-block px-4 py-2 bg-blue-600/20 backdrop-blur-sm border border-blue-400/30 rounded-full text-blue-200 text-sm font-medium">
+                Semiconductor Services
+              </span>
+            </div>
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-8 leading-tight">
+              Bench
+              <span className="block bg-gradient-to-r from-blue-400 via-blue-300 to-blue-200 bg-clip-text text-transparent">
+                Characterization
+              </span>
+            </h1>
+            <p className="text-lg md:text-xl text-slate-300 leading-relaxed max-w-3xl mx-auto">
+              We offer comprehensive bench characterization services to validate your silicon, providing the in-depth performance data needed to ensure your device meets and exceeds specifications before production.
+            </p>
+          </div>
         </div>
-        <Card className="shadow-lg">
-          <CardHeader>
-            <CardTitle>Characterization Capabilities</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-3 text-muted-foreground">
-            <p><strong>Functional Validation:</strong> Verifying all operating modes and features.</p>
-            <p><strong>Electrical Parametrics:</strong> Measuring current, voltage, timing, and other key electrical characteristics.</p>
-            <p><strong>PVT Characterization:</strong> Sweeping across conditions to guarantee performance over the product's operating range.</p>
-            <p><strong>Correlation:</strong> Ensuring strong correlation between bench, ATE, and simulation data.</p>
-          </CardContent>
-        </Card>
-      </div>
+      </section>
+
+      {/* Service Overview */}
+      <section className="py-20 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="max-w-6xl mx-auto">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+              <div>
+                <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6">
+                  Precision
+                  <span className="block text-blue-600">Silicon Validation</span>
+                </h2>
+                <p className="text-lg text-slate-600 leading-relaxed mb-8">
+                  Our bench characterization services provide detailed analysis of your silicon devices, ensuring they meet performance specifications and quality requirements before production.
+                </p>
+                <div className="space-y-4">
+                  <div className="flex items-start">
+                    <div className="w-6 h-6 bg-blue-600 rounded-full flex items-center justify-center mr-4 mt-1">
+                      <div className="w-2 h-2 bg-white rounded-full"></div>
+                    </div>
+                    <p className="text-slate-600">Advanced measurement equipment and techniques</p>
+                  </div>
+                  <div className="flex items-start">
+                    <div className="w-6 h-6 bg-blue-600 rounded-full flex items-center justify-center mr-4 mt-1">
+                      <div className="w-2 h-2 bg-white rounded-full"></div>
+                    </div>
+                    <p className="text-slate-600">Comprehensive electrical and thermal analysis</p>
+                  </div>
+                  <div className="flex items-start">
+                    <div className="w-6 h-6 bg-blue-600 rounded-full flex items-center justify-center mr-4 mt-1">
+                      <div className="w-2 h-2 bg-white rounded-full"></div>
+                    </div>
+                    <p className="text-slate-600">Reliability testing and performance validation</p>
+                  </div>
+                </div>
+              </div>
+              <div className="relative">
+                <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-3xl p-8">
+                  <div className="grid grid-cols-2 gap-6">
+                    <div className="text-center">
+                      <div className="w-16 h-16 bg-blue-600 rounded-2xl flex items-center justify-center mb-4 mx-auto">
+                        <Microscope className="w-8 h-8 text-white" />
+                      </div>
+                      <h3 className="text-2xl font-bold text-slate-900">1000+</h3>
+                      <p className="text-slate-600">Devices Tested</p>
+                    </div>
+                    <div className="text-center">
+                      <div className="w-16 h-16 bg-green-600 rounded-2xl flex items-center justify-center mb-4 mx-auto">
+                        <Target className="w-8 h-8 text-white" />
+                      </div>
+                      <h3 className="text-2xl font-bold text-slate-900">99.9%</h3>
+                      <p className="text-slate-600">Accuracy</p>
+                    </div>
+                    <div className="text-center">
+                      <div className="w-16 h-16 bg-purple-600 rounded-2xl flex items-center justify-center mb-4 mx-auto">
+                        <Zap className="w-8 h-8 text-white" />
+                      </div>
+                      <h3 className="text-2xl font-bold text-slate-900">50%</h3>
+                      <p className="text-slate-600">Faster Testing</p>
+                    </div>
+                    <div className="text-center">
+                      <div className="w-16 h-16 bg-orange-600 rounded-2xl flex items-center justify-center mb-4 mx-auto">
+                        <Shield className="w-8 h-8 text-white" />
+                      </div>
+                      <h3 className="text-2xl font-bold text-slate-900">100%</h3>
+                      <p className="text-slate-600">Reliability</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Capabilities */}
+      <section className="py-20 bg-slate-50">
+        <div className="container mx-auto px-4">
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-16">
+              <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6">
+                Our Characterization Capabilities
+              </h2>
+              <p className="text-lg text-slate-600 leading-relaxed max-w-3xl mx-auto">
+                From electrical characterization to reliability testing, we deliver comprehensive bench characterization solutions that ensure your devices meet the highest quality standards.
+              </p>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {capabilities.map((capability) => {
+                const IconComponent = capability.icon;
+                return (
+                  <Card key={capability.title} className="bg-white border border-slate-200 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
+                    <CardHeader className="pb-4">
+                      <div className="w-16 h-16 bg-blue-600 rounded-2xl flex items-center justify-center mb-6">
+                        <IconComponent className="w-8 h-8 text-white" />
+                      </div>
+                      <CardTitle className="text-2xl font-bold text-slate-900 mb-3">
+                        {capability.title}
+                      </CardTitle>
+                      <p className="text-slate-600 leading-relaxed">
+                        {capability.description}
+                      </p>
+                    </CardHeader>
+                    <CardContent>
+                      <ul className="space-y-2">
+                        {capability.features.map((feature, index) => (
+                          <li key={index} className="flex items-center text-slate-600">
+                            <div className="w-2 h-2 bg-blue-600 rounded-full mr-3"></div>
+                            {feature}
+                          </li>
+                        ))}
+                      </ul>
+                    </CardContent>
+                  </Card>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Benefits */}
+      <section className="py-20 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-16">
+              <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6">
+                Why Choose Our
+                <span className="block text-blue-600">Characterization Services</span>
+              </h2>
+              <p className="text-lg text-slate-600 leading-relaxed max-w-3xl mx-auto">
+                Our proven track record and deep expertise in bench characterization make us the preferred partner for semiconductor companies worldwide.
+              </p>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {benefits.map((benefit) => {
+                const IconComponent = benefit.icon;
+                return (
+                  <div key={benefit.title} className="text-center">
+                    <div className="w-16 h-16 bg-blue-600 rounded-2xl flex items-center justify-center mb-6 mx-auto">
+                      <IconComponent className="w-8 h-8 text-white" />
+                    </div>
+                    <h3 className="text-xl font-bold text-slate-900 mb-4">
+                      {benefit.title}
+                    </h3>
+                    <p className="text-slate-600 leading-relaxed">
+                      {benefit.description}
+                    </p>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-20 bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800">
+        <div className="container mx-auto px-4 text-center">
+          <div className="max-w-4xl mx-auto">
+            <div className="mb-8">
+              <span className="inline-block px-4 py-2 bg-blue-600/20 backdrop-blur-sm border border-blue-400/30 rounded-full text-blue-200 text-sm font-medium">
+                Ready to Characterize?
+              </span>
+            </div>
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-8 leading-tight">
+              Let's Validate Your
+              <span className="block bg-gradient-to-r from-blue-400 via-blue-300 to-blue-200 bg-clip-text text-transparent">
+                Silicon
+              </span>
+            </h2>
+            <p className="text-lg md:text-xl text-slate-300 mb-12 leading-relaxed max-w-3xl mx-auto">
+              Ready to ensure your silicon quality? Our team of expert engineers is here to help you achieve your characterization goals.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Button asChild className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 text-lg font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300">
+                <Link href="/contact" className="flex items-center">
+                  Start Your Project
+                  <ArrowRight className="ml-2 w-5 h-5" />
+                </Link>
+              </Button>
+              <Button asChild variant="outline" className="border-2 border-white/30 text-white hover:bg-white/10 px-8 py-4 text-lg font-semibold rounded-lg backdrop-blur-sm transition-all duration-300">
+                <Link href="/services" className="flex items-center">
+                  View All Services
+                  <ArrowRight className="ml-2 w-5 h-5" />
+                </Link>
+              </Button>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }

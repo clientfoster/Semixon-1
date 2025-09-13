@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <!-- Background circle -->
+  <circle cx="16" cy="16" r="16" fill="#1e293b"/>
+  
+  <!-- Inner circle -->
+  <circle cx="16" cy="16" r="12" fill="#3b82f6"/>
+  
+  <!-- Central square -->
+  <rect x="10" y="10" width="12" height="12" rx="2" fill="white"/>
+  
+  <!-- Inner square -->
+  <rect x="12" y="12" width="8" height="8" rx="1" fill="#3b82f6"/>
+  
+  <!-- Corner dots -->
+  <circle cx="13" cy="13" r="1" fill="white"/>
+  <circle cx="19" cy="13" r="1" fill="white"/>
+  <circle cx="13" cy="19" r="1" fill="white"/>
+  <circle cx="19" cy="19" r="1" fill="white"/>
+  
+  <!-- Center dot -->
+  <circle cx="16" cy="16" r="1.5" fill="white"/>
+</svg>
+

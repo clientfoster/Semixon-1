@@ -1,57 +1,269 @@
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { ArrowRight, Settings, Target, Zap, TrendingUp, Shield, Cpu } from 'lucide-react';
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { CheckCircle } from "lucide-react";
+const capabilities = [
+  {
+    title: 'Test Program Development',
+    description: 'Comprehensive ATE test programs for various semiconductor devices',
+    icon: Settings,
+    features: ['Digital test patterns', 'Analog measurements', 'Mixed-signal testing', 'High-speed testing']
+  },
+  {
+    title: 'Test Hardware Design',
+    description: 'Custom test hardware and interface solutions',
+    icon: Cpu,
+    features: ['Load board design', 'Probe card design', 'Interface circuits', 'Signal conditioning']
+  },
+  {
+    title: 'Yield Optimization',
+    description: 'Advanced yield analysis and optimization techniques',
+    icon: Target,
+    features: ['Statistical analysis', 'Yield prediction', 'Process optimization', 'Defect analysis']
+  },
+  {
+    title: 'Production Support',
+    description: 'Ongoing production support and maintenance services',
+    icon: Shield,
+    features: ['Test monitoring', 'Performance tracking', 'Issue resolution', 'Continuous improvement']
+  }
+];
 
-export default function ServicePage() {
+const benefits = [
+  {
+    title: 'Faster Time-to-Market',
+    description: 'Accelerate product launch with optimized test programs',
+    icon: TrendingUp
+  },
+  {
+    title: 'Cost Reduction',
+    description: 'Reduce test costs through efficient test strategies',
+    icon: Target
+  },
+  {
+    title: 'Quality Assurance',
+    description: 'Ensure product quality with comprehensive testing',
+    icon: Shield
+  }
+];
+
+export default function ATEPage() {
   return (
-    <div className="container mx-auto py-16 px-4">
-      <h1 className="text-4xl md:text-5xl font-bold font-headline text-primary mb-6 text-center">ATE Program Development</h1>
-      <p className="text-lg md:text-xl text-muted-foreground mb-12 text-center max-w-3xl mx-auto">
-        We provide comprehensive Automated Test Equipment (ATE) program development services to ensure your semiconductor devices are tested efficiently, accurately, and cost-effectively from characterization to high-volume production.
-      </p>
-
-      <div className="grid md:grid-cols-2 gap-12 items-center">
-        <div>
-          <h2 className="text-3xl font-semibold font-headline text-primary mb-4">Accelerating Your Time-to-Market</h2>
-          <p className="text-muted-foreground mb-6 leading-relaxed">
-            Our experienced test engineers develop robust and scalable ATE solutions for a wide range of devices, including digital, analog, mixed-signal, RF, and SoC. We work closely with your design and product teams to create test strategies that maximize test coverage while minimizing test time, ultimately reducing your cost of test and accelerating your product release schedule.
-          </p>
-          <ul className="space-y-4">
-            <li className="flex items-start">
-              <CheckCircle className="h-6 w-6 text-accent mr-3 mt-1 shrink-0" />
-              <div>
-                <h4 className="font-semibold">Multi-Platform Expertise</h4>
-                <p className="text-muted-foreground text-sm">Proficiency across leading ATE platforms like Teradyne, Advantest, and National Instruments.</p>
-              </div>
-            </li>
-            <li className="flex items-start">
-              <CheckCircle className="h-6 w-6 text-accent mr-3 mt-1 shrink-0" />
-              <div>
-                <h4 className="font-semibold">Full Lifecycle Support</h4>
-                <p className="text-muted-foreground text-sm">From initial test plan development and hardware design (load boards/probe cards) to production release and yield optimization.</p>
-              </div>
-            </li>
-            <li className="flex items-start">
-              <CheckCircle className="h-6 w-6 text-accent mr-3 mt-1 shrink-0" />
-              <div>
-                <h4 className="font-semibold">Characterization & Production</h4>
-                <p className="text-muted-foreground text-sm">Developing programs for both engineering characterization and high-throughput wafer sort and final test.</p>
-              </div>
-            </li>
-          </ul>
+    <div className="min-h-screen bg-slate-50">
+      {/* Hero Section */}
+      <section className="bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 py-20">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto text-center">
+            <div className="mb-8">
+              <span className="inline-block px-4 py-2 bg-blue-600/20 backdrop-blur-sm border border-blue-400/30 rounded-full text-blue-200 text-sm font-medium">
+                Semiconductor Services
+              </span>
+            </div>
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-8 leading-tight">
+              ATE Program
+              <span className="block bg-gradient-to-r from-blue-400 via-blue-300 to-blue-200 bg-clip-text text-transparent">
+                Development
+              </span>
+            </h1>
+            <p className="text-lg md:text-xl text-slate-300 leading-relaxed max-w-3xl mx-auto">
+              We provide comprehensive Automated Test Equipment (ATE) program development services to ensure your semiconductor devices are tested efficiently, accurately, and cost-effectively from characterization to high-volume production.
+            </p>
+          </div>
         </div>
-        <Card className="shadow-lg">
-          <CardHeader>
-            <CardTitle>Our ATE Services</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-3 text-muted-foreground">
-            <p><strong>Test Program Development & Conversion:</strong> Creating new test programs or migrating existing ones to different platforms.</p>
-            <p><strong>Test Hardware Design:</strong> Designing and managing fabrication of probe cards and load boards.</p>
-            <p><strong>Test Time Reduction:</strong> Optimizing test flows and implementing multi-site testing to lower costs.</p>
-            <p><strong>Data Analysis & Yield Improvement:</strong> Providing tools and expertise to quickly analyze test data and improve yields.</p>
-          </CardContent>
-        </Card>
-      </div>
+      </section>
+
+      {/* Service Overview */}
+      <section className="py-20 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="max-w-6xl mx-auto">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+              <div>
+                <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6">
+                  Precision Testing
+                  <span className="block text-blue-600">Solutions</span>
+                </h2>
+                <p className="text-lg text-slate-600 leading-relaxed mb-8">
+                  Our ATE program development expertise ensures your semiconductor devices are tested with the highest accuracy and efficiency, from initial characterization to high-volume production.
+                </p>
+                <div className="space-y-4">
+                  <div className="flex items-start">
+                    <div className="w-6 h-6 bg-blue-600 rounded-full flex items-center justify-center mr-4 mt-1">
+                      <div className="w-2 h-2 bg-white rounded-full"></div>
+                    </div>
+                    <p className="text-slate-600">Advanced test program development and optimization</p>
+                  </div>
+                  <div className="flex items-start">
+                    <div className="w-6 h-6 bg-blue-600 rounded-full flex items-center justify-center mr-4 mt-1">
+                      <div className="w-2 h-2 bg-white rounded-full"></div>
+                    </div>
+                    <p className="text-slate-600">Custom test hardware and interface design</p>
+                  </div>
+                  <div className="flex items-start">
+                    <div className="w-6 h-6 bg-blue-600 rounded-full flex items-center justify-center mr-4 mt-1">
+                      <div className="w-2 h-2 bg-white rounded-full"></div>
+                    </div>
+                    <p className="text-slate-600">Yield optimization and production support</p>
+                  </div>
+                </div>
+              </div>
+              <div className="relative">
+                <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-3xl p-8">
+                  <div className="grid grid-cols-2 gap-6">
+                    <div className="text-center">
+                      <div className="w-16 h-16 bg-blue-600 rounded-2xl flex items-center justify-center mb-4 mx-auto">
+                        <Settings className="w-8 h-8 text-white" />
+                      </div>
+                      <h3 className="text-2xl font-bold text-slate-900">200+</h3>
+                      <p className="text-slate-600">Test Programs</p>
+                    </div>
+                    <div className="text-center">
+                      <div className="w-16 h-16 bg-green-600 rounded-2xl flex items-center justify-center mb-4 mx-auto">
+                        <Target className="w-8 h-8 text-white" />
+                      </div>
+                      <h3 className="text-2xl font-bold text-slate-900">99.9%</h3>
+                      <p className="text-slate-600">Test Accuracy</p>
+                    </div>
+                    <div className="text-center">
+                      <div className="w-16 h-16 bg-purple-600 rounded-2xl flex items-center justify-center mb-4 mx-auto">
+                        <Zap className="w-8 h-8 text-white" />
+                      </div>
+                      <h3 className="text-2xl font-bold text-slate-900">50%</h3>
+                      <p className="text-slate-600">Faster Testing</p>
+                    </div>
+                    <div className="text-center">
+                      <div className="w-16 h-16 bg-orange-600 rounded-2xl flex items-center justify-center mb-4 mx-auto">
+                        <TrendingUp className="w-8 h-8 text-white" />
+                      </div>
+                      <h3 className="text-2xl font-bold text-slate-900">30%</h3>
+                      <p className="text-slate-600">Cost Reduction</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Capabilities */}
+      <section className="py-20 bg-slate-50">
+        <div className="container mx-auto px-4">
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-16">
+              <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6">
+                Our ATE Capabilities
+              </h2>
+              <p className="text-lg text-slate-600 leading-relaxed max-w-3xl mx-auto">
+                From test program development to production support, we deliver comprehensive ATE solutions that ensure your devices meet the highest quality standards.
+              </p>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {capabilities.map((capability) => {
+                const IconComponent = capability.icon;
+                return (
+                  <Card key={capability.title} className="bg-white border border-slate-200 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
+                    <CardHeader className="pb-4">
+                      <div className="w-16 h-16 bg-blue-600 rounded-2xl flex items-center justify-center mb-6">
+                        <IconComponent className="w-8 h-8 text-white" />
+                      </div>
+                      <CardTitle className="text-2xl font-bold text-slate-900 mb-3">
+                        {capability.title}
+                      </CardTitle>
+                      <p className="text-slate-600 leading-relaxed">
+                        {capability.description}
+                      </p>
+                    </CardHeader>
+                    <CardContent>
+                      <ul className="space-y-2">
+                        {capability.features.map((feature, index) => (
+                          <li key={index} className="flex items-center text-slate-600">
+                            <div className="w-2 h-2 bg-blue-600 rounded-full mr-3"></div>
+                            {feature}
+                          </li>
+                        ))}
+                      </ul>
+                    </CardContent>
+                  </Card>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Benefits */}
+      <section className="py-20 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-16">
+              <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6">
+                Why Choose Our
+                <span className="block text-blue-600">ATE Services</span>
+              </h2>
+              <p className="text-lg text-slate-600 leading-relaxed max-w-3xl mx-auto">
+                Our proven track record and deep expertise in ATE program development make us the preferred partner for semiconductor companies worldwide.
+              </p>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {benefits.map((benefit) => {
+                const IconComponent = benefit.icon;
+                return (
+                  <div key={benefit.title} className="text-center">
+                    <div className="w-16 h-16 bg-blue-600 rounded-2xl flex items-center justify-center mb-6 mx-auto">
+                      <IconComponent className="w-8 h-8 text-white" />
+                    </div>
+                    <h3 className="text-xl font-bold text-slate-900 mb-4">
+                      {benefit.title}
+                    </h3>
+                    <p className="text-slate-600 leading-relaxed">
+                      {benefit.description}
+                    </p>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-20 bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800">
+        <div className="container mx-auto px-4 text-center">
+          <div className="max-w-4xl mx-auto">
+            <div className="mb-8">
+              <span className="inline-block px-4 py-2 bg-blue-600/20 backdrop-blur-sm border border-blue-400/30 rounded-full text-blue-200 text-sm font-medium">
+                Ready to Test?
+              </span>
+            </div>
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-8 leading-tight">
+              Let's Build Your
+              <span className="block bg-gradient-to-r from-blue-400 via-blue-300 to-blue-200 bg-clip-text text-transparent">
+                Test Solution
+              </span>
+            </h2>
+            <p className="text-lg md:text-xl text-slate-300 mb-12 leading-relaxed max-w-3xl mx-auto">
+              Ready to optimize your semiconductor testing? Our team of expert engineers is here to help you achieve your testing goals.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Button asChild className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 text-lg font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300">
+                <Link href="/contact" className="flex items-center">
+                  Start Your Project
+                  <ArrowRight className="ml-2 w-5 h-5" />
+                </Link>
+              </Button>
+              <Button asChild variant="outline" className="border-2 border-white/30 text-white hover:bg-white/10 px-8 py-4 text-lg font-semibold rounded-lg backdrop-blur-sm transition-all duration-300">
+                <Link href="/services" className="flex items-center">
+                  View All Services
+                  <ArrowRight className="ml-2 w-5 h-5" />
+                </Link>
+              </Button>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }
