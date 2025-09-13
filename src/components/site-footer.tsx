@@ -42,10 +42,12 @@ export function SiteFooter() {
         </div>
         <div className="mt-12 border-t pt-8">
           <p className="text-base text-muted-foreground text-center">
-            &copy; {currentYear} Semixon Lite. All rights reserved.
+            &copy; {currentYear} Semixion. All rights reserved.
           </p>
         </div>
       </div>
     </footer>
   );
 }
+
+    

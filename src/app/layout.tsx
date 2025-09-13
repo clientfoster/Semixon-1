@@ -5,7 +5,7 @@ import { SiteFooter } from '@/components/site-footer';
 import { Toaster } from '@/components/ui/toaster';
 
 export const metadata: Metadata = {
-  title: 'Semixon Lite',
+  title: 'Semixion',
   description: 'A professional website for a semiconductor/engineering company.',
 };
 
@@ -33,3 +33,5 @@ export default function RootLayout({
     </html>
   );
 }
+
+    

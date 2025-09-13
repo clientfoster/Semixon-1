@@ -18,9 +18,10 @@ export function Logo(props: SVGProps<SVGSVGElement>) {
         fill="hsl(var(--primary))"
         className="fill-primary"
       >
-        Semixon
-        <tspan fill="hsl(var(--accent))" className="fill-accent"> Lite</tspan>
+        Semixion
       </text>
     </svg>
   );
 }
+
+    

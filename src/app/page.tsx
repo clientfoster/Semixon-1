@@ -34,7 +34,7 @@ export default function Home() {
             Engineering the Future of Semiconductors
           </h1>
           <p className="mt-4 max-w-2xl text-lg md:text-xl drop-shadow">
-            Semixon Lite delivers cutting-edge solutions and products for the most demanding technological challenges.
+            Semixion delivers cutting-edge solutions and products for the most demanding technological challenges.
           </p>
           <div className="mt-8 flex gap-4">
             <Button asChild size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90">
@@ -51,9 +51,9 @@ export default function Home() {
       <section id="about" className="py-16 md:py-24 bg-card">
         <div className="container mx-auto grid md:grid-cols-2 gap-8 md:gap-16 items-center">
           <div className="space-y-4">
-            <h2 className="font-headline text-3xl md:text-4xl font-semibold text-primary">About Semixon Lite</h2>
+            <h2 className="font-headline text-3xl md:text-4xl font-semibold text-primary">About Semixion</h2>
             <p className="text-muted-foreground text-lg">
-              At Semixon Lite, we are pioneers in semiconductor technology. Our mission is to drive innovation and deliver excellence through our state-of-the-art products and expert engineering services. We are committed to building a sustainable future with technology that empowers progress.
+              At Semixion, we are pioneers in semiconductor technology. Our mission is to drive innovation and deliver excellence through our state-of-the-art products and expert engineering services. We are committed to building a sustainable future with technology that empowers progress.
             </p>
             <Button asChild className="mt-4">
               <Link href="/about">Learn More <ArrowRight className="ml-2" /></Link>
@@ -166,7 +166,7 @@ export default function Home() {
         <div className="container mx-auto text-center">
           <h2 className="font-headline text-3xl md:text-4xl font-bold">Ready to Innovate With Us?</h2>
           <p className="mt-4 max-w-xl mx-auto text-lg">
-            Let's discuss how Semixon Lite can help you achieve your technological goals. Get in touch with our experts today.
+            Let's discuss how Semixion can help you achieve your technological goals. Get in touch with our experts today.
           </p>
           <Button asChild size="lg" className="mt-8 bg-accent text-accent-foreground hover:bg-accent/90">
             <Link href="/contact">Contact Us</Link>
@@ -176,3 +176,5 @@ export default function Home() {
     </div>
   );
 }
+
+    

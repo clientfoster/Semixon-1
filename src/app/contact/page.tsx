@@ -42,7 +42,7 @@ export default function ContactPage() {
                 </div>
                 <div>
                   <h3 className="text-lg font-semibold">Email Us</h3>
-                  <p className="text-muted-foreground">contact@semixonlite.com</p>
+                  <p className="text-muted-foreground">contact@semixion.com</p>
                 </div>
               </div>
               <div className="flex items-start gap-4">
@@ -61,3 +61,5 @@ export default function ContactPage() {
     </div>
   );
 }
+
+    

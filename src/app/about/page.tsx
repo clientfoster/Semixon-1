@@ -35,7 +35,7 @@ export default function AboutPage() {
     <div>
       <section className="py-16 md:py-24 bg-primary text-primary-foreground">
         <div className="container mx-auto text-center">
-          <h1 className="font-headline text-4xl md:text-5xl font-bold">About Semixon Lite</h1>
+          <h1 className="font-headline text-4xl md:text-5xl font-bold">About Semixion</h1>
           <p className="mt-4 max-w-2xl mx-auto text-lg text-primary-foreground/80">
             Pioneering the next generation of semiconductor technology through innovation, expertise, and a commitment to excellence.
           </p>
@@ -47,7 +47,7 @@ export default function AboutPage() {
           <div>
             <h2 className="font-headline text-3xl font-semibold text-primary">Our Story</h2>
             <p className="mt-4 text-muted-foreground text-lg leading-relaxed">
-              Founded by a team of visionary engineers, Semixon Lite was born from a desire to push the boundaries of what's possible in the semiconductor industry. We saw an opportunity to create more efficient, powerful, and reliable technologies that could solve the critical challenges of tomorrow.
+              Founded by a team of visionary engineers, Semixion was born from a desire to push the boundaries of what's possible in the semiconductor industry. We saw an opportunity to create more efficient, powerful, and reliable technologies that could solve the critical challenges of tomorrow.
             </p>
             <p className="mt-4 text-muted-foreground text-lg leading-relaxed">
               From our humble beginnings in a small lab, we have grown into a trusted partner for leading technology companies worldwide. Our journey is one of relentless innovation, strategic growth, and an unwavering dedication to our clients' success.
@@ -197,3 +197,5 @@ export default function AboutPage() {
     </div>
   );
 }
+
+    
