@@ -102,22 +102,24 @@ export function SiteHeader() {
                     <ChevronDown className="h-4 w-4" />
                   </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent className="w-64">
-                  <DropdownMenuItem asChild>
-                    <Link href="/services" className="font-semibold">All Services</Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuSeparator />
-                  {link.dropdown.map(group => (
-                    <DropdownMenuGroup key={group.heading}>
-                      <DropdownMenuLabel>{group.heading}</DropdownMenuLabel>
-                      {group.items.map(item => (
-                        <DropdownMenuItem key={item} disabled>
-                          {item}
-                        </DropdownMenuItem>
+                <DropdownMenuContent className="w-auto p-4">
+                    <div className="grid grid-cols-3 gap-8">
+                      {link.dropdown.map(group => (
+                        <DropdownMenuGroup key={group.heading} className="flex flex-col gap-2">
+                          <DropdownMenuLabel className="p-0 mb-1 font-semibold text-base">{group.heading}</DropdownMenuLabel>
+                          {group.items.map(item => (
+                            <DropdownMenuItem key={item} disabled className="p-0">
+                              {item}
+                            </DropdownMenuItem>
+                          ))}
+                        </DropdownMenuGroup>
                       ))}
-                    </DropdownMenuGroup>
-                  ))}
-                </DropdownMenuContent>
+                    </div>
+                    <DropdownMenuSeparator className="my-4" />
+                    <DropdownMenuItem asChild>
+                      <Link href="/services" className="font-semibold focus:bg-accent">View All Services</Link>
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
               </DropdownMenu>
             ) : (
               <Link
