@@ -1,8 +1,16 @@
+'use client';
+
 import Link from 'next/link';
 import { Logo } from './icons';
+import { usePathname } from 'next/navigation';
 
 export function SiteFooter() {
   const currentYear = new Date().getFullYear();
+  const pathname = usePathname();
+
+  if (pathname.startsWith('/admin')) {
+    return null;
+  }
 
   return (
     <footer className="border-t">

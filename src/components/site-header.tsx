@@ -17,11 +17,16 @@ const navLinks = [
   { href: '/team', label: 'Team' },
   { href: '/contact', label: 'Contact' },
   { href: '/ai-copy-suggester', label: 'AI Suggester' },
+  { href: '/admin', label: 'Admin' },
 ];
 
 export function SiteHeader() {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
+
+  if (pathname.startsWith('/admin')) {
+    return null;
+  }
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
