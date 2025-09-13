@@ -28,40 +28,40 @@ const navLinks = [
       {
         heading: 'Semiconductors',
         items: [
-          'Analog and mixed-signal',
-          'ATE',
-          'Bench characterization',
-          'Design verification',
-          'DFT',
-          'FPGA design',
-          'In-house silicon validation lab',
-          'Physical design',
-          'Prototyping and Emulation',
+          { href: '/services/analog-and-mixed-signal', label: 'Analog and mixed-signal' },
+          { href: '/services/ate', label: 'ATE' },
+          { href: '/services/bench-characterization', label: 'Bench characterization' },
+          { href: '/services/design-verification', label: 'Design verification' },
+          { href: '/services/dft', label: 'DFT' },
+          { href: '/services/fpga-design', label: 'FPGA design' },
+          { href: '/services/in-house-silicon-validation-lab', label: 'In-house silicon validation lab' },
+          { href: '/services/physical-design', label: 'Physical design' },
+          { href: '/services/prototyping-and-emulation', label: 'Prototyping and Emulation' },
         ],
       },
       {
         heading: 'Embedded',
         items: [
-          'Bare metal programming',
-          'Board support package',
-          'CI/CD',
-          'Device drivers',
-          'Diagnostics',
-          'OS porting and customization',
-          'Cyber security',
-          'Verification and validation',
+          { href: '/services/bare-metal-programming', label: 'Bare metal programming' },
+          { href: '/services/board-support-package', label: 'Board support package' },
+          { href: '/services/ci-cd', label: 'CI/CD' },
+          { href: '/services/device-drivers', label: 'Device drivers' },
+          { href: '/services/diagnostics', label: 'Diagnostics' },
+          { href: '/services/os-porting-and-customization', label: 'OS porting and customization' },
+          { href: '/services/cyber-security', label: 'Cyber security' },
+          { href: '/services/verification-and-validation', label: 'Verification and validation' },
         ],
       },
       {
         heading: 'Software',
         items: [
-          'Data Analytics, AI and Machine Learning',
-          'Cloud Architecture and Engineering',
-          'Salesforce Implementation and Support​',
-          'Application Development and Maintenance',
-          'Quality Assurance',
-          'IT Infrastructure',
-          'Engineering and Technical Services',
+          { href: '/services/data-analytics-ai-and-machine-learning', label: 'Data Analytics, AI and Machine Learning' },
+          { href: '/services/cloud-architecture-and-engineering', label: 'Cloud Architecture and Engineering' },
+          { href: '/services/salesforce-implementation-and-support', label: 'Salesforce Implementation and Support' },
+          { href: '/services/application-development-and-maintenance', label: 'Application Development and Maintenance' },
+          { href: '/services/quality-assurance', label: 'Quality Assurance' },
+          { href: '/services/it-infrastructure', label: 'IT Infrastructure' },
+          { href: '/services/engineering-and-technical-services', label: 'Engineering and Technical Services' },
         ],
       }
     ]
@@ -102,14 +102,14 @@ export function SiteHeader() {
                     <ChevronDown className="h-4 w-4" />
                   </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent className="w-auto p-4">
+                <DropdownMenuContent className="w-[50rem] p-4">
                     <div className="grid grid-cols-3 gap-8">
                       {link.dropdown.map(group => (
                         <DropdownMenuGroup key={group.heading} className="flex flex-col gap-2">
                           <DropdownMenuLabel className="p-0 mb-1 font-semibold text-base">{group.heading}</DropdownMenuLabel>
                           {group.items.map(item => (
-                            <DropdownMenuItem key={item} disabled className="p-0">
-                              {item}
+                            <DropdownMenuItem key={item.href} asChild>
+                              <Link href={item.href}>{item.label}</Link>
                             </DropdownMenuItem>
                           ))}
                         </DropdownMenuGroup>
