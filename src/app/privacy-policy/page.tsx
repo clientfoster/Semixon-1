@@ -102,6 +102,15 @@ export default function PrivacyPolicyPage() {
                   <p className="text-slate-600 leading-relaxed mb-4">
                     We use cookies and similar technologies to enhance your browsing experience, analyze website traffic, and personalize content. You can control cookie settings through your browser preferences.
                   </p>
+                  
+                  <h3 className="text-xl font-semibold text-slate-800 mb-4">Google AdSense</h3>
+                  <p className="text-slate-600 leading-relaxed mb-4">
+                    We use Google AdSense to display advertisements on our website. Google AdSense uses cookies to serve ads based on your prior visits to our website or other websites. You may opt out of personalized advertising by visiting 
+                    <a href="https://www.google.com/settings/ads" className="text-blue-600 hover:text-blue-800 underline" target="_blank" rel="noopener noreferrer"> Google Ad Settings</a>.
+                  </p>
+                  <p className="text-slate-600 leading-relaxed mb-4">
+                    Third-party vendors, including Google, use cookies to serve ads based on a user's prior visits to our website or other websites. Google's use of advertising cookies enables it and its partners to serve ads to our users based on their visit to our sites and/or other sites on the Internet.
+                  </p>
                 </div>
 
                 <h2 className="text-2xl font-bold text-slate-900 mb-6">6. Your Rights and Choices</h2>

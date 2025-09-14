@@ -8,8 +8,75 @@ import { PerformanceProvider } from '@/components/performance-provider';
 import { AnalyticsProvider } from '@/components/analytics-provider';
 
 export const metadata: Metadata = {
-  title: 'Semixion',
-  description: 'A professional website for a semiconductor/engineering company.',
+  title: {
+    default: 'Semixion - Leading Semiconductor Engineering Solutions',
+    template: '%s | Semixion'
+  },
+  description: 'Semixion delivers cutting-edge semiconductor engineering solutions, IC design, wafer fabrication, and reliability testing services. Powering innovation across industries worldwide with precision and excellence.',
+  keywords: [
+    'semiconductor engineering',
+    'IC design',
+    'wafer fabrication',
+    'reliability testing',
+    'semiconductor solutions',
+    'engineering services',
+    'chip design',
+    'semiconductor manufacturing',
+    'ASIC design',
+    'FPGA design',
+    'mixed signal design',
+    'analog design',
+    'digital design'
+  ],
+  authors: [{ name: 'Semixion Team' }],
+  creator: 'Semixion',
+  publisher: 'Semixion',
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
+  metadataBase: new URL('https://semixion.com'),
+  alternates: {
+    canonical: '/',
+  },
+  openGraph: {
+    type: 'website',
+    locale: 'en_US',
+    url: 'https://semixion.com',
+    title: 'Semixion - Leading Semiconductor Engineering Solutions',
+    description: 'Semixion delivers cutting-edge semiconductor engineering solutions, IC design, wafer fabrication, and reliability testing services. Powering innovation across industries worldwide.',
+    siteName: 'Semixion',
+    images: [
+      {
+        url: '/hero.jpeg',
+        width: 1200,
+        height: 630,
+        alt: 'Semixion - Semiconductor Engineering Excellence',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Semixion - Leading Semiconductor Engineering Solutions',
+    description: 'Semixion delivers cutting-edge semiconductor engineering solutions, IC design, wafer fabrication, and reliability testing services.',
+    images: ['/hero.jpeg'],
+    creator: '@semixion',
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+  verification: {
+    google: 'your-google-verification-code', // Replace with actual verification code
+  },
   icons: {
     icon: '/favicon.svg',
     shortcut: '/favicon.svg',
@@ -30,9 +97,50 @@ export default function RootLayout({
         <link rel="apple-touch-icon" href="/icon.svg" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com" />
+        <link rel="dns-prefetch" href="https://www.google-analytics.com" />
         <link href="https://fonts.googleapis.com/css2?family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet" />
         <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet" />
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1870924429992767" crossOrigin="anonymous"></script>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              "name": "Semixion",
+              "description": "Leading semiconductor engineering solutions provider specializing in IC design, wafer fabrication, and reliability testing services.",
+              "url": "https://semixion.com",
+              "logo": "https://semixion.com/logo.png",
+              "image": "https://semixion.com/hero.jpeg",
+              "foundingDate": "2024",
+              "industry": "Semiconductor Engineering",
+              "services": [
+                "IC Design",
+                "Wafer Fabrication", 
+                "Reliability Testing",
+                "ASIC Design",
+                "FPGA Design",
+                "Mixed Signal Design",
+                "Analog Design",
+                "Digital Design"
+              ],
+              "address": {
+                "@type": "PostalAddress",
+                "addressCountry": "US"
+              },
+              "contactPoint": {
+                "@type": "ContactPoint",
+                "contactType": "Customer Service",
+                "url": "https://semixion.com/contact"
+              },
+              "sameAs": [
+                "https://www.linkedin.com/company/semixion",
+                "https://twitter.com/semixion"
+              ]
+            })
+          }}
+        />
       </head>
             <body className="font-body antialiased">
               <PerformanceProvider>

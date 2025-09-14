@@ -220,6 +220,48 @@ export default function Home() {
       </section>
 
 
+      {/* Industries We Serve */}
+      <section className="py-20 bg-slate-50">
+        <div className="container mx-auto px-4">
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-16">
+              <div className="inline-block mb-6">
+                <span className="inline-block px-4 py-2 bg-blue-100 text-blue-800 rounded-full text-sm font-semibold">
+                  Industries We Serve
+                </span>
+              </div>
+              <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6">
+                Powering Innovation Across Industries
+              </h2>
+              <p className="max-w-3xl mx-auto text-lg text-slate-600 leading-relaxed">
+                Our semiconductor solutions drive technological advancement across diverse industries, 
+                from automotive to telecommunications, delivering reliable performance where it matters most.
+              </p>
+            </div>
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8">
+              {[
+                { name: 'Automotive', icon: '🚗' },
+                { name: 'BFSI', icon: '🏦' },
+                { name: 'Insurance', icon: '🛡️' },
+                { name: 'Retail', icon: '🛒' },
+                { name: 'Semiconductor', icon: '🔬' },
+                { name: 'Telecom', icon: '📡' }
+              ].map((industry) => (
+                <div key={industry.name} className="text-center group">
+                  <div className="w-16 h-16 mx-auto mb-4 bg-white rounded-2xl flex items-center justify-center text-2xl shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:scale-110">
+                    {industry.icon}
+                  </div>
+                  <h3 className="text-sm font-semibold text-slate-900 group-hover:text-blue-600 transition-colors">
+                    {industry.name}
+                  </h3>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+
       {/* CTA Section */}
       <section className="py-20 bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800">
         <div className="container mx-auto px-4 text-center">

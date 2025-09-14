@@ -1,0 +1,19 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://semixion.com/sitemap.xml
+
+# Disallow admin areas
+Disallow: /admin/
+Disallow: /super-admin/
+Disallow: /api/
+
+# Allow important pages
+Allow: /services/
+Allow: /products/
+Allow: /industries/
+Allow: /blog/
+Allow: /about
+Allow: /contact
+Allow: /team

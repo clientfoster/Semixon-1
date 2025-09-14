@@ -400,31 +400,15 @@ export const usePerformanceOptimization = () => {
   const preloadCriticalResources = () => {
     if (typeof window === 'undefined') return;
     
-    const preloaded = cookieManager.getCookie('criticalResourcesPreloaded');
+    // Clear any old cache that might reference non-existent files
+    cookieManager.deleteCookie('criticalResourcesPreloaded');
     
-    if (!preloaded) {
-      // Preload critical CSS and fonts
-      const criticalResources = [
-        '/fonts/inter.woff2',
-        '/css/critical.css',
-      ];
-      
-      criticalResources.forEach(resource => {
-        const link = document.createElement('link');
-        link.rel = 'preload';
-        link.href = resource;
-        link.as = resource.endsWith('.css') ? 'style' : 'font';
-        if (resource.endsWith('.woff2')) {
-          link.setAttribute('crossorigin', 'anonymous');
-        }
-        document.head.appendChild(link);
-      });
-      
-      cookieManager.setCookie('criticalResourcesPreloaded', 'true', {
-        expires: 7,
-        path: '/',
-      });
-    }
+    // No critical resources to preload currently
+    // This prevents 404 errors from non-existent files
+    cookieManager.setCookie('criticalResourcesPreloaded', 'v2.0.0', {
+      expires: 7,
+      path: '/',
+    });
   };
 
   return {

@@ -25,9 +25,9 @@ export function PerformanceProvider({ children }: { children: React.ReactNode })
 
     // Preload critical resources
     const preloadResources = () => {
+      // Only preload resources that actually exist
       const criticalResources = [
-        { href: '/fonts/inter.woff2', as: 'font', type: 'font/woff2' },
-        { href: '/css/critical.css', as: 'style' },
+        // Add any actual critical resources here when they exist
       ];
       
       criticalResources.forEach(resource => {

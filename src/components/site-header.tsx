@@ -89,6 +89,7 @@ const navLinks = [
 
 export function SiteHeader() {
   const [isOpen, setIsOpen] = useState(false);
+  const [hoveredDropdown, setHoveredDropdown] = useState<string | null>(null);
   const pathname = usePathname();
 
   if (pathname.startsWith('/admin')) {
@@ -113,47 +114,65 @@ export function SiteHeader() {
           <nav className="hidden lg:flex items-center space-x-1 text-base font-medium">
             {navLinks.map((link) => (
               link.dropdown ? (
-                <DropdownMenu key={link.href}>
-                  <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" className={cn(
-                      "flex items-center gap-1 px-4 py-2 rounded-lg transition-all duration-300 hover:bg-blue-50 hover:text-blue-600 focus-visible:ring-0 font-medium text-base",
-                      pathname.startsWith(link.href) ? 'text-blue-600 bg-blue-50' : 'text-slate-600 hover:text-blue-600'
-                    )}>
-                      {link.label}
-                      <ChevronDown className="h-5 w-5" />
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent className={cn("p-6 shadow-xl border border-slate-200 bg-white rounded-xl", link.label === 'Services' ? "w-[50rem]" : "w-64")}>
-                    {link.label === 'Services' ? (
-                       <div className="grid grid-cols-3 gap-8">
-                        {link.dropdown.map((group, index) => (
-                          <DropdownMenuGroup key={'heading' in group ? group.heading : `group-${index}`} className="flex flex-col gap-3">
-                            {'heading' in group && group.heading && (
-                              <DropdownMenuLabel className="p-0 mb-2 text-lg font-bold text-slate-900">{group.heading}</DropdownMenuLabel>
-                            )}
-                            {group.items.map(item => (
-                              <DropdownMenuItem key={item.href} asChild className="p-0">
-                                <Link href={item.href} className="block px-3 py-2 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition-colors duration-200 text-slate-600 hover:text-blue-600">{item.label}</Link>
-                              </DropdownMenuItem>
-                            ))}
-                          </DropdownMenuGroup>
-                        ))}
-                      </div>
-                    ) : (
-                       <DropdownMenuGroup>
-                        {link.dropdown[0].items.map(item => (
-                          <DropdownMenuItem key={item.href} asChild className="p-0">
-                            <Link href={item.href} className="block px-3 py-2 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition-colors duration-200 text-slate-600 hover:text-blue-600">{item.label}</Link>
-                          </DropdownMenuItem>
-                        ))}
-                      </DropdownMenuGroup>
-                    )}
-                     <DropdownMenuSeparator className="my-6 bg-slate-200" />
-                      <DropdownMenuItem asChild className="p-0">
-                        <Link href={link.href} className="block px-3 py-2 rounded-lg font-semibold text-blue-600 hover:bg-blue-50 transition-colors duration-200">{`View All ${link.label}`}</Link>
-                      </DropdownMenuItem>
-                    </DropdownMenuContent>
-                </DropdownMenu>
+                <div
+                  key={link.href}
+                  className="relative"
+                  onMouseEnter={() => setHoveredDropdown(link.label)}
+                  onMouseLeave={() => setHoveredDropdown(null)}
+                >
+                  <DropdownMenu open={hoveredDropdown === link.label} onOpenChange={(open) => !open && setHoveredDropdown(null)}>
+                    <DropdownMenuTrigger asChild>
+                      <Button 
+                        variant="ghost" 
+                        className={cn(
+                          "flex items-center gap-1 px-4 py-2 rounded-lg transition-all duration-300 hover:bg-blue-50 hover:text-blue-600 focus-visible:ring-0 font-medium text-base",
+                          pathname.startsWith(link.href) ? 'text-blue-600 bg-blue-50' : 'text-slate-600 hover:text-blue-600'
+                        )}
+                        onClick={() => {
+                          // Navigate to the main page when clicked
+                          window.location.href = link.href;
+                        }}
+                      >
+                        {link.label}
+                        <ChevronDown className="h-5 w-5" />
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent 
+                      className={cn("p-6 shadow-xl border border-slate-200 bg-white rounded-xl", link.label === 'Services' ? "w-[50rem]" : "w-64")}
+                      onMouseEnter={() => setHoveredDropdown(link.label)}
+                      onMouseLeave={() => setHoveredDropdown(null)}
+                    >
+                      {link.label === 'Services' ? (
+                         <div className="grid grid-cols-3 gap-8">
+                          {link.dropdown.map((group, index) => (
+                            <DropdownMenuGroup key={'heading' in group ? group.heading : `group-${index}`} className="flex flex-col gap-3">
+                              {'heading' in group && group.heading && (
+                                <DropdownMenuLabel className="p-0 mb-2 text-lg font-bold text-slate-900">{group.heading}</DropdownMenuLabel>
+                              )}
+                              {group.items.map(item => (
+                                <DropdownMenuItem key={item.href} asChild className="p-0">
+                                  <Link href={item.href} className="block px-3 py-2 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition-colors duration-200 text-slate-600 hover:text-blue-600">{item.label}</Link>
+                                </DropdownMenuItem>
+                              ))}
+                            </DropdownMenuGroup>
+                          ))}
+                        </div>
+                      ) : (
+                         <DropdownMenuGroup>
+                          {link.dropdown[0].items.map(item => (
+                            <DropdownMenuItem key={item.href} asChild className="p-0">
+                              <Link href={item.href} className="block px-3 py-2 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition-colors duration-200 text-slate-600 hover:text-blue-600">{item.label}</Link>
+                            </DropdownMenuItem>
+                          ))}
+                        </DropdownMenuGroup>
+                      )}
+                       <DropdownMenuSeparator className="my-6 bg-slate-200" />
+                        <DropdownMenuItem asChild className="p-0">
+                          <Link href={link.href} className="block px-3 py-2 rounded-lg font-semibold text-blue-600 hover:bg-blue-50 transition-colors duration-200">{`View All ${link.label}`}</Link>
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                  </DropdownMenu>
+                </div>
               ) : (
                 <Link
                   key={link.href}

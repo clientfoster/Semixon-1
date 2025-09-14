@@ -71,9 +71,8 @@ export function usePerformanceOptimization() {
     
     if (!preloaded) {
       const criticalResources = [
-        { href: '/fonts/inter.woff2', as: 'font', type: 'font/woff2' },
-        { href: '/css/critical.css', as: 'style' },
-        { href: '/api/team', as: 'fetch' },
+        // Only preload resources that actually exist
+        // Add any actual critical resources here when they exist
       ];
       
       criticalResources.forEach(resource => {
