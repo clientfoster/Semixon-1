@@ -7,6 +7,7 @@ import { MaintenanceBanner } from '@/components/maintenance-banner';
 import { PerformanceProvider } from '@/components/performance-provider';
 import { AnalyticsProvider } from '@/components/analytics-provider';
 import { SpeedInsights } from '@vercel/speed-insights/next';
+import { Analytics } from '@vercel/analytics/next';
 
 export const metadata: Metadata = {
   title: {
@@ -156,6 +157,15 @@ export default function RootLayout({
                 </AnalyticsProvider>
               </PerformanceProvider>
               <SpeedInsights />
+              <Analytics />
+              {/* Debug - Remove after testing */}
+              {process.env.NODE_ENV === 'development' && (
+                <script
+                  dangerouslySetInnerHTML={{
+                    __html: `console.log('Vercel Analytics & Speed Insights loaded');`
+                  }}
+                />
+              )}
             </body>
     </html>
   );
