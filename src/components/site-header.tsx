@@ -148,12 +148,12 @@ export function SiteHeader() {
                       </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent 
-                      className={cn("p-6 shadow-xl border border-slate-200 bg-white rounded-xl", link.label === 'Services' ? "w-[50rem]" : "w-64")}
+                      className={cn("p-6 shadow-xl border border-slate-200 bg-white rounded-xl", link.label === 'Services' ? "w-[60rem]" : "w-64")}
                       onMouseEnter={() => setHoveredDropdown(link.label)}
                       onMouseLeave={() => setHoveredDropdown(null)}
                     >
                       {link.label === 'Services' ? (
-                         <div className="grid grid-cols-3 gap-8">
+                         <div className="grid grid-cols-4 gap-6">
                           {link.dropdown.map((group, index) => (
                             <DropdownMenuGroup key={'heading' in group ? group.heading : `group-${index}`} className="flex flex-col gap-3">
                               {'heading' in group && group.heading && (

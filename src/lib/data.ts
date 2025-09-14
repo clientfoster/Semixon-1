@@ -196,6 +196,48 @@ export const services = [
     description: 'We provide specialized engineering and technical services to support your entire product lifecycle, augmenting your team with the expertise you need, when you need it.',
     imageId: 'service-4',
     href: '/services/engineering-and-technical-services',
+  },
+  {
+    id: 'web-development',
+    category: 'Software',
+    title: 'Web Development',
+    description: 'We create modern, responsive, and scalable web applications using cutting-edge technologies, delivering exceptional user experiences and robust backend solutions.',
+    imageId: 'service-1',
+    href: '/services/web-development',
+  },
+
+  // Digital Marketing
+  {
+    id: 'digital-marketing',
+    category: 'Digital Marketing',
+    title: 'Digital Marketing',
+    description: 'We help you reach your target audience through strategic digital marketing campaigns, including SEO, social media, PPC, and content marketing to drive growth and engagement.',
+    imageId: 'service-2',
+    href: '/services/digital-marketing',
+  },
+  {
+    id: 'content-writing',
+    category: 'Digital Marketing',
+    title: 'Content Writing',
+    description: 'We create compelling, SEO-optimized content that engages your audience, builds authority, and drives conversions across all digital platforms.',
+    imageId: 'service-3',
+    href: '/services/content-writing',
+  },
+  {
+    id: 'branding-design',
+    category: 'Digital Marketing',
+    title: 'Branding & Design',
+    description: 'We develop strong brand identities and create stunning visual designs that resonate with your audience and differentiate your business in the market.',
+    imageId: 'service-4',
+    href: '/services/branding-design',
+  },
+  {
+    id: 'quick-services',
+    category: 'Digital Marketing',
+    title: 'Quick Services',
+    description: 'Affordable Fiverr-style gigs: logo design, copywriting, video editing, and more. Fast delivery, professional quality, and budget-friendly solutions.',
+    imageId: 'product-1',
+    href: '/services/quick-services',
   }
 ];
 
