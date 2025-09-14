@@ -60,9 +60,19 @@ const navLinks = [
           { href: '/services/cloud-architecture-and-engineering', label: 'Cloud Architecture and Engineering' },
           { href: '/services/salesforce-implementation-and-support', label: 'Salesforce Implementation and Support' },
           { href: '/services/application-development-and-maintenance', label: 'Application Development and Maintenance' },
+          { href: '/services/web-development', label: 'Web Development' },
           { href: '/services/quality-assurance', label: 'Quality Assurance' },
           { href: '/services/it-infrastructure', label: 'IT Infrastructure' },
           { href: '/services/engineering-and-technical-services', label: 'Engineering and Technical Services' },
+        ],
+      },
+      {
+        heading: 'Digital Marketing',
+        items: [
+          { href: '/services/digital-marketing', label: 'Digital Marketing' },
+          { href: '/services/content-writing', label: 'Content Writing' },
+          { href: '/services/branding-design', label: 'Branding & Design' },
+          { href: '/services/quick-services', label: 'Quick Services' },
         ],
       }
     ]

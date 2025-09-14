@@ -6,6 +6,7 @@ import { Toaster } from '@/components/ui/toaster';
 import { MaintenanceBanner } from '@/components/maintenance-banner';
 import { PerformanceProvider } from '@/components/performance-provider';
 import { AnalyticsProvider } from '@/components/analytics-provider';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 
 export const metadata: Metadata = {
   title: {
@@ -154,6 +155,7 @@ export default function RootLayout({
                   <Toaster />
                 </AnalyticsProvider>
               </PerformanceProvider>
+              <SpeedInsights />
             </body>
     </html>
   );
