@@ -32,7 +32,7 @@ import { services as existingServices } from '@/lib/data';
 export interface Service {
   id?: string;
   title: string;
-  category: 'Semiconductors' | 'Embedded' | 'Software';
+  category: 'Semiconductors' | 'Embedded' | 'Software' | 'Digital Marketing';
   description: string;
   imageId: string;
   imageUrl?: string; // Direct image URL
@@ -200,6 +200,7 @@ export default function ServicesManagementPage() {
       case 'Semiconductors': return 'default';
       case 'Embedded': return 'secondary';
       case 'Software': return 'outline';
+      case 'Digital Marketing': return 'destructive';
       default: return 'secondary';
     }
   };
@@ -282,6 +283,7 @@ export default function ServicesManagementPage() {
                 <SelectItem value="Semiconductors">Semiconductors</SelectItem>
                 <SelectItem value="Embedded">Embedded</SelectItem>
                 <SelectItem value="Software">Software</SelectItem>
+                <SelectItem value="Digital Marketing">Digital Marketing</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -477,6 +479,7 @@ function ServiceForm({
               <SelectItem value="Semiconductors">Semiconductors</SelectItem>
               <SelectItem value="Embedded">Embedded</SelectItem>
               <SelectItem value="Software">Software</SelectItem>
+              <SelectItem value="Digital Marketing">Digital Marketing</SelectItem>
             </SelectContent>
           </Select>
         </div>

@@ -1,23 +1,36 @@
 'use client';
 
 import { createContext, useContext, useEffect } from 'react';
-import { usePageTracking, useSessionTracking } from '@/hooks/use-analytics';
+import { vercelAnalyticsService } from '@/lib/vercel-analytics';
 
 interface AnalyticsContextType {
-  // Add any analytics context methods here if needed
+  trackPageView: (page: string, title: string) => void;
+  trackEvent: (eventName: string, properties?: Record<string, any>) => void;
 }
 
-const AnalyticsContext = createContext<AnalyticsContextType>({});
+const AnalyticsContext = createContext<AnalyticsContextType>({
+  trackPageView: () => {},
+  trackEvent: () => {},
+});
 
 export function AnalyticsProvider({ children }: { children: React.ReactNode }) {
-  // Initialize page tracking
-  usePageTracking();
-  
-  // Initialize session tracking
-  useSessionTracking();
+  useEffect(() => {
+    // Track initial page view
+    if (typeof window !== 'undefined') {
+      vercelAnalyticsService.trackPageView(window.location.pathname, document.title);
+    }
+  }, []);
+
+  const trackPageView = (page: string, title: string) => {
+    vercelAnalyticsService.trackPageView(page, title);
+  };
+
+  const trackEvent = (eventName: string, properties?: Record<string, any>) => {
+    vercelAnalyticsService.trackEvent(eventName, properties);
+  };
 
   return (
-    <AnalyticsContext.Provider value={{}}>
+    <AnalyticsContext.Provider value={{ trackPageView, trackEvent }}>
       {children}
     </AnalyticsContext.Provider>
   );

@@ -19,17 +19,21 @@ import {
   Filter,
   Activity,
   Zap,
-  Target
+  Target,
+  Trash2,
+  AlertTriangle
 } from 'lucide-react';
-import { analyticsService, AnalyticsMetrics } from '@/lib/analytics';
+import { vercelAnalyticsService, VercelAnalyticsMetrics } from '@/lib/vercel-analytics';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
 import { RealTimeAnalytics } from '@/components/admin/real-time-analytics';
 import { PerformanceMetrics } from '@/components/admin/performance-metrics';
+import { useToast } from '@/hooks/use-toast';
 
-interface AnalyticsData extends AnalyticsMetrics {
+interface AnalyticsData extends VercelAnalyticsMetrics {
   conversionRate: number;
   performance: {
     averageLoadTime: number;
@@ -45,6 +49,8 @@ export default function AnalyticsDashboard() {
   const [loading, setLoading] = useState(true);
   const [timeRange, setTimeRange] = useState('7d');
   const [refreshKey, setRefreshKey] = useState(0);
+  const [isResetting, setIsResetting] = useState(false);
+  const { toast } = useToast();
 
   useEffect(() => {
     loadAnalyticsData();
@@ -54,7 +60,19 @@ export default function AnalyticsDashboard() {
     setLoading(true);
     
     try {
-      const metrics = await analyticsService.getAnalyticsMetrics(timeRange as '24h' | '7d' | '30d' | '90d');
+      // Try to fetch from API first, fallback to direct service
+      let metrics;
+      try {
+        const response = await fetch(`/api/analytics?timeRange=${timeRange}`);
+        if (response.ok) {
+          metrics = await response.json();
+        } else {
+          throw new Error('API request failed');
+        }
+      } catch (apiError) {
+        console.log('API not available, using direct service');
+        metrics = await vercelAnalyticsService.getAnalyticsMetrics(timeRange as '24h' | '7d' | '30d' | '90d');
+      }
       
       // Add additional data not in metrics
       const data: AnalyticsData = {
@@ -93,6 +111,30 @@ export default function AnalyticsDashboard() {
     link.download = `analytics-${new Date().toISOString().split('T')[0]}.json`;
     link.click();
     URL.revokeObjectURL(url);
+  };
+
+  const resetAnalytics = async () => {
+    try {
+      setIsResetting(true);
+      await vercelAnalyticsService.resetAllAnalytics();
+      
+      toast({
+        title: 'Analytics Reset Successfully',
+        description: 'All local analytics data has been cleared. Vercel Analytics data will reset on next deployment.',
+      });
+      
+      // Refresh the data to show empty state
+      setRefreshKey(prev => prev + 1);
+    } catch (error) {
+      console.error('Error resetting analytics:', error);
+      toast({
+        variant: 'destructive',
+        title: 'Reset Failed',
+        description: 'Failed to reset analytics data. Please try again.',
+      });
+    } finally {
+      setIsResetting(false);
+    }
   };
 
   if (loading) {
@@ -136,8 +178,23 @@ export default function AnalyticsDashboard() {
               Analytics Dashboard
             </h1>
             <p className="text-slate-400 mt-2">
-              Monitor your site performance and user behavior
+              Monitor your site performance and user behavior with Vercel Analytics
             </p>
+            <div className="mt-3 p-3 bg-blue-900/20 border border-blue-500/30 rounded-lg">
+              <p className="text-blue-300 text-sm">
+                <strong>Note:</strong> This dashboard shows simulated analytics data. 
+                For real Vercel Analytics data, visit your{' '}
+                <a 
+                  href="https://vercel.com/dashboard" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-blue-400 hover:text-blue-300 underline"
+                >
+                  Vercel Dashboard
+                </a>
+                {' '}or deploy this app to Vercel with Analytics enabled.
+              </p>
+            </div>
           </div>
           <div className="flex items-center gap-3">
             <Select value={timeRange} onValueChange={setTimeRange}>
@@ -169,6 +226,60 @@ export default function AnalyticsDashboard() {
               <Download className="h-4 w-4 mr-2" />
               Export
             </Button>
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <Button
+                  variant="destructive"
+                  size="sm"
+                  disabled={isResetting}
+                  className="bg-red-900/20 border-red-800 text-red-400 hover:bg-red-900/40 hover:border-red-700"
+                >
+                  {isResetting ? (
+                    <>
+                      <div className="h-4 w-4 border-2 border-red-400 border-t-transparent rounded-full animate-spin mr-2" />
+                      Resetting...
+                    </>
+                  ) : (
+                    <>
+                      <Trash2 className="h-4 w-4 mr-2" />
+                      Reset All
+                    </>
+                  )}
+                </Button>
+              </AlertDialogTrigger>
+              <AlertDialogContent className="bg-slate-800 border-slate-700">
+                <AlertDialogHeader>
+                  <AlertDialogTitle className="text-white flex items-center gap-2">
+                    <AlertTriangle className="h-5 w-5 text-red-400" />
+                    Reset All Analytics Data
+                  </AlertDialogTitle>
+                  <AlertDialogDescription className="text-slate-300">
+                    This action will clear all local analytics data. Vercel Analytics data will reset on next deployment. This includes: All page views and visitor data, All user sessions and behavior tracking, All analytics events and custom metrics, and All historical performance data. 
+                    <br /><br />
+                    <strong className="text-red-400">This action cannot be undone!</strong>
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel className="bg-slate-700 text-slate-300 hover:bg-slate-600">
+                    Cancel
+                  </AlertDialogCancel>
+                  <AlertDialogAction
+                    onClick={resetAnalytics}
+                    className="bg-red-600 text-white hover:bg-red-700"
+                    disabled={isResetting}
+                  >
+                    {isResetting ? (
+                      <>
+                        <div className="h-4 w-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2" />
+                        Resetting...
+                      </>
+                    ) : (
+                      'Reset All Data'
+                    )}
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
           </div>
         </div>
 
@@ -259,8 +370,12 @@ export default function AnalyticsDashboard() {
                 <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
                 <span className="text-white font-medium">{analyticsData.realTimeUsers} active users</span>
               </div>
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 bg-blue-500 rounded-full animate-ping"></div>
+                <span className="text-slate-400 text-sm">Live data updating</span>
+              </div>
               <div className="text-slate-400">
-                Last updated: {analyticsData.lastUpdated.toDate().toLocaleTimeString()}
+                Last updated: {analyticsData.lastUpdated.toLocaleTimeString()}
               </div>
             </div>
           </CardContent>

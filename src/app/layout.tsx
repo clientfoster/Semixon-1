@@ -143,6 +143,21 @@ export default function RootLayout({
             })
           }}
         />
+        {/* Google Analytics */}
+        <script
+          async
+          src="https://www.googletagmanager.com/gtag/js?id=G-1M36VKSMZ2"
+        />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-1M36VKSMZ2');
+            `,
+          }}
+        />
       </head>
             <body className="font-body antialiased">
               <PerformanceProvider>
@@ -162,7 +177,7 @@ export default function RootLayout({
               {process.env.NODE_ENV === 'development' && (
                 <script
                   dangerouslySetInnerHTML={{
-                    __html: `console.log('Vercel Analytics & Speed Insights loaded');`
+                    __html: `console.log('Vercel Analytics, Speed Insights & Google Analytics loaded');`
                   }}
                 />
               )}

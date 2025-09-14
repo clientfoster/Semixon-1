@@ -53,7 +53,7 @@ function AdminHeader() {
   };
 
   return (
-    <header className="border-b border-slate-800 bg-slate-900/95 backdrop-blur-sm">
+    <header className="sticky top-0 z-50 border-b border-slate-800 bg-slate-900/95 backdrop-blur-sm shadow-lg">
       <div className="flex items-center justify-between px-6 py-4">
         <div className="flex items-center gap-4">
           <SidebarTrigger className="hover:bg-slate-800 rounded-lg p-2 transition-colors text-slate-300" />
@@ -83,7 +83,6 @@ function AdminHeader() {
               Logout
             </Button>
           )}
-
 
           {user && (
             <DropdownMenu>
@@ -174,7 +173,8 @@ function AdminSidebar() {
     {
       title: 'System',
       items: [
-        { name: 'Analytics', href: '/admin/analytics', icon: BarChart3, description: 'Site analytics and performance' },
+        { name: 'Analytics', href: '/admin/analytics', icon: BarChart3, description: 'Vercel analytics and performance' },
+        { name: 'Google Analytics', href: '/admin/analytics-ga', icon: BarChart3, description: 'Google Analytics 4 dashboard' },
         { name: 'Site Settings', href: '/admin/settings', icon: Globe, description: 'Site configuration' }
       ]
     }
@@ -237,11 +237,13 @@ function AdminLayoutContent({ children }: { children: React.ReactNode }) {
     <AuthGuard>
       <SidebarProvider>
         <AdminSidebar />
-        <SidebarInset>
+        <SidebarInset className="flex flex-col">
           <AdminHeader />
-          <div className="min-h-screen bg-slate-900">
-            {children}
-          </div>
+          <main className="flex-1 bg-slate-900 overflow-auto">
+            <div className="p-6">
+              {children}
+            </div>
+          </main>
         </SidebarInset>
       </SidebarProvider>
     </AuthGuard>

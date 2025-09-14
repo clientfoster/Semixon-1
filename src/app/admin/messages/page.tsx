@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { collection, onSnapshot, doc, updateDoc, query, orderBy, where } from 'firebase/firestore';
+import { collection, onSnapshot, doc, updateDoc, deleteDoc, query, orderBy, where } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 import { useToast } from '@/hooks/use-toast';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
@@ -9,8 +9,10 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
+import { Checkbox } from '@/components/ui/checkbox';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter } from '@/components/ui/dialog';
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Separator } from '@/components/ui/separator';
@@ -24,7 +26,8 @@ import {
   Archive,
   Reply,
   Filter,
-  Search
+  Search,
+  Trash2
 } from 'lucide-react';
 import type { ContactMessage } from '@/lib/types';
 
@@ -36,6 +39,9 @@ export default function ContactMessagesPage() {
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState<string>('all');
   const [priorityFilter, setPriorityFilter] = useState<string>('all');
+  const [deletingMessageId, setDeletingMessageId] = useState<string | null>(null);
+  const [selectedMessages, setSelectedMessages] = useState<Set<string>>(new Set());
+  const [isDeletingBulk, setIsDeletingBulk] = useState(false);
   const { toast } = useToast();
 
   useEffect(() => {
@@ -85,6 +91,9 @@ export default function ContactMessagesPage() {
     }
 
     setFilteredMessages(filtered);
+    
+    // Clear selected messages when filters change
+    setSelectedMessages(new Set());
   }, [messages, searchTerm, statusFilter, priorityFilter]);
 
   const updateMessageStatus = async (messageId: string, status: ContactMessage['status']) => {
@@ -104,6 +113,75 @@ export default function ContactMessagesPage() {
         title: 'Error',
         description: 'Failed to update message status.',
       });
+    }
+  };
+
+  const deleteMessage = async (messageId: string) => {
+    try {
+      setDeletingMessageId(messageId);
+      await deleteDoc(doc(db, 'contactMessages', messageId));
+      toast({
+        title: 'Message Deleted',
+        description: 'The message has been permanently deleted.',
+      });
+    } catch (error) {
+      console.error('Error deleting message:', error);
+      toast({
+        variant: 'destructive',
+        title: 'Error',
+        description: 'Failed to delete message. Please try again.',
+      });
+    } finally {
+      setDeletingMessageId(null);
+    }
+  };
+
+  const toggleMessageSelection = (messageId: string) => {
+    setSelectedMessages(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(messageId)) {
+        newSet.delete(messageId);
+      } else {
+        newSet.add(messageId);
+      }
+      return newSet;
+    });
+  };
+
+  const selectAllMessages = () => {
+    if (selectedMessages.size === filteredMessages.length) {
+      setSelectedMessages(new Set());
+    } else {
+      setSelectedMessages(new Set(filteredMessages.map(msg => msg.id)));
+    }
+  };
+
+  const deleteSelectedMessages = async () => {
+    if (selectedMessages.size === 0) return;
+
+    try {
+      setIsDeletingBulk(true);
+      const deletePromises = Array.from(selectedMessages).map(messageId =>
+        deleteDoc(doc(db, 'contactMessages', messageId))
+      );
+      
+      await Promise.all(deletePromises);
+      
+      toast({
+        title: 'Messages Deleted',
+        description: `${selectedMessages.size} message(s) have been permanently deleted.`,
+      });
+      
+      setSelectedMessages(new Set());
+    } catch (error) {
+      console.error('Error deleting messages:', error);
+      toast({
+        variant: 'destructive',
+        title: 'Error',
+        description: 'Failed to delete some messages. Please try again.',
+      });
+    } finally {
+      setIsDeletingBulk(false);
     }
   };
 
@@ -203,6 +281,77 @@ export default function ContactMessagesPage() {
         </CardContent>
       </Card>
 
+      {/* Bulk Actions */}
+      {filteredMessages.length > 0 && (
+        <Card>
+          <CardContent className="pt-6">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                <div className="flex items-center space-x-2">
+                  <Checkbox
+                    id="select-all"
+                    checked={selectedMessages.size === filteredMessages.length && filteredMessages.length > 0}
+                    onCheckedChange={selectAllMessages}
+                  />
+                  <label
+                    htmlFor="select-all"
+                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  >
+                    Select All ({selectedMessages.size} selected)
+                  </label>
+                </div>
+                {selectedMessages.size > 0 && (
+                  <Badge variant="secondary">
+                    {selectedMessages.size} message{selectedMessages.size !== 1 ? 's' : ''} selected
+                  </Badge>
+                )}
+              </div>
+              {selectedMessages.size > 0 && (
+                <AlertDialog>
+                  <AlertDialogTrigger asChild>
+                    <Button 
+                      variant="destructive" 
+                      size="sm"
+                      disabled={isDeletingBulk}
+                    >
+                      {isDeletingBulk ? (
+                        <>
+                          <div className="h-4 w-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2" />
+                          Deleting...
+                        </>
+                      ) : (
+                        <>
+                          <Trash2 className="h-4 w-4 mr-2" />
+                          Delete Selected ({selectedMessages.size})
+                        </>
+                      )}
+                    </Button>
+                  </AlertDialogTrigger>
+                  <AlertDialogContent>
+                    <AlertDialogHeader>
+                      <AlertDialogTitle>Delete Selected Messages</AlertDialogTitle>
+                      <AlertDialogDescription>
+                        Are you sure you want to delete {selectedMessages.size} selected message{selectedMessages.size !== 1 ? 's' : ''}? 
+                        This action cannot be undone and the messages will be permanently removed.
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel>Cancel</AlertDialogCancel>
+                      <AlertDialogAction
+                        onClick={deleteSelectedMessages}
+                        className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                      >
+                        Delete {selectedMessages.size} Message{selectedMessages.size !== 1 ? 's' : ''}
+                      </AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
+              )}
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
       {/* Messages List */}
       <div className="space-y-4">
         {filteredMessages.length === 0 ? (
@@ -225,119 +374,169 @@ export default function ContactMessagesPage() {
             <Card key={message.id} className="hover:shadow-md transition-shadow">
               <CardContent className="pt-6">
                 <div className="flex items-start justify-between">
-                  <div className="flex-1 space-y-3">
-                    <div className="flex items-center gap-3">
-                      <h3 className="font-semibold text-lg">{message.name}</h3>
-                      <Badge variant={getStatusBadgeVariant(message.status)}>
-                        {message.status}
-                      </Badge>
-                      <Badge variant={getPriorityBadgeVariant(message.priority)}>
-                        {message.priority}
-                      </Badge>
-                    </div>
-                    
-                    <div className="flex items-center gap-4 text-sm text-muted-foreground">
-                      <div className="flex items-center gap-1">
-                        <Mail className="h-4 w-4" />
-                        {message.email}
-                      </div>
-                      {message.phone && (
-                        <div className="flex items-center gap-1">
-                          <Phone className="h-4 w-4" />
-                          {message.phone}
+                  <div className="flex items-start gap-3">
+                    <Checkbox
+                      id={`message-${message.id}`}
+                      checked={selectedMessages.has(message.id)}
+                      onCheckedChange={() => toggleMessageSelection(message.id)}
+                      className="mt-1"
+                    />
+                      <div className="flex-1 space-y-3">
+                        <div className="flex items-center gap-3">
+                          <h3 className="font-semibold text-lg">{message.name}</h3>
+                          <Badge variant={getStatusBadgeVariant(message.status)}>
+                            {message.status}
+                          </Badge>
+                          <Badge variant={getPriorityBadgeVariant(message.priority)}>
+                            {message.priority}
+                          </Badge>
                         </div>
-                      )}
-                      {message.company && (
-                        <div className="flex items-center gap-1">
-                          <Building className="h-4 w-4" />
-                          {message.company}
+                        
+                        <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                          <div className="flex items-center gap-1">
+                            <Mail className="h-4 w-4" />
+                            {message.email}
+                          </div>
+                          {message.phone && (
+                            <div className="flex items-center gap-1">
+                              <Phone className="h-4 w-4" />
+                              {message.phone}
+                            </div>
+                          )}
+                          {message.company && (
+                            <div className="flex items-center gap-1">
+                              <Building className="h-4 w-4" />
+                              {message.company}
+                            </div>
+                          )}
+                          <div className="flex items-center gap-1">
+                            <Calendar className="h-4 w-4" />
+                            {formatDate(message.createdAt)}
+                          </div>
                         </div>
-                      )}
-                      <div className="flex items-center gap-1">
-                        <Calendar className="h-4 w-4" />
-                        {formatDate(message.createdAt)}
-                      </div>
-                    </div>
 
-                    <div>
-                      <h4 className="font-medium mb-1">{message.subject}</h4>
-                      <p className="text-muted-foreground line-clamp-2">
-                        {message.message}
-                      </p>
+                        <div>
+                          <h4 className="font-medium mb-1">{message.subject}</h4>
+                          <p className="text-muted-foreground line-clamp-2">
+                            {message.message}
+                          </p>
+                        </div>
+                      </div>
                     </div>
-                  </div>
 
                   <div className="flex flex-col gap-2 ml-4">
-                    <Dialog>
-                      <DialogTrigger asChild>
-                        <Button 
-                          variant="outline" 
-                          size="sm"
-                          onClick={() => setSelectedMessage(message)}
-                        >
-                          <Eye className="h-4 w-4 mr-2" />
-                          View
-                        </Button>
-                      </DialogTrigger>
-                      <DialogContent className="max-w-2xl">
-                        <DialogHeader>
-                          <DialogTitle>Message Details</DialogTitle>
-                        </DialogHeader>
-                        {selectedMessage && (
-                          <div className="space-y-4">
-                            <div className="grid grid-cols-2 gap-4">
-                              <div>
-                                <label className="text-sm font-medium">Name</label>
-                                <p className="text-sm text-muted-foreground">{selectedMessage.name}</p>
-                              </div>
-                              <div>
-                                <label className="text-sm font-medium">Email</label>
-                                <p className="text-sm text-muted-foreground">{selectedMessage.email}</p>
-                              </div>
-                              {selectedMessage.phone && (
+                    <div className="flex gap-2">
+                      <Dialog>
+                        <DialogTrigger asChild>
+                          <Button 
+                            variant="outline" 
+                            size="sm"
+                            onClick={() => setSelectedMessage(message)}
+                          >
+                            <Eye className="h-4 w-4 mr-2" />
+                            View
+                          </Button>
+                        </DialogTrigger>
+                        <DialogContent className="max-w-2xl">
+                          <DialogHeader>
+                            <DialogTitle>Message Details</DialogTitle>
+                          </DialogHeader>
+                          {selectedMessage && (
+                            <div className="space-y-4">
+                              <div className="grid grid-cols-2 gap-4">
                                 <div>
-                                  <label className="text-sm font-medium">Phone</label>
-                                  <p className="text-sm text-muted-foreground">{selectedMessage.phone}</p>
+                                  <label className="text-sm font-medium">Name</label>
+                                  <p className="text-sm text-muted-foreground">{selectedMessage.name}</p>
                                 </div>
-                              )}
-                              {selectedMessage.company && (
                                 <div>
-                                  <label className="text-sm font-medium">Company</label>
-                                  <p className="text-sm text-muted-foreground">{selectedMessage.company}</p>
+                                  <label className="text-sm font-medium">Email</label>
+                                  <p className="text-sm text-muted-foreground">{selectedMessage.email}</p>
                                 </div>
-                              )}
-                            </div>
-                            <Separator />
-                            <div>
-                              <label className="text-sm font-medium">Subject</label>
-                              <p className="text-sm text-muted-foreground">{selectedMessage.subject}</p>
-                            </div>
-                            <div>
-                              <label className="text-sm font-medium">Message</label>
-                              <Textarea 
-                                value={selectedMessage.message} 
-                                readOnly 
-                                rows={6}
-                                className="mt-1"
-                              />
-                            </div>
-                            <div className="flex justify-between items-center pt-4">
-                              <div className="flex gap-2">
-                                <Badge variant={getStatusBadgeVariant(selectedMessage.status)}>
-                                  {selectedMessage.status}
-                                </Badge>
-                                <Badge variant={getPriorityBadgeVariant(selectedMessage.priority)}>
-                                  {selectedMessage.priority}
-                                </Badge>
+                                {selectedMessage.phone && (
+                                  <div>
+                                    <label className="text-sm font-medium">Phone</label>
+                                    <p className="text-sm text-muted-foreground">{selectedMessage.phone}</p>
+                                  </div>
+                                )}
+                                {selectedMessage.company && (
+                                  <div>
+                                    <label className="text-sm font-medium">Company</label>
+                                    <p className="text-sm text-muted-foreground">{selectedMessage.company}</p>
+                                  </div>
+                                )}
                               </div>
-                              <p className="text-sm text-muted-foreground">
-                                Received: {formatDate(selectedMessage.createdAt)}
-                              </p>
+                              <Separator />
+                              <div>
+                                <label className="text-sm font-medium">Subject</label>
+                                <p className="text-sm text-muted-foreground">{selectedMessage.subject}</p>
+                              </div>
+                              <div>
+                                <label className="text-sm font-medium">Message</label>
+                                <Textarea 
+                                  value={selectedMessage.message} 
+                                  readOnly 
+                                  rows={6}
+                                  className="mt-1"
+                                />
+                              </div>
+                              <div className="flex justify-between items-center pt-4">
+                                <div className="flex gap-2">
+                                  <Badge variant={getStatusBadgeVariant(selectedMessage.status)}>
+                                    {selectedMessage.status}
+                                  </Badge>
+                                  <Badge variant={getPriorityBadgeVariant(selectedMessage.priority)}>
+                                    {selectedMessage.priority}
+                                  </Badge>
+                                </div>
+                                <p className="text-sm text-muted-foreground">
+                                  Received: {formatDate(selectedMessage.createdAt)}
+                                </p>
+                              </div>
                             </div>
-                          </div>
-                        )}
-                      </DialogContent>
-                    </Dialog>
+                          )}
+                        </DialogContent>
+                      </Dialog>
+
+                      <AlertDialog>
+                        <AlertDialogTrigger asChild>
+                          <Button 
+                            variant="destructive" 
+                            size="sm"
+                            disabled={deletingMessageId === message.id}
+                          >
+                            {deletingMessageId === message.id ? (
+                              <>
+                                <div className="h-4 w-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2" />
+                                Deleting...
+                              </>
+                            ) : (
+                              <>
+                                <Trash2 className="h-4 w-4 mr-2" />
+                                Delete
+                              </>
+                            )}
+                          </Button>
+                        </AlertDialogTrigger>
+                        <AlertDialogContent>
+                          <AlertDialogHeader>
+                            <AlertDialogTitle>Delete Message</AlertDialogTitle>
+                            <AlertDialogDescription>
+                              Are you sure you want to delete this message from <strong>{message.name}</strong>? 
+                              This action cannot be undone and the message will be permanently removed.
+                            </AlertDialogDescription>
+                          </AlertDialogHeader>
+                          <AlertDialogFooter>
+                            <AlertDialogCancel>Cancel</AlertDialogCancel>
+                            <AlertDialogAction
+                              onClick={() => deleteMessage(message.id)}
+                              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                            >
+                              Delete Message
+                            </AlertDialogAction>
+                          </AlertDialogFooter>
+                        </AlertDialogContent>
+                      </AlertDialog>
+                    </div>
 
                     <Select
                       value={message.status}

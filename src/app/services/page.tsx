@@ -3,7 +3,7 @@ import { services } from '@/lib/data';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { ArrowRight, Cpu, Code, Database, Shield, Zap, Settings, Target, Users, TrendingUp, CheckCircle, Star, Clock, Award } from 'lucide-react';
+import { ArrowRight, Cpu, Code, Database, Shield, Zap, Settings, Target, Star, Clock } from 'lucide-react';
 
 const serviceCategories = [
   {
@@ -40,12 +40,6 @@ const serviceCategories = [
   }
 ];
 
-const stats = [
-  { label: 'Services Delivered', value: '500+', icon: CheckCircle },
-  { label: 'Happy Clients', value: '100+', icon: Users },
-  { label: 'Years Experience', value: '15+', icon: Award },
-  { label: 'Success Rate', value: '99%', icon: TrendingUp }
-];
 
 const processSteps = [
   {
@@ -86,9 +80,9 @@ export default function ServicesPage() {
       {/* Hero Section */}
       <section className="relative bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 py-24 overflow-hidden">
         {/* Background Pattern */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(59,130,246,0.1)_0%,transparent_70%)]"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(59,130,246,0.1)_0%,transparent_70%)] animate-pulse-slow"></div>
         <div className="absolute top-0 left-0 w-full h-full opacity-20">
-          <div className="absolute inset-0" style={{
+          <div className="absolute inset-0 animate-float" style={{
             backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
             backgroundRepeat: 'repeat'
           }}></div>
@@ -96,30 +90,30 @@ export default function ServicesPage() {
         
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-5xl mx-auto text-center">
-            <div className="mb-8">
-              <Badge className="bg-blue-600/20 text-blue-200 border-blue-400/30 px-6 py-3 text-base font-medium">
-                <Star className="w-4 h-4 mr-2" />
+            <div className="mb-8 animate-fade-in-up">
+              <Badge className="bg-blue-600/20 text-blue-200 border-blue-400/30 px-6 py-3 text-base font-medium animate-glow-pulse">
+                <Star className="w-4 h-4 mr-2 animate-bounce-gentle" />
                 Comprehensive Engineering Solutions
               </Badge>
             </div>
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-8 leading-tight">
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-8 leading-tight animate-fade-in-up animation-delay-200">
               Engineering Excellence
-              <span className="block bg-gradient-to-r from-blue-400 via-blue-300 to-blue-200 bg-clip-text text-transparent">
+              <span className="block bg-gradient-to-r from-blue-400 via-blue-300 to-blue-200 bg-clip-text text-transparent animate-gradient-x">
                 Redefined
               </span>
             </h1>
-            <p className="text-xl md:text-2xl text-slate-300 leading-relaxed max-w-4xl mx-auto mb-12">
+            <p className="text-xl md:text-2xl text-slate-300 leading-relaxed max-w-4xl mx-auto mb-12 animate-fade-in-up animation-delay-400">
               From semiconductor design to digital marketing, we deliver comprehensive solutions that drive innovation, 
               accelerate growth, and ensure your success in today's competitive market.
             </p>
-            <div className="flex flex-col sm:flex-row gap-6 justify-center">
-              <Button asChild size="lg" className="bg-blue-600 hover:bg-blue-700 text-white px-10 py-5 text-xl font-semibold rounded-xl shadow-2xl hover:shadow-3xl transition-all duration-300">
+            <div className="flex flex-col sm:flex-row gap-6 justify-center animate-fade-in-up animation-delay-600">
+              <Button asChild size="lg" className="bg-blue-600 hover:bg-blue-700 text-white px-10 py-5 text-xl font-semibold rounded-xl shadow-2xl hover:shadow-3xl transition-all duration-300 micro-hover micro-press">
                 <Link href="/contact" className="flex items-center">
                   Start Your Project
-                  <ArrowRight className="ml-3 w-6 h-6" />
+                  <ArrowRight className="ml-3 w-6 h-6 group-hover:translate-x-1 transition-transform duration-300" />
                 </Link>
               </Button>
-              <Button asChild size="lg" variant="outline" className="border-2 border-white/30 text-white hover:bg-white/10 px-10 py-5 text-xl font-semibold rounded-xl backdrop-blur-sm transition-all duration-300">
+              <Button asChild size="lg" variant="outline" className="border-2 border-white/30 text-white hover:bg-white/10 px-10 py-5 text-xl font-semibold rounded-xl backdrop-blur-sm transition-all duration-300 micro-hover micro-press">
                 <Link href="#services" className="flex items-center">
                   Explore Services
                 </Link>
@@ -129,27 +123,6 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      {/* Stats Section */}
-      <section className="py-16 bg-white border-b border-slate-200">
-        <div className="container mx-auto px-4">
-          <div className="max-w-6xl mx-auto">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-              {stats.map((stat, index) => {
-                const IconComponent = stat.icon;
-                return (
-                  <div key={index} className="text-center group">
-                    <div className="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-all duration-300">
-                      <IconComponent className="w-8 h-8 text-blue-600" />
-                    </div>
-                    <div className="text-3xl md:text-4xl font-bold text-slate-900 mb-2">{stat.value}</div>
-                    <div className="text-sm md:text-base text-slate-600 font-medium">{stat.label}</div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* Service Categories */}
       <section id="services" className="py-24 bg-slate-50">
@@ -166,16 +139,16 @@ export default function ServicesPage() {
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-20">
-              {serviceCategories.map((category) => {
+              {serviceCategories.map((category, index) => {
                 const IconComponent = category.icon;
                 return (
-                  <Card key={category.name} className="group bg-white border border-slate-200 rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-3 overflow-hidden">
+                  <Card key={category.name} className={`group bg-white border border-slate-200 rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-3 overflow-hidden animate-fade-in-up animation-delay-${(index + 1) * 200}`}>
                     <CardHeader className="text-center pb-6 pt-8">
-                      <div className={`w-20 h-20 bg-gradient-to-r ${category.color} rounded-3xl flex items-center justify-center mb-6 mx-auto group-hover:scale-110 transition-all duration-500 shadow-lg`}>
-                        <IconComponent className="w-10 h-10 text-white" />
+                      <div className={`w-20 h-20 bg-gradient-to-r ${category.color} rounded-3xl flex items-center justify-center mb-6 mx-auto group-hover:scale-110 transition-all duration-500 shadow-lg animate-glow-pulse`}>
+                        <IconComponent className="w-10 h-10 text-white group-hover:animate-wiggle" />
                       </div>
                       <div className="flex items-center justify-center mb-4">
-                        <Badge className="bg-slate-100 text-slate-700 px-3 py-1 text-sm font-semibold">
+                        <Badge className="bg-slate-100 text-slate-700 px-3 py-1 text-sm font-semibold micro-hover">
                           {category.count} Services
                         </Badge>
                       </div>
@@ -187,7 +160,7 @@ export default function ServicesPage() {
                       </p>
                       <div className="flex flex-wrap justify-center gap-2">
                         {category.features.map((feature, index) => (
-                          <Badge key={index} variant="outline" className="text-xs border-slate-300 text-slate-600">
+                          <Badge key={index} variant="outline" className="text-xs border-slate-300 text-slate-600 micro-hover micro-glow">
                             {feature}
                           </Badge>
                         ))}

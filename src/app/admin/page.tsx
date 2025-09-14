@@ -142,7 +142,7 @@ export default function AdminDashboardPage() {
   if (loading) {
     return (
       <div className="min-h-screen bg-slate-50">
-        <div className="space-y-8 p-6">
+        <div className="space-y-8">
           {/* Header Skeleton */}
           <div className="space-y-4">
             <div className="h-8 bg-white rounded w-1/3 animate-pulse"></div>
@@ -169,7 +169,7 @@ export default function AdminDashboardPage() {
 
   return (
     <div className="min-h-screen bg-slate-900">
-      <div className="space-y-8 p-6">
+      <div className="space-y-8">
         {/* Header Section */}
         <div className="flex items-center justify-between">
           <div>

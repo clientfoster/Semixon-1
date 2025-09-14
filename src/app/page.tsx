@@ -95,7 +95,6 @@ export default function Home() {
 
       {/* About Us Summary */}
       <section id="about" className="py-20 bg-slate-50">
-        <div className="container mx-auto px-4">
           <div className="max-w-6xl mx-auto">
             <div className="grid lg:grid-cols-2 gap-16 items-center">
               <div className="space-y-8">
@@ -135,13 +134,7 @@ export default function Home() {
                     />
                   )}
                 </div>
-                <div className="absolute top-6 right-6 w-16 h-16 bg-white/90 backdrop-blur-sm rounded-xl flex items-center justify-center shadow-lg">
-                  <div className="w-8 h-8 bg-blue-600 rounded-lg"></div>
-                </div>
                 <div className="absolute bottom-6 left-6 bg-white/90 backdrop-blur-sm rounded-xl p-4 shadow-lg">
-                  <div className="text-2xl font-bold text-slate-900">15+</div>
-                  <div className="text-sm text-slate-600 font-medium">Years of Excellence</div>
-                </div>
               </div>
             </div>
           </div>

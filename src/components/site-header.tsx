@@ -2,13 +2,14 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { Menu, ChevronDown } from 'lucide-react';
 import { Logo } from './icons';
 import { ThemeSwitcher } from './theme-switcher';
+import { trackButtonClick, trackEngagement } from '@/lib/google-analytics';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -99,8 +100,31 @@ const navLinks = [
 
 export function SiteHeader() {
   const [isOpen, setIsOpen] = useState(false);
-  const [hoveredDropdown, setHoveredDropdown] = useState<string | null>(null);
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
   const pathname = usePathname();
+
+  const handleMouseEnter = (dropdownName: string) => {
+    // Clear any existing timeout
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+    
+    // Set a new timeout for 0.3 seconds
+    timeoutRef.current = setTimeout(() => {
+      setOpenDropdown(dropdownName);
+    }, 300);
+  };
+
+  const handleMouseLeave = () => {
+    // Clear any existing timeout
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+    
+    // Don't close on mouse leave - keep dropdown open
+    // Only close when clicking outside or on a different dropdown
+  };
 
   if (pathname.startsWith('/admin')) {
     return null;
@@ -113,8 +137,8 @@ export function SiteHeader() {
           {/* Logo */}
           <div className="flex items-center">
             <Link href="/" className="flex items-center space-x-3 group">
-              <div className="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center group-hover:scale-110 transition-all duration-300 shadow-lg p-1">
-                <Logo className="h-6 w-6" />
+              <div className="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center group-hover:scale-110 transition-all duration-300 shadow-lg p-1 animate-glow-pulse">
+                <Logo className="h-6 w-6 group-hover:animate-wiggle" />
               </div>
               <span className="text-2xl font-bold text-slate-900 group-hover:text-blue-600 transition-colors duration-300">Semixion</span>
             </Link>
@@ -127,10 +151,15 @@ export function SiteHeader() {
                 <div
                   key={link.href}
                   className="relative"
-                  onMouseEnter={() => setHoveredDropdown(link.label)}
-                  onMouseLeave={() => setHoveredDropdown(null)}
+                  onMouseEnter={() => handleMouseEnter(link.label)}
+                  onMouseLeave={handleMouseLeave}
                 >
-                  <DropdownMenu open={hoveredDropdown === link.label} onOpenChange={(open) => !open && setHoveredDropdown(null)}>
+                  <DropdownMenu open={openDropdown === link.label} onOpenChange={(open) => {
+                    // Only close if explicitly closed (clicking outside or pressing escape)
+                    if (!open) {
+                      setOpenDropdown(null);
+                    }
+                  }}>
                     <DropdownMenuTrigger asChild>
                       <Button 
                         variant="ghost" 
@@ -139,6 +168,9 @@ export function SiteHeader() {
                           pathname.startsWith(link.href) ? 'text-blue-600 bg-blue-50' : 'text-slate-600 hover:text-blue-600'
                         )}
                         onClick={() => {
+                          // Track navigation click
+                          trackButtonClick(`${link.label}_main`, 'header_navigation');
+                          trackEngagement('navigation_click', link.label);
                           // Navigate to the main page when clicked
                           window.location.href = link.href;
                         }}
@@ -149,8 +181,6 @@ export function SiteHeader() {
                     </DropdownMenuTrigger>
                     <DropdownMenuContent 
                       className={cn("p-6 shadow-xl border border-slate-200 bg-white rounded-xl", link.label === 'Services' ? "w-[60rem]" : "w-64")}
-                      onMouseEnter={() => setHoveredDropdown(link.label)}
-                      onMouseLeave={() => setHoveredDropdown(null)}
                     >
                       {link.label === 'Services' ? (
                          <div className="grid grid-cols-4 gap-6">
@@ -161,7 +191,16 @@ export function SiteHeader() {
                               )}
                               {group.items.map(item => (
                                 <DropdownMenuItem key={item.href} asChild className="p-0">
-                                  <Link href={item.href} className="block px-3 py-2 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition-colors duration-200 text-slate-600 hover:text-blue-600">{item.label}</Link>
+                                  <Link 
+                                    href={item.href} 
+                                    className="block px-3 py-2 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition-colors duration-200 text-slate-600 hover:text-blue-600"
+                                    onClick={() => {
+                                      trackButtonClick(item.label, 'services_dropdown');
+                                      trackEngagement('service_click', item.label);
+                                    }}
+                                  >
+                                    {item.label}
+                                  </Link>
                                 </DropdownMenuItem>
                               ))}
                             </DropdownMenuGroup>

@@ -13,7 +13,9 @@ import {
   onSnapshot,
   serverTimestamp,
   increment,
-  Timestamp
+  Timestamp,
+  deleteDoc,
+  writeBatch
 } from 'firebase/firestore';
 
 export interface PageView {
@@ -394,6 +396,36 @@ class AnalyticsService {
       }
     } catch (error) {
       console.error('Error ending session:', error);
+    }
+  }
+
+  async resetAllAnalytics(): Promise<void> {
+    try {
+      const batch = writeBatch(db);
+
+      // Get all page views and delete them
+      const pageViewsSnapshot = await getDocs(collection(db, 'pageViews'));
+      pageViewsSnapshot.docs.forEach((docSnapshot) => {
+        batch.delete(docSnapshot.ref);
+      });
+
+      // Get all sessions and delete them
+      const sessionsSnapshot = await getDocs(collection(db, 'sessions'));
+      sessionsSnapshot.docs.forEach((docSnapshot) => {
+        batch.delete(docSnapshot.ref);
+      });
+
+      // Get all analytics events and delete them
+      const eventsSnapshot = await getDocs(collection(db, 'analyticsEvents'));
+      eventsSnapshot.docs.forEach((docSnapshot) => {
+        batch.delete(docSnapshot.ref);
+      });
+
+      // Commit the batch
+      await batch.commit();
+    } catch (error) {
+      console.error('Error resetting analytics:', error);
+      throw error;
     }
   }
 }
