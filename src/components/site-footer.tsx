@@ -3,10 +3,13 @@
 import Link from 'next/link';
 import { Logo } from './icons';
 import { usePathname } from 'next/navigation';
+import { useSiteSettings } from '@/hooks/use-site-settings';
+import { CookieSettingsButton } from '@/components/cookie-consent-banner';
 
 export function SiteFooter() {
   const currentYear = new Date().getFullYear();
   const pathname = usePathname();
+  const { settings, getFormattedAddress, getCompanyName } = useSiteSettings();
 
   if (pathname.startsWith('/admin')) {
     return null;
@@ -21,10 +24,10 @@ export function SiteFooter() {
                 <div className="w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center group-hover:scale-110 transition-all duration-300 shadow-lg">
                   <Logo className="h-6 w-6 text-white" />
                 </div>
-                <span className="text-3xl font-bold text-white group-hover:text-blue-400 transition-colors duration-300">Semixion</span>
+                <span className="text-3xl font-bold text-white group-hover:text-blue-400 transition-colors duration-300">{settings.siteName}</span>
              </Link>
             <p className="text-slate-300 text-lg leading-relaxed mb-8 max-w-lg">
-              Engineering the future of semiconductors through innovation, excellence, and cutting-edge technology solutions that power tomorrow's innovations.
+              {settings.siteDescription}
             </p>
             <div className="flex space-x-4">
               <div className="w-10 h-10 bg-slate-800 rounded-lg flex items-center justify-center hover:bg-blue-600 transition-all duration-300 cursor-pointer group">
@@ -71,18 +74,15 @@ export function SiteFooter() {
             <ul className="space-y-4">
               <li className="text-slate-300 text-base">
                 <span className="font-semibold">Phone:</span><br />
-                +91 9618055526
+                {settings.phone}
               </li>
               <li className="text-slate-300 text-base">
                 <span className="font-semibold">Email:</span><br />
-                info@semixion.com
+                {settings.email}
               </li>
               <li className="text-slate-300 text-base">
                 <span className="font-semibold">Address:</span><br />
-                Plot No: 205, 2nd Floor,<br />
-                Sapthagiri Arcade, Hoodi Village,<br />
-                ITPL Main Rd, Mahadevapura,<br />
-                Bengaluru, Karnataka 560048
+                {getFormattedAddress()}
               </li>
             </ul>
           </div>
@@ -100,9 +100,12 @@ export function SiteFooter() {
         </div>
         <div className="mt-16 pt-8 border-t border-slate-800">
           <div className="flex flex-col lg:flex-row justify-between items-center space-y-4 lg:space-y-0">
-            <p className="text-slate-400 text-base">
-              &copy; {currentYear} Semixion. All rights reserved.
-            </p>
+            <div className="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-4">
+              <p className="text-slate-400 text-base">
+                &copy; {currentYear} {getCompanyName()}. All rights reserved.
+              </p>
+              <CookieSettingsButton />
+            </div>
             <p className="text-slate-400 text-sm">
               Site developed by{' '}
               <button

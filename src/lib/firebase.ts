@@ -1,5 +1,6 @@
 import { initializeApp, getApps, getApp } from 'firebase/app';
-import { getFirestore } from 'firebase/firestore';
+import { getFirestore, initializeFirestore, connectFirestoreEmulator } from 'firebase/firestore';
+import { getAuth } from 'firebase/auth';
 
 const firebaseConfig = {
   "projectId": "studio-262487200-a8a7e",
@@ -12,6 +13,27 @@ const firebaseConfig = {
 };
 
 const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
-const db = getFirestore(app);
 
-export { app, db };
+// Initialize Firestore with optimized settings to prevent timeout issues
+let db;
+try {
+  // Try to initialize Firestore with long polling for better connectivity
+  db = initializeFirestore(app, {
+    experimentalForceLongPolling: true,
+    ignoreUndefinedProperties: true,
+  });
+} catch (error) {
+  // Fallback to regular getFirestore if initializeFirestore fails
+  console.warn('Falling back to regular Firestore initialization:', error);
+  try {
+    db = getFirestore(app);
+  } catch (fallbackError) {
+    console.error('Failed to initialize Firestore:', fallbackError);
+    throw fallbackError;
+  }
+}
+
+// Initialize Firebase Auth
+const auth = getAuth(app);
+
+export { app, db, auth };

@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import { ContactInfo } from '@/components/contact-info';
 
 export const metadata: Metadata = {
   title: 'Privacy Policy | Semixion',
@@ -152,11 +153,7 @@ export default function PrivacyPolicyPage() {
                   <p className="text-slate-600 leading-relaxed mb-4">
                     If you have any questions about this privacy policy or our data practices, please contact us:
                   </p>
-                  <div className="bg-slate-50 rounded-lg p-6">
-                    <p className="text-slate-700 mb-2"><strong>Email:</strong> info@semixion.com</p>
-                    <p className="text-slate-700 mb-2"><strong>Phone:</strong> +91 9618055526</p>
-                    <p className="text-slate-700"><strong>Address:</strong> Plot No: 205, 2nd Floor, No 1, Sapthagiri Arcade, Hoodi Village, ITPL Main Rd, Mahadevapura, Bengaluru, Karnataka 560048</p>
-                  </div>
+                  <ContactInfo />
                 </div>
 
               </div>

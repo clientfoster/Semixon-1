@@ -1,7 +1,12 @@
+'use client';
+
 import { ContactForm } from '@/components/contact-form';
 import { Mail, Phone, MapPin, HelpCircle, Clock, HeadphonesIcon, Users, Building2 } from 'lucide-react';
+import { useSiteSettings } from '@/hooks/use-site-settings';
 
 export default function ContactPage() {
+  const { settings, getFormattedAddress, getCompanyName } = useSiteSettings();
+  
   return (
     <div>
       <section className="py-20 md:py-32 relative overflow-hidden bg-gradient-to-br from-blue-900/80 via-blue-700/70 to-blue-900/80">
@@ -42,9 +47,7 @@ export default function ContactPage() {
                 <div>
                   <h3 className="text-lg font-semibold">Our Office</h3>
                   <p className="text-muted-foreground">
-                    Plot No: 205, 2nd Floor, No 1, Sapthagiri Arcade,<br />
-                    Hoodi Village, ITPL Main Rd,<br />
-                    Mahadevapura, Bengaluru, Karnataka 560048
+                    {getFormattedAddress()}
                   </p>
                 </div>
               </div>
@@ -54,7 +57,7 @@ export default function ContactPage() {
                 </div>
                 <div>
                   <h3 className="text-lg font-semibold">Email Us</h3>
-                  <p className="text-muted-foreground">info@semixion.com</p>
+                  <p className="text-muted-foreground">{settings.email}</p>
                 </div>
               </div>
               <div className="flex items-start gap-4">
@@ -63,7 +66,7 @@ export default function ContactPage() {
                 </div>
                 <div>
                   <h3 className="text-lg font-semibold">Call Us</h3>
-                  <p className="text-muted-foreground">+91 9618055526</p>
+                  <p className="text-muted-foreground">{settings.phone}</p>
                 </div>
               </div>
             </div>
