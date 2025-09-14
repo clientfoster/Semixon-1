@@ -173,8 +173,6 @@ function AdminSidebar() {
     {
       title: 'System',
       items: [
-        { name: 'Analytics', href: '/admin/analytics', icon: BarChart3, description: 'Vercel analytics and performance' },
-        { name: 'Google Analytics', href: '/admin/analytics-ga', icon: BarChart3, description: 'Google Analytics 4 dashboard' },
         { name: 'Site Settings', href: '/admin/settings', icon: Globe, description: 'Site configuration' }
       ]
     }

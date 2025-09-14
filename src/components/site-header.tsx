@@ -9,7 +9,6 @@ import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { Menu, ChevronDown } from 'lucide-react';
 import { Logo } from './icons';
 import { ThemeSwitcher } from './theme-switcher';
-import { trackButtonClick, trackEngagement } from '@/lib/google-analytics';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -168,9 +167,6 @@ export function SiteHeader() {
                           pathname.startsWith(link.href) ? 'text-blue-600 bg-blue-50' : 'text-slate-600 hover:text-blue-600'
                         )}
                         onClick={() => {
-                          // Track navigation click
-                          trackButtonClick(`${link.label}_main`, 'header_navigation');
-                          trackEngagement('navigation_click', link.label);
                           // Navigate to the main page when clicked
                           window.location.href = link.href;
                         }}
@@ -194,10 +190,6 @@ export function SiteHeader() {
                                   <Link 
                                     href={item.href} 
                                     className="block px-3 py-2 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition-colors duration-200 text-slate-600 hover:text-blue-600"
-                                    onClick={() => {
-                                      trackButtonClick(item.label, 'services_dropdown');
-                                      trackEngagement('service_click', item.label);
-                                    }}
                                   >
                                     {item.label}
                                   </Link>

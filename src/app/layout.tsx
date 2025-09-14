@@ -5,9 +5,7 @@ import { SiteFooter } from '@/components/site-footer';
 import { Toaster } from '@/components/ui/toaster';
 import { MaintenanceBanner } from '@/components/maintenance-banner';
 import { PerformanceProvider } from '@/components/performance-provider';
-import { AnalyticsProvider } from '@/components/analytics-provider';
 import { SpeedInsights } from '@vercel/speed-insights/next';
-import { Analytics } from '@vercel/analytics/next';
 
 export const metadata: Metadata = {
   title: {
@@ -161,23 +159,20 @@ export default function RootLayout({
       </head>
             <body className="font-body antialiased">
               <PerformanceProvider>
-                <AnalyticsProvider>
-                  <div className="relative flex min-h-screen flex-col bg-background">
-                    <SiteHeader />
-                    <MaintenanceBanner />
-                    <main className="flex-1">{children}</main>
-                    <SiteFooter />
-                  </div>
-                  <Toaster />
-                </AnalyticsProvider>
+                <div className="relative flex min-h-screen flex-col bg-background">
+                  <SiteHeader />
+                  <MaintenanceBanner />
+                  <main className="flex-1">{children}</main>
+                  <SiteFooter />
+                </div>
+                <Toaster />
               </PerformanceProvider>
               <SpeedInsights />
-              <Analytics />
               {/* Debug - Remove after testing */}
               {process.env.NODE_ENV === 'development' && (
                 <script
                   dangerouslySetInnerHTML={{
-                    __html: `console.log('Vercel Analytics, Speed Insights & Google Analytics loaded');`
+                    __html: `console.log('Speed Insights & Google Analytics loaded');`
                   }}
                 />
               )}

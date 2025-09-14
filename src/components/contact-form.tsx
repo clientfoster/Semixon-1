@@ -17,7 +17,6 @@ import {
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
-import { trackFormSubmission, trackContactInteraction } from '@/lib/google-analytics';
 
 const formSchema = z.object({
   name: z.string().min(2, { message: 'Name must be at least 2 characters.' }),
@@ -46,9 +45,6 @@ export function ContactForm() {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      // Track form interaction
-      trackContactInteraction('form_started', 'contact_form');
-      
       await addDoc(collection(db, 'contactMessages'), {
         name: values.name,
         email: values.email,
@@ -62,10 +58,6 @@ export function ContactForm() {
         updatedAt: new Date(),
       });
 
-      // Track successful form submission
-      trackFormSubmission('contact_form', true);
-      trackContactInteraction('form_submitted', 'contact_form_success');
-
       toast({
         title: 'Message Sent!',
         description: 'Thank you for contacting us. We will get back to you shortly.',
@@ -73,10 +65,6 @@ export function ContactForm() {
       form.reset();
     } catch (error) {
       console.error('Error sending message:', error);
-      
-      // Track failed form submission
-      trackFormSubmission('contact_form', false);
-      trackContactInteraction('form_error', 'contact_form_failed');
       
       toast({
         variant: 'destructive',
