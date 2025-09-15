@@ -13,6 +13,23 @@ import { Skeleton } from '@/components/ui/skeleton';
 import type { TeamMember } from '@/app/admin/team/page';
 import type { PageContent } from '@/lib/types';
 
+export const metadata: Metadata = generateMeta({
+  title: 'About Semixion - Leading Semiconductor Engineering Solutions',
+  description: 'Learn about Semixion\'s journey in semiconductor engineering, our expert team, and our commitment to delivering cutting-edge IC design, wafer fabrication, and reliability testing solutions.',
+  keywords: [
+    'about semixion',
+    'semiconductor company',
+    'engineering team',
+    'company history',
+    'semiconductor expertise',
+    'IC design company',
+    'wafer fabrication',
+    'reliability testing'
+  ],
+  url: '/about',
+  type: 'website',
+});
+
 export default function AboutPage() {
   const aboutImage = PlaceHolderImages.find(img => img.id === 'about-overview');
   const [team, setTeam] = useState<TeamMember[]>([]);

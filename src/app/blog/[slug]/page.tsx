@@ -1,10 +1,7 @@
-'use client';
-
-import { useState, useEffect } from 'react';
-import { collection, onSnapshot, query, where, limit, orderBy } from 'firebase/firestore';
-// @ts-ignore - db is properly typed in firebase.ts but TypeScript can't infer it here
+import { Metadata } from 'next';
+import { notFound } from 'next/navigation';
+import { collection, getDocs, query, where, limit, orderBy } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
-import { useParams } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
@@ -24,318 +21,271 @@ import {
 } from 'lucide-react';
 import { BlogPost } from '@/lib/types';
 import { BlogPostCard } from '@/components/blog-post-card';
-import { Skeleton } from '@/components/ui/skeleton';
 import { MarkdownRenderer } from '@/components/markdown-renderer';
-import { generateMetaTitle, generateMetaDescription } from '@/lib/blog-utils';
+import { generateBlogMeta } from '@/lib/meta-utils';
 
-export default function BlogPostPage() {
-  const params = useParams();
-  const slug = params.slug as string;
-  const [post, setPost] = useState<BlogPost | null>(null);
-  const [relatedPosts, setRelatedPosts] = useState<BlogPost[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [notFound, setNotFound] = useState(false);
-
-  useEffect(() => {
-    let unsubscribe: (() => void) | undefined;
-    let relatedUnsubscribe: (() => void) | undefined;
-
-    const setupListeners = () => {
-      try {
-        const postsQuery = query(
-          // @ts-ignore - db is properly typed in firebase.ts
-          collection(db, 'blogPosts'),
-          where('slug', '==', slug),
-          limit(1)
-        );
-
-        unsubscribe = onSnapshot(postsQuery, 
-          (snapshot) => {
-            if (snapshot.empty) {
-              setNotFound(true);
-              setLoading(false);
-              return;
-            }
-
-            const postData = snapshot.docs[0].data() as BlogPost;
-            
-            // Check if post is published
-            if (postData.status !== 'published') {
-              setNotFound(true);
-              setLoading(false);
-              return;
-            }
-
-            setPost({
-              ...postData,
-              id: snapshot.docs[0].id,
-              docId: snapshot.docs[0].id,
-              createdAt: (postData.createdAt as any)?.toDate?.() || new Date(),
-              updatedAt: (postData.updatedAt as any)?.toDate?.() || new Date(),
-              publishedAt: (postData.publishedAt as any)?.toDate?.(),
-            });
-
-            // Fetch related posts (by tags or just recent posts)
-            const relatedQuery = query(
-              // @ts-ignore - db is properly typed in firebase.ts
-              collection(db, 'blogPosts'),
-              orderBy('createdAt', 'desc'),
-              limit(10)
-            );
-
-            relatedUnsubscribe = onSnapshot(relatedQuery, 
-              (relatedSnapshot) => {
-                const relatedData: BlogPost[] = [];
-                relatedSnapshot.forEach((doc) => {
-                  const data = doc.data();
-                  // Exclude the current post and only include published posts
-                  if (doc.id !== snapshot.docs[0].id && data.status === 'published') {
-                    relatedData.push({
-                      ...data,
-                      id: doc.id,
-                      docId: doc.id,
-                      createdAt: (data.createdAt as any)?.toDate?.() || new Date(),
-                      updatedAt: (data.updatedAt as any)?.toDate?.() || new Date(),
-                      publishedAt: (data.publishedAt as any)?.toDate?.(),
-                    } as BlogPost);
-                  }
-                });
-                setRelatedPosts(relatedData.slice(0, 3));
-              },
-              (error) => {
-                console.error('Error loading related posts:', error);
-              }
-            );
-
-            setLoading(false);
-          },
-          (error) => {
-            console.error('Error loading post:', error);
-            setNotFound(true);
-            setLoading(false);
-          }
-        );
-      } catch (error) {
-        console.error('Error setting up listeners:', error);
-        setNotFound(true);
-        setLoading(false);
-      }
-    };
-
-    // Add a small delay to prevent race conditions
-    const timeoutId = setTimeout(setupListeners, 100);
-
-    return () => {
-      clearTimeout(timeoutId);
-      if (unsubscribe) unsubscribe();
-      if (relatedUnsubscribe) relatedUnsubscribe();
-    };
-  }, [slug]);
-
-  const formatDate = (date: Date) => {
-    return new Intl.DateTimeFormat('en-US', {
-      weekday: 'long',
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
-    }).format(date);
+interface BlogPostPageProps {
+  params: {
+    slug: string;
   };
+}
 
-
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-slate-50">
-        {/* Back Button */}
-        <div className="bg-white border-b sticky top-0 z-10 shadow-sm">
-          <div className="container mx-auto px-4 py-4">
-            <Button 
-              asChild 
-              variant="ghost" 
-              className="hover:bg-slate-100 transition-colors duration-200 group text-black"
-            >
-              <Link href="/blog" className="flex items-center gap-2">
-                <ArrowLeft className="h-4 w-4 group-hover:-translate-x-1 transition-transform duration-200" />
-                <span className="font-medium">Back to Blog</span>
-              </Link>
-            </Button>
-          </div>
-        </div>
-        
-        <div className="container mx-auto px-4 py-16">
-          <div className="max-w-4xl mx-auto">
-            <div className="mb-8">
-              <Skeleton className="h-8 w-32 mb-4" />
-              <Skeleton className="h-12 w-full mb-4" />
-              <div className="flex gap-4 mb-8">
-                <Skeleton className="h-6 w-24" />
-                <Skeleton className="h-6 w-32" />
-                <Skeleton className="h-6 w-20" />
-              </div>
-            </div>
-            <Skeleton className="h-64 w-full mb-8" />
-            <div className="space-y-4">
-              <Skeleton className="h-4 w-full" />
-              <Skeleton className="h-4 w-full" />
-              <Skeleton className="h-4 w-3/4" />
-            </div>
-          </div>
-        </div>
-      </div>
+async function getBlogPost(slug: string): Promise<BlogPost | null> {
+  try {
+    const postsQuery = query(
+      collection(db, 'blogPosts'),
+      where('slug', '==', slug),
+      limit(1)
     );
+    
+    const snapshot = await getDocs(postsQuery);
+    
+    if (snapshot.empty) {
+      return null;
+    }
+    
+    const doc = snapshot.docs[0];
+    const data = doc.data();
+    
+    return {
+      id: doc.id,
+      title: data.title,
+      slug: data.slug,
+      excerpt: data.excerpt,
+      content: data.content,
+      featuredImage: data.featuredImage,
+      author: data.author,
+      publishedAt: data.publishedAt?.toDate?.() || new Date(),
+      updatedAt: data.updatedAt?.toDate?.() || new Date(),
+      tags: data.tags || [],
+      category: data.category,
+      readTime: data.readTime || 5,
+      status: data.status || 'published',
+      views: data.views || 0,
+      likes: data.likes || 0,
+    };
+  } catch (error) {
+    console.error('Error fetching blog post:', error);
+    return null;
+  }
+}
+
+async function getRelatedPosts(category: string, currentSlug: string, limit: number = 3): Promise<BlogPost[]> {
+  try {
+    const postsQuery = query(
+      collection(db, 'blogPosts'),
+      where('category', '==', category),
+      where('status', '==', 'published'),
+      orderBy('publishedAt', 'desc'),
+      limit(limit + 1)
+    );
+    
+    const snapshot = await getDocs(postsQuery);
+    const posts: BlogPost[] = [];
+    
+    snapshot.docs.forEach((doc) => {
+      const data = doc.data();
+      const post: BlogPost = {
+        id: doc.id,
+        title: data.title,
+        slug: data.slug,
+        excerpt: data.excerpt,
+        content: data.content,
+        featuredImage: data.featuredImage,
+        author: data.author,
+        publishedAt: data.publishedAt?.toDate?.() || new Date(),
+        updatedAt: data.updatedAt?.toDate?.() || new Date(),
+        tags: data.tags || [],
+        category: data.category,
+        readTime: data.readTime || 5,
+        status: data.status || 'published',
+        views: data.views || 0,
+        likes: data.likes || 0,
+      };
+      
+      // Exclude current post from related posts
+      if (post.slug !== currentSlug) {
+        posts.push(post);
+      }
+    });
+    
+    return posts.slice(0, limit);
+  } catch (error) {
+    console.error('Error fetching related posts:', error);
+    return [];
+  }
+}
+
+export async function generateMetadata({ params }: BlogPostPageProps): Promise<Metadata> {
+  const post = await getBlogPost(params.slug);
+  
+  if (!post) {
+    return {
+      title: 'Post Not Found | Semixion',
+      description: 'The requested blog post could not be found.',
+    };
   }
 
-  if (notFound || !post) {
-    return (
-      <div className="min-h-screen bg-slate-50 flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-4xl font-bold text-slate-900 mb-4">Post Not Found</h1>
-          <p className="text-lg text-slate-600 mb-8">
-            The blog post you're looking for doesn't exist or has been removed.
-          </p>
-          <Button asChild>
-            <Link href="/blog">
-              <ArrowLeft className="h-4 w-4 mr-2" />
-              Back to Blog
-            </Link>
-          </Button>
-        </div>
-      </div>
-    );
+  return generateBlogMeta({
+    title: post.title,
+    excerpt: post.excerpt,
+    content: post.content,
+    slug: post.slug,
+    publishedAt: post.publishedAt.toISOString(),
+    updatedAt: post.updatedAt.toISOString(),
+    tags: post.tags,
+    category: post.category,
+    author: post.author,
+    featuredImage: post.featuredImage,
+  });
+}
+
+export default async function BlogPostPage({ params }: BlogPostPageProps) {
+  const post = await getBlogPost(params.slug);
+  
+  if (!post) {
+    notFound();
   }
+
+  const relatedPosts = await getRelatedPosts(post.category, post.slug);
 
   return (
-    <div className="min-h-screen bg-slate-50">
-      {/* Back Button */}
-      <div className="bg-white border-b sticky top-0 z-10 shadow-sm">
-        <div className="container mx-auto px-4 py-4">
-          <Button 
-            asChild 
-            variant="ghost" 
-            className="hover:bg-slate-100 transition-colors duration-200 group text-black"
-          >
-            <Link href="/blog" className="flex items-center gap-2">
-              <ArrowLeft className="h-4 w-4 group-hover:-translate-x-1 transition-transform duration-200" />
-              <span className="font-medium">Back to Blog</span>
-            </Link>
-          </Button>
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
+      <div className="container mx-auto px-4 py-8">
+        {/* Back Button */}
+        <div className="mb-8">
+          <Link href="/blog">
+            <Button variant="outline" className="flex items-center gap-2">
+              <ArrowLeft className="h-4 w-4" />
+              Back to Blog
+            </Button>
+          </Link>
         </div>
-      </div>
 
-      <article className="container mx-auto px-4 py-16">
-        <div className="max-w-4xl mx-auto">
-          {/* Header */}
-          <header className="mb-12">
-            <div className="flex items-center gap-3 mb-6">
-              {post.isFeatured && (
-                <Badge variant="outline" className="border-amber-400 text-amber-600">
-                  Featured
-                </Badge>
-              )}
-            </div>
-
-            <h1 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6 leading-tight">
-              {post.title}
-            </h1>
-
-            <p className="text-xl text-slate-600 mb-8 leading-relaxed">
-              {post.excerpt}
-            </p>
-
-            {/* Meta Information */}
-            <div className="flex flex-wrap items-center gap-6 text-slate-500 mb-8">
-              <div className="flex items-center gap-2">
-                <User className="h-5 w-5" />
-                <span className="font-medium">{post.author?.name}</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Calendar className="h-5 w-5" />
-                <span>{formatDate(post.publishedAt || post.createdAt)}</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Clock className="h-5 w-5" />
-                <span>{post.readingTime} min read</span>
-              </div>
-              {post.viewCount > 0 && (
-                <div className="flex items-center gap-2">
-                  <Eye className="h-5 w-5" />
-                  <span>{post.viewCount.toLocaleString()} views</span>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {/* Main Content */}
+          <div className="lg:col-span-2">
+            <article className="bg-white rounded-xl shadow-lg overflow-hidden">
+              {/* Featured Image */}
+              {post.featuredImage && (
+                <div className="relative h-64 md:h-80 lg:h-96">
+                  <Image
+                    src={post.featuredImage}
+                    alt={post.title}
+                    fill
+                    className="object-cover"
+                    priority
+                  />
                 </div>
               )}
-            </div>
 
-            {/* Tags */}
-            {post.tags && post.tags.length > 0 && (
-              <div className="flex flex-wrap gap-2 mb-8">
-                {post.tags.map((tag) => (
-                  <Badge key={tag} variant="secondary" className="flex items-center gap-1">
-                    <Tag className="h-3 w-3" />
-                    {tag}
-                  </Badge>
-                ))}
+              <div className="p-6 md:p-8">
+                {/* Meta Information */}
+                <div className="flex flex-wrap items-center gap-4 text-sm text-slate-600 mb-6">
+                  <div className="flex items-center gap-2">
+                    <Calendar className="h-4 w-4" />
+                    {post.publishedAt.toLocaleDateString('en-US', {
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric'
+                    })}
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <User className="h-4 w-4" />
+                    {post.author}
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Clock className="h-4 w-4" />
+                    {post.readTime} min read
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Eye className="h-4 w-4" />
+                    {post.views} views
+                  </div>
+                </div>
+
+                {/* Title */}
+                <h1 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
+                  {post.title}
+                </h1>
+
+                {/* Excerpt */}
+                <p className="text-lg text-slate-600 mb-6 leading-relaxed">
+                  {post.excerpt}
+                </p>
+
+                {/* Tags */}
+                {post.tags && post.tags.length > 0 && (
+                  <div className="flex flex-wrap gap-2 mb-8">
+                    {post.tags.map((tag, index) => (
+                      <Badge key={index} variant="secondary" className="flex items-center gap-1">
+                        <Tag className="h-3 w-3" />
+                        {tag}
+                      </Badge>
+                    ))}
+                  </div>
+                )}
+
+                <Separator className="my-8" />
+
+                {/* Content */}
+                <div className="prose prose-lg max-w-none">
+                  <MarkdownRenderer content={post.content} />
+                </div>
+
+                {/* Actions */}
+                <div className="flex items-center justify-between mt-8 pt-6 border-t">
+                  <div className="flex items-center gap-4">
+                    <Button variant="outline" size="sm" className="flex items-center gap-2">
+                      <Heart className="h-4 w-4" />
+                      {post.likes} Likes
+                    </Button>
+                    <Button variant="outline" size="sm" className="flex items-center gap-2">
+                      <Share2 className="h-4 w-4" />
+                      Share
+                    </Button>
+                  </div>
+                </div>
               </div>
-            )}
-
-            {/* Action Buttons */}
-            <div className="flex items-center gap-4">
-              <Button variant="outline" size="sm">
-                <Share2 className="h-4 w-4 mr-2" />
-                Share
-              </Button>
-              <Button variant="outline" size="sm">
-                <Heart className="h-4 w-4 mr-2" />
-                {post.likeCount} Likes
-              </Button>
-            </div>
-          </header>
-
-          {/* Featured Image */}
-          {post.featuredImage && (
-            <div className="relative h-96 mb-12 rounded-lg overflow-hidden">
-              <Image
-                src={post.featuredImage}
-                alt={post.featuredImageAlt || post.title}
-                fill
-                className="object-cover"
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1024px"
-                priority
-              />
-            </div>
-          )}
-
-          {/* Content */}
-          <div className="mb-12">
-            <MarkdownRenderer content={post.content} />
+            </article>
           </div>
 
-          <Separator className="my-12" />
+          {/* Sidebar */}
+          <div className="space-y-6">
+            {/* Related Posts */}
+            {relatedPosts.length > 0 && (
+              <Card>
+                <CardHeader>
+                  <CardTitle className="text-xl font-bold text-slate-900">
+                    Related Posts
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  {relatedPosts.map((relatedPost) => (
+                    <BlogPostCard key={relatedPost.id} post={relatedPost} />
+                  ))}
+                </CardContent>
+              </Card>
+            )}
 
-
-          {/* Related Posts */}
-          {relatedPosts.length > 0 && (
-            <section>
-              <h2 className="text-2xl font-bold text-slate-900 mb-8">Related Articles</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {relatedPosts.map((relatedPost) => (
-                  <BlogPostCard key={relatedPost.id} post={relatedPost} />
-                ))}
-              </div>
-            </section>
-          )}
+            {/* Newsletter Signup */}
+            <Card className="bg-gradient-to-br from-blue-500 to-blue-600 text-white">
+              <CardContent className="p-6">
+                <h3 className="text-lg font-bold mb-2">Stay Updated</h3>
+                <p className="text-blue-100 mb-4">
+                  Get the latest insights on semiconductor engineering and technology trends.
+                </p>
+                <Button 
+                  variant="secondary" 
+                  className="w-full"
+                  onClick={() => window.open('/contact', '_blank')}
+                >
+                  Subscribe to Newsletter
+                </Button>
+              </CardContent>
+            </Card>
+          </div>
         </div>
-      </article>
-
-      {/* Floating Back Button for Mobile */}
-      <div className="fixed bottom-6 right-6 z-50 md:hidden">
-        <Button 
-          asChild 
-          size="lg"
-          className="rounded-full shadow-lg hover:shadow-xl transition-all duration-200 bg-black hover:bg-gray-800 text-white"
-        >
-          <Link href="/blog" className="flex items-center gap-2">
-            <ArrowLeft className="h-5 w-5" />
-            <span className="hidden sm:inline">Back</span>
-          </Link>
-        </Button>
       </div>
     </div>
   );

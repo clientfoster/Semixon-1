@@ -1,10 +1,11 @@
 import type { Metadata } from 'next';
-import './globals.css';
+import './globals-optimized.css';
 import { SiteHeader } from '@/components/site-header';
 import { SiteFooter } from '@/components/site-footer';
 import { Toaster } from '@/components/ui/toaster';
 import { MaintenanceBanner } from '@/components/maintenance-banner';
 import { PerformanceProvider } from '@/components/performance-provider';
+import { PerformanceMonitor } from '@/components/performance-monitor';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 
 export const metadata: Metadata = {
@@ -77,6 +78,9 @@ export const metadata: Metadata = {
   verification: {
     google: 'your-google-verification-code', // Replace with actual verification code
   },
+  other: {
+    'google-site-verification': 'your-google-verification-code',
+  },
   icons: {
     icon: '/favicon.svg',
     shortcut: '/favicon.svg',
@@ -99,8 +103,15 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://pagead2.googlesyndication.com" />
         <link rel="dns-prefetch" href="https://www.google-analytics.com" />
-        <link href="https://fonts.googleapis.com/css2?family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet" />
-        <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet" />
+        <link 
+          href="https://fonts.googleapis.com/css2?family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" 
+          rel="stylesheet"
+          media="print"
+          onLoad="this.media='all'"
+        />
+        <noscript>
+          <link href="https://fonts.googleapis.com/css2?family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+        </noscript>
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1870924429992767" crossOrigin="anonymous"></script>
         <script
           type="application/ld+json"
@@ -159,6 +170,7 @@ export default function RootLayout({
       </head>
             <body className="font-body antialiased">
               <PerformanceProvider>
+                <PerformanceMonitor />
                 <div className="relative flex min-h-screen flex-col bg-background">
                   <SiteHeader />
                   <MaintenanceBanner />

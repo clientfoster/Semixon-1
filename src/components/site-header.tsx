@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useState, useRef } from 'react';
+import { useState, useRef, memo } from 'react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
@@ -97,7 +97,7 @@ const navLinks = [
   { href: '/contact', label: 'Contact' },
 ];
 
-export function SiteHeader() {
+const SiteHeader = memo(function SiteHeader() {
   const [isOpen, setIsOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -277,4 +277,6 @@ export function SiteHeader() {
       </div>
     </header>
   );
-}
+});
+
+export { SiteHeader };

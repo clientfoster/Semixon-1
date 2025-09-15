@@ -1,9 +1,11 @@
+import { Metadata } from 'next';
 import Link from 'next/link';
 import { services } from '@/lib/data';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { ArrowRight, Cpu, Code, Database, Shield, Zap, Settings, Target, Star, Clock } from 'lucide-react';
+import { generateMetadata as generateMeta } from '@/lib/meta-utils';
 
 const serviceCategories = [
   {
@@ -73,6 +75,25 @@ const getCategoryIcon = (category: string) => {
     default: return Database;
   }
 };
+
+export const metadata: Metadata = generateMeta({
+  title: 'Semiconductor Engineering Services',
+  description: 'Comprehensive semiconductor engineering services including IC design, wafer fabrication, reliability testing, embedded systems, and software development. Expert solutions for your semiconductor needs.',
+  keywords: [
+    'semiconductor services',
+    'IC design services',
+    'wafer fabrication',
+    'reliability testing',
+    'embedded systems',
+    'software development',
+    'engineering solutions',
+    'ASIC design',
+    'FPGA design',
+    'mixed signal design'
+  ],
+  url: '/services',
+  type: 'website',
+});
 
 export default function ServicesPage() {
   return (

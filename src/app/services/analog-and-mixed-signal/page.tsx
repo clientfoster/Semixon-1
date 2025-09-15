@@ -1,7 +1,9 @@
+import { Metadata } from 'next';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ArrowRight, Cpu, Microchip, Zap, Target, TrendingUp, Shield } from 'lucide-react';
+import { generateServiceMeta } from '@/lib/meta-utils';
 
 const capabilities = [
   {
@@ -47,6 +49,22 @@ const benefits = [
     icon: Shield
   }
 ];
+
+export const metadata: Metadata = generateServiceMeta({
+  title: 'Analog and Mixed Signal Design Services',
+  description: 'Expert analog and mixed signal IC design services including high-speed data converters, power management ICs, RF circuits, and precision analog solutions for your semiconductor needs.',
+  slug: 'analog-and-mixed-signal',
+  category: 'Semiconductors',
+  features: [
+    'High-Speed Data Converters',
+    'Power Management ICs',
+    'RF and Wireless Circuits',
+    'Precision Analog Circuits',
+    'Clock Generation and Distribution',
+    'Sensor Interface ICs'
+  ],
+  image: '/hero.jpeg'
+});
 
 export default function AnalogMixedSignalPage() {
   return (

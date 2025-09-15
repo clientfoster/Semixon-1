@@ -95,6 +95,9 @@ export function SiteFooter() {
               <li><Link href="/terms-of-service" className="text-slate-300 hover:text-white transition-colors duration-300 text-base">
                 Terms of Service
               </Link></li>
+              <li><Link href="/sitemap" className="text-slate-300 hover:text-white transition-colors duration-300 text-base">
+                Sitemap
+              </Link></li>
             </ul>
           </div>
         </div>
