@@ -72,12 +72,11 @@ async function getBlogPost(slug: string): Promise<BlogPost | null> {
 
 async function getRelatedPosts(category: string, currentSlug: string, limit: number = 3): Promise<BlogPost[]> {
   try {
+    // Simplified query to avoid composite index requirement
     const postsQuery = query(
       collection(db, 'blogPosts'),
-      where('category', '==', category),
-      where('status', '==', 'published'),
       orderBy('publishedAt', 'desc'),
-      limit(limit + 1)
+      limit(20) // Get more posts to filter on client side
     );
     
     const snapshot = await getDocs(postsQuery);
@@ -85,26 +84,27 @@ async function getRelatedPosts(category: string, currentSlug: string, limit: num
     
     snapshot.docs.forEach((doc) => {
       const data = doc.data();
-      const post: BlogPost = {
-        id: doc.id,
-        title: data.title,
-        slug: data.slug,
-        excerpt: data.excerpt,
-        content: data.content,
-        featuredImage: data.featuredImage,
-        author: data.author,
-        publishedAt: data.publishedAt?.toDate?.() || new Date(),
-        updatedAt: data.updatedAt?.toDate?.() || new Date(),
-        tags: data.tags || [],
-        category: data.category,
-        readTime: data.readTime || 5,
-        status: data.status || 'published',
-        views: data.views || 0,
-        likes: data.likes || 0,
-      };
       
-      // Exclude current post from related posts
-      if (post.slug !== currentSlug) {
+      // Filter by category and status on client side to avoid index requirement
+      if (data.category === category && data.status === 'published' && data.slug !== currentSlug) {
+        const post: BlogPost = {
+          id: doc.id,
+          title: data.title,
+          slug: data.slug,
+          excerpt: data.excerpt,
+          content: data.content,
+          featuredImage: data.featuredImage,
+          author: data.author,
+          publishedAt: data.publishedAt?.toDate?.() || new Date(),
+          updatedAt: data.updatedAt?.toDate?.() || new Date(),
+          tags: data.tags || [],
+          category: data.category,
+          readTime: data.readTime || 5,
+          status: data.status || 'published',
+          views: data.views || 0,
+          likes: data.likes || 0,
+        };
+        
         posts.push(post);
       }
     });

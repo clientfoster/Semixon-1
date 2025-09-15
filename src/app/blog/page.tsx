@@ -24,9 +24,9 @@ import { BlogPageClient } from './blog-client';
 
 async function getBlogPosts(): Promise<BlogPost[]> {
   try {
+    // Simplified query to avoid composite index requirement
     const postsQuery = query(
       collection(db, 'blogPosts'),
-      where('status', '==', 'published'),
       orderBy('publishedAt', 'desc')
     );
     
@@ -35,23 +35,27 @@ async function getBlogPosts(): Promise<BlogPost[]> {
     
     snapshot.docs.forEach((doc) => {
       const data = doc.data();
-      posts.push({
-        id: doc.id,
-        title: data.title,
-        slug: data.slug,
-        excerpt: data.excerpt,
-        content: data.content,
-        featuredImage: data.featuredImage,
-        author: data.author,
-        publishedAt: data.publishedAt?.toDate?.() || new Date(),
-        updatedAt: data.updatedAt?.toDate?.() || new Date(),
-        tags: data.tags || [],
-        category: data.category,
-        readTime: data.readTime || 5,
-        status: data.status || 'published',
-        views: data.views || 0,
-        likes: data.likes || 0,
-      });
+      
+      // Filter published posts on the client side to avoid index requirement
+      if (data.status === 'published') {
+        posts.push({
+          id: doc.id,
+          title: data.title,
+          slug: data.slug,
+          excerpt: data.excerpt,
+          content: data.content,
+          featuredImage: data.featuredImage,
+          author: data.author,
+          publishedAt: data.publishedAt?.toDate?.() || new Date(),
+          updatedAt: data.updatedAt?.toDate?.() || new Date(),
+          tags: data.tags || [],
+          category: data.category,
+          readTime: data.readTime || 5,
+          status: data.status || 'published',
+          views: data.views || 0,
+          likes: data.likes || 0,
+        });
+      }
     });
     
     return posts;

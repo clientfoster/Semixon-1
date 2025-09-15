@@ -16,8 +16,7 @@ const nextConfig: NextConfig = {
     optimizeCss: true,
     optimizePackageImports: ['lucide-react', '@radix-ui/react-icons'],
   },
-  // Enable SWC minification
-  swcMinify: true,
+  // SWC minification is enabled by default in Next.js 15+
   // Optimize bundle
   webpack: (config, { dev, isServer }) => {
     if (!dev && !isServer) {
