@@ -16,9 +16,28 @@ const nextConfig: NextConfig = {
     optimizeCss: true,
     optimizePackageImports: ['lucide-react', '@radix-ui/react-icons'],
   },
+  // Turbopack configuration (stable in Next.js 15+)
+  turbopack: {
+    rules: {
+      '*.svg': {
+        loaders: ['@svgr/webpack'],
+        as: '*.js',
+      },
+    },
+    // Turbopack-specific optimizations
+    resolveAlias: {
+      // Add any custom aliases here if needed
+    },
+  },
   // SWC minification is enabled by default in Next.js 15+
-  // Optimize bundle
-  webpack: (config, { dev, isServer }) => {
+  // Optimize bundle - only for webpack builds (not Turbopack)
+  webpack: (config, { dev, isServer, isTurbopack }) => {
+    // Skip webpack optimization if using Turbopack
+    // Turbopack has its own optimization strategies
+    if (isTurbopack) {
+      return config;
+    }
+    
     if (!dev && !isServer) {
       // Optimize bundle splitting
       config.optimization.splitChunks = {

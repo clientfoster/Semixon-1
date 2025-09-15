@@ -10,8 +10,27 @@ import { Card, CardHeader, CardTitle, CardContent, CardFooter } from '@/componen
 import { Button } from '@/components/ui/button';
 import { Eye, Target, Gem, Linkedin, ArrowRight, Mail } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
-import type { TeamMember } from '@/app/admin/team/page';
-import type { PageContent } from '@/lib/types';
+
+// Simple interface for team member
+interface TeamMember {
+  id: string;
+  name: string;
+  role: string;
+  email?: string;
+  imageUrl?: string;
+  imageId?: string;
+  linkedinUrl?: string;
+  bio?: string;
+  priority?: number;
+}
+
+// Simple interface for page content
+interface PageContent {
+  title?: string;
+  subtitle?: string;
+  content?: string;
+  heroImage?: string;
+}
 
 export function AboutPageClient() {
   const aboutImage = PlaceHolderImages.find(img => img.id === 'about-overview');
@@ -20,19 +39,17 @@ export function AboutPageClient() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Use a simple query without composite index to avoid Firestore index requirements
     const teamQuery = query(collection(db, 'team'));
     const teamUnsubscribe = onSnapshot(teamQuery, (snapshot) => {
       const teamData: TeamMember[] = [];
       snapshot.forEach((doc) => {
         const data = doc.data();
-        teamData.push({ 
-          id: doc.id, 
+        teamData.push({
+          id: doc.id,
           ...data,
-          priority: data.priority || 999 // Default priority for existing members
+          priority: data.priority || 999
         } as TeamMember);
       });
-      // Sort by priority first, then by name as fallback
       teamData.sort((a, b) => {
         if (a.priority !== b.priority) {
           return a.priority - b.priority;
@@ -69,7 +86,6 @@ export function AboutPageClient() {
             </p>
           </div>
         </div>
-        {/* Decorative elements */}
         <div className="absolute top-10 left-10 w-32 h-32 bg-white/10 rounded-full blur-3xl"></div>
         <div className="absolute bottom-10 right-10 w-40 h-40 bg-white/10 rounded-full blur-3xl"></div>
       </section>
@@ -79,7 +95,7 @@ export function AboutPageClient() {
           <div>
             <h2 className="font-headline text-3xl font-semibold text-primary">Our Story</h2>
             {aboutContent?.content ? (
-              <div 
+              <div
                 className="mt-4 text-muted-foreground text-lg leading-relaxed prose prose-lg max-w-none"
                 dangerouslySetInnerHTML={{ __html: aboutContent.content }}
               />
@@ -119,18 +135,18 @@ export function AboutPageClient() {
 
       <section className="py-16 md:py-24 bg-card">
         <div className="container mx-auto grid md:grid-cols-2 gap-12 md:gap-16 items-center">
-           <div className="order-2 md:order-1">
-             <h2 className="font-headline text-3xl font-semibold text-primary">Our Mission</h2>
-              <p className="mt-4 text-muted-foreground text-lg leading-relaxed">
-                To empower global technological advancement by designing and delivering innovative semiconductor solutions that offer unparalleled performance, efficiency, and reliability. We strive to be the catalyst for our clients' breakthroughs, enabling them to create products that shape the future.
-              </p>
-           </div>
-           <div className="order-1 md:order-2 flex justify-center">
-              <Target className="w-32 h-32 text-accent" />
-           </div>
+          <div className="order-2 md:order-1">
+            <h2 className="font-headline text-3xl font-semibold text-primary">Our Mission</h2>
+            <p className="mt-4 text-muted-foreground text-lg leading-relaxed">
+              To empower global technological advancement by designing and delivering innovative semiconductor solutions that offer unparalleled performance, efficiency, and reliability. We strive to be the catalyst for our clients' breakthroughs, enabling them to create products that shape the future.
+            </p>
+          </div>
+          <div className="order-1 md:order-2 flex justify-center">
+            <Target className="w-32 h-32 text-accent" />
+          </div>
         </div>
       </section>
-      
+
       <section className="py-16 md:py-24">
         <div className="container mx-auto">
           <div className="text-center">
@@ -186,7 +202,7 @@ export function AboutPageClient() {
             </p>
           </div>
           {loading ? (
-             <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
               {[...Array(3)].map((_, i) => (
                 <Card key={i} className="text-center flex flex-col items-center pt-8">
                   <div className="w-40 h-40 mx-auto relative overflow-hidden rounded-full border-4 border-background outline-accent outline">
@@ -205,10 +221,9 @@ export function AboutPageClient() {
           ) : (
             <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
               {team.map((member) => {
-                // Prioritize imageUrl over imageId
                 const hasImageUrl = member.imageUrl && member.imageUrl.trim() !== '';
                 const teamImage = !hasImageUrl ? PlaceHolderImages.find(img => img.id === member.imageId) : null;
-                
+
                 return (
                   <Card key={member.id} className="text-center flex flex-col items-center pt-8 shadow-sm hover:shadow-xl transition-shadow duration-300">
                     <CardHeader className="p-0">
@@ -221,7 +236,6 @@ export function AboutPageClient() {
                             className="object-cover object-center"
                             sizes="(max-width: 768px) 160px, 160px"
                             onError={(e) => {
-                              // Fallback to placeholder image if URL fails
                               const target = e.target as HTMLImageElement;
                               const fallbackImage = PlaceHolderImages.find(img => img.id === member.imageId);
                               if (fallbackImage) {
@@ -253,7 +267,7 @@ export function AboutPageClient() {
                       {member.email && (
                         <div className="flex items-center justify-center gap-2 mt-2">
                           <Mail className="h-4 w-4 text-muted-foreground" />
-                          <a 
+                          <a
                             href={`mailto:${member.email}`}
                             className="text-sm text-muted-foreground hover:text-primary transition-colors"
                           >
@@ -277,7 +291,7 @@ export function AboutPageClient() {
                           </Button>
                         )}
                         <Button asChild variant="ghost" size="icon">
-                          <Link href={member.linkedinUrl} target="_blank" aria-label={`${member.name}'s LinkedIn`}>
+                          <Link href={member.linkedinUrl || '#'} target="_blank" aria-label={`${member.name}'s LinkedIn`}>
                             <Linkedin className="h-6 w-6 text-muted-foreground hover:text-primary" />
                           </Link>
                         </Button>
