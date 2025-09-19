@@ -31,7 +31,7 @@ export function ContactPageClient() {
               </div>
               <div className="flex items-center gap-2 text-blue-100">
                 <Mail className="h-5 w-5" />
-                <span>info@semixion.com</span>
+                <span>info@semixon.com</span>
               </div>
             </div>
           </div>
@@ -93,7 +93,7 @@ export function ContactPageClient() {
                     </div>
                     <div>
                       <h3 className="font-semibold text-slate-900 mb-2">Email</h3>
-                      <p className="text-slate-600 mb-2">info@semixion.com</p>
+                      <p className="text-slate-600 mb-2">info@semixon.com</p>
                       <p className="text-sm text-slate-500">We'll respond within 24 hours</p>
                     </div>
                   </div>

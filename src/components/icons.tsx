@@ -4,7 +4,7 @@ export function Logo(props: { className?: string }) {
   return (
     <Image
       src="/logo.png"
-      alt="Semixion Logo"
+      alt="Semixon Logo"
       width={32}
       height={32}
       className={props.className || "h-8 w-8"}

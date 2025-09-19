@@ -2,6 +2,7 @@
 
 import { Button } from '@/components/ui/button';
 import { LazyImage } from '@/components/lazy-image';
+import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import { PlaceHolderImages, type ImagePlaceholder } from '@/lib/placeholder-images';
@@ -12,29 +13,49 @@ const getImage = (id: string): ImagePlaceholder | undefined => {
 
 export function HeroSection() {
   const heroImage = getImage('hero');
+  
+  // Debug: Log hero image data
+  console.log('Hero image data:', heroImage);
+  console.log('PlaceholderImages:', PlaceHolderImages);
 
   return (
     <section className="relative min-h-[70vh] w-full overflow-hidden bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800">
-      {heroImage && (
-        <LazyImage
-          src={heroImage.imageUrl}
-          alt={heroImage.description}
+      {/* Hero Background Image */}
+      <div className="absolute inset-0 z-0">
+        <Image
+          src="/hero.jpeg"
+          alt="Semiconductor factory interior"
           fill
-          className="object-cover opacity-30"
+          className="object-cover opacity-60"
           priority
           sizes="100vw"
           quality={85}
-          placeholder="blur"
-          dataAiHint={heroImage.imageHint}
         />
-      )}
+      </div>
+      
+      {/* Alternative: LazyImage version */}
+      {/* {heroImage && (
+        <div className="absolute inset-0">
+          <LazyImage
+            src={heroImage.imageUrl}
+            alt={heroImage.description}
+            fill
+            className="object-cover opacity-30"
+            priority
+            sizes="100vw"
+            quality={85}
+            placeholder="blur"
+            dataAiHint={heroImage.imageHint}
+          />
+        </div>
+      )} */}
       
       {/* Professional overlay */}
-      <div className="absolute inset-0 bg-gradient-to-br from-slate-900/60 via-blue-900/50 to-slate-800/60" />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(59,130,246,0.05)_0%,transparent_70%)]" />
+      <div className="absolute inset-0 z-10 bg-gradient-to-br from-slate-900/30 via-blue-900/20 to-slate-800/30" />
+      <div className="absolute inset-0 z-10 bg-[radial-gradient(ellipse_at_center,rgba(59,130,246,0.03)_0%,transparent_70%)]" />
       
       {/* Content */}
-      <div className="relative z-10 flex items-center min-h-[70vh] py-20">
+      <div className="relative z-20 flex items-center min-h-[70vh] py-20">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
             {/* Badge */}
@@ -58,7 +79,7 @@ export function HeroSection() {
             {/* Subtitle */}
             <div className="mb-12 animate-fade-in-up delay-400">
               <p className="text-lg md:text-xl text-slate-300 leading-relaxed max-w-3xl mx-auto">
-                Semixion delivers cutting-edge solutions and products for the most demanding technological challenges, 
+                Semixon delivers cutting-edge solutions and products for the most demanding technological challenges, 
                 powering innovation across industries worldwide with precision and excellence.
               </p>
             </div>
@@ -83,7 +104,7 @@ export function HeroSection() {
       </div>
       
       {/* Scroll Indicator */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce z-20">
         <div className="flex flex-col items-center space-y-2">
           <span className="text-slate-400 text-sm font-medium">Scroll to explore</span>
           <div className="w-6 h-10 border-2 border-slate-400/50 rounded-full flex justify-center">

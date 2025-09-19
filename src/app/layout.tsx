@@ -10,10 +10,10 @@ import { SpeedInsights } from '@vercel/speed-insights/next';
 
 export const metadata: Metadata = {
   title: {
-    default: 'Semixion - Leading Semiconductor Engineering Solutions',
-    template: '%s | Semixion'
+    default: 'Semixon - Leading Semiconductor Engineering Solutions',
+    template: '%s | Semixon'
   },
-  description: 'Semixion delivers cutting-edge semiconductor engineering solutions, IC design, wafer fabrication, and reliability testing services. Powering innovation across industries worldwide with precision and excellence.',
+  description: 'Semixon delivers cutting-edge semiconductor engineering solutions, IC design, wafer fabrication, and reliability testing services. Powering innovation across industries worldwide with precision and excellence.',
   keywords: [
     'semiconductor engineering',
     'IC design',
@@ -29,40 +29,40 @@ export const metadata: Metadata = {
     'analog design',
     'digital design'
   ],
-  authors: [{ name: 'Semixion Team' }],
-  creator: 'Semixion',
-  publisher: 'Semixion',
+  authors: [{ name: 'Semixon Team' }],
+  creator: 'Semixon',
+  publisher: 'Semixon',
   formatDetection: {
     email: false,
     address: false,
     telephone: false,
   },
-  metadataBase: new URL('https://semixion.com'),
+  metadataBase: new URL('https://Semixon.com'),
   alternates: {
     canonical: '/',
   },
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: 'https://semixion.com',
-    title: 'Semixion - Leading Semiconductor Engineering Solutions',
-    description: 'Semixion delivers cutting-edge semiconductor engineering solutions, IC design, wafer fabrication, and reliability testing services. Powering innovation across industries worldwide.',
-    siteName: 'Semixion',
+    url: 'https://Semixon.com',
+    title: 'Semixon - Leading Semiconductor Engineering Solutions',
+    description: 'Semixon delivers cutting-edge semiconductor engineering solutions, IC design, wafer fabrication, and reliability testing services. Powering innovation across industries worldwide.',
+    siteName: 'Semixon',
     images: [
       {
         url: '/hero.jpeg',
         width: 1200,
         height: 630,
-        alt: 'Semixion - Semiconductor Engineering Excellence',
+        alt: 'Semixon - Semiconductor Engineering Excellence',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Semixion - Leading Semiconductor Engineering Solutions',
-    description: 'Semixion delivers cutting-edge semiconductor engineering solutions, IC design, wafer fabrication, and reliability testing services.',
+    title: 'Semixon - Leading Semiconductor Engineering Solutions',
+    description: 'Semixon delivers cutting-edge semiconductor engineering solutions, IC design, wafer fabrication, and reliability testing services.',
     images: ['/hero.jpeg'],
-    creator: '@semixion',
+    creator: '@Semixon',
   },
   robots: {
     index: true,
@@ -106,8 +106,6 @@ export default function RootLayout({
         <link 
           href="https://fonts.googleapis.com/css2?family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" 
           rel="stylesheet"
-          media="print"
-          onLoad="this.media='all'"
         />
         <noscript>
           <link href="https://fonts.googleapis.com/css2?family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
@@ -119,11 +117,11 @@ export default function RootLayout({
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "Organization",
-              "name": "Semixion",
+              "name": "Semixon",
               "description": "Leading semiconductor engineering solutions provider specializing in IC design, wafer fabrication, and reliability testing services.",
-              "url": "https://semixion.com",
-              "logo": "https://semixion.com/logo.png",
-              "image": "https://semixion.com/hero.jpeg",
+              "url": "https://Semixon.com",
+              "logo": "https://Semixon.com/logo.png",
+              "image": "https://Semixon.com/hero.jpeg",
               "foundingDate": "2024",
               "industry": "Semiconductor Engineering",
               "services": [
@@ -143,13 +141,25 @@ export default function RootLayout({
               "contactPoint": {
                 "@type": "ContactPoint",
                 "contactType": "Customer Service",
-                "url": "https://semixion.com/contact"
+                "url": "https://Semixon.com/contact"
               },
               "sameAs": [
-                "https://www.linkedin.com/company/semixion",
-                "https://twitter.com/semixion"
+                "https://www.linkedin.com/company/Semixon",
+                "https://twitter.com/Semixon"
               ]
             })
+          }}
+        />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              // Force dark theme permanently
+              document.documentElement.classList.add('dark');
+              // Remove any theme-related localStorage entries
+              if (typeof localStorage !== 'undefined') {
+                localStorage.removeItem('theme');
+              }
+            `,
           }}
         />
         {/* Google Analytics */}

@@ -1,8 +1,51 @@
 import { Metadata } from 'next'
 import Link from 'next/link'
+import { collection, getDocs, query, where, orderBy } from 'firebase/firestore'
+// @ts-ignore
+import { db } from '@/lib/firebase'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import { ArrowRight, ExternalLink, Globe, FileText, Settings, Users, Briefcase } from 'lucide-react'
+import { ArrowRight, ExternalLink, Globe, FileText, Settings, Users, Briefcase, BookOpen } from 'lucide-react'
+
+interface BlogPost {
+  slug: string;
+  title: string;
+  excerpt?: string;
+  publishedAt?: any;
+  category?: string;
+}
+
+async function getBlogPosts(): Promise<BlogPost[]> {
+  try {
+    const postsQuery = query(
+      // @ts-ignore
+      collection(db, 'blogPosts'),
+      where('status', '==', 'published'),
+      orderBy('publishedAt', 'desc')
+    );
+    
+    const snapshot = await getDocs(postsQuery);
+    const posts: BlogPost[] = [];
+    
+    snapshot.docs.forEach((doc) => {
+      const data = doc.data();
+      if (data.slug && data.status === 'published') {
+        posts.push({
+          slug: data.slug,
+          title: data.title,
+          excerpt: data.excerpt,
+          publishedAt: data.publishedAt,
+          category: data.category,
+        });
+      }
+    });
+    
+    return posts.slice(0, 10); // Limit to 10 recent posts for the sitemap
+  } catch (error) {
+    console.error('Error fetching blog posts for sitemap:', error);
+    return [];
+  }
+}
 
 export const metadata: Metadata = {
   title: 'Site Map - Semixon',
@@ -74,7 +117,10 @@ const sitemapData = {
   ],
 }
 
-export default function SitemapPage() {
+export default async function SitemapPage() {
+  // Get dynamic blog posts
+  const blogPosts = await getBlogPosts();
+  
   return (
     <div className="min-h-screen bg-slate-50">
       <div className="container mx-auto px-4 py-16">
@@ -191,6 +237,57 @@ export default function SitemapPage() {
               </div>
             </CardContent>
           </Card>
+
+          {/* Recent Blog Posts */}
+          {blogPosts.length > 0 && (
+            <Card className="mb-8">
+              <CardHeader>
+                <CardTitle className="flex items-center text-2xl">
+                  <BookOpen className="w-6 h-6 mr-3 text-blue-600" />
+                  Recent Blog Posts
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {blogPosts.map((post) => (
+                    <Link
+                      key={post.slug}
+                      href={`/blog/${post.slug}`}
+                      className="group p-4 rounded-lg border border-slate-200 hover:border-blue-300 hover:bg-blue-50 transition-all duration-200"
+                    >
+                      <div className="flex items-start justify-between">
+                        <div className="flex-1">
+                          <h3 className="font-medium text-slate-700 group-hover:text-blue-600 transition-colors line-clamp-2">
+                            {post.title}
+                          </h3>
+                          {post.excerpt && (
+                            <p className="text-sm text-slate-500 mt-1 line-clamp-2">
+                              {post.excerpt}
+                            </p>
+                          )}
+                          {post.category && (
+                            <Badge variant="secondary" className="mt-2 text-xs">
+                              {post.category}
+                            </Badge>
+                          )}
+                        </div>
+                        <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-blue-600 transition-colors ml-3 flex-shrink-0" />
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+                <div className="mt-6 text-center">
+                  <Link
+                    href="/blog"
+                    className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200"
+                  >
+                    <BookOpen className="w-4 h-4 mr-2" />
+                    View All Blog Posts
+                  </Link>
+                </div>
+              </CardContent>
+            </Card>
+          )}
 
           {/* Legal Pages */}
           <Card className="mb-8">

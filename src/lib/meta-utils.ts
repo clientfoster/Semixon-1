@@ -31,13 +31,13 @@ const defaultKeywords = [
 ];
 
 const siteConfig = {
-  name: 'Semixion',
+  name: 'Semixon',
   description: 'Leading Semiconductor Engineering Solutions',
-  url: 'https://semixion.com',
-  logo: 'https://semixion.com/logo.png',
-  twitter: '@semixion',
-  facebook: 'https://www.facebook.com/semixion',
-  linkedin: 'https://www.linkedin.com/company/semixion'
+  url: 'https://semixon.com',
+  logo: 'https://semixon.com/logo.png',
+  twitter: '@semixon',
+  facebook: 'https://www.facebook.com/semixon',
+  linkedin: 'https://www.linkedin.com/company/semixon'
 };
 
 export function generateMetadata(data: MetaData): Metadata {
@@ -50,12 +50,12 @@ export function generateMetadata(data: MetaData): Metadata {
     type = 'website',
     publishedTime,
     modifiedTime,
-    author = 'Semixion Team',
+    author = 'Semixon Team',
     section,
     tags = []
   } = data;
 
-  const fullTitle = title.includes('Semixion') ? title : `${title} | Semixion`;
+  const fullTitle = title.includes('Semixon') ? title : `${title} | Semixon`;
   const fullDescription = description || siteConfig.description;
   const fullUrl = url ? `${siteConfig.url}${url}` : siteConfig.url;
   const fullImage = image || `${siteConfig.url}/hero.jpeg`;
@@ -66,8 +66,8 @@ export function generateMetadata(data: MetaData): Metadata {
     description: fullDescription,
     keywords: allKeywords,
     authors: [{ name: author }],
-    creator: 'Semixion',
-    publisher: 'Semixion',
+    creator: 'Semixon',
+    publisher: 'Semixon',
     formatDetection: {
       email: false,
       address: false,
@@ -78,7 +78,7 @@ export function generateMetadata(data: MetaData): Metadata {
       canonical: url || '/',
     },
     openGraph: {
-      type: type,
+      type: type === 'product' ? 'website' : type,
       locale: 'en_US',
       url: fullUrl,
       title: fullTitle,
@@ -145,19 +145,19 @@ function generateJsonLd(
 ) {
   const baseJsonLd = {
     '@context': 'https://schema.org',
-    '@type': data.type === 'article' ? 'Article' : 'WebPage',
+    '@type': data.type === 'article' ? 'Article' : data.type === 'product' ? 'Product' : 'WebPage',
     headline: title,
     description: description,
     url: url,
     image: image,
     author: {
       '@type': 'Organization',
-      name: 'Semixion',
+      name: 'Semixon',
       url: siteConfig.url,
     },
     publisher: {
       '@type': 'Organization',
-      name: 'Semixion',
+      name: 'Semixon',
       url: siteConfig.url,
       logo: {
         '@type': 'ImageObject',
@@ -175,6 +175,22 @@ function generateJsonLd(
       articleSection: data.section,
       keywords: data.tags?.join(', '),
       wordCount: description.split(' ').length,
+    };
+  }
+
+  if (data.type === 'product') {
+    return {
+      ...baseJsonLd,
+      '@type': 'Product',
+      brand: {
+        '@type': 'Organization',
+        name: 'Semixon',
+      },
+      manufacturer: {
+        '@type': 'Organization',
+        name: 'Semixon',
+        url: siteConfig.url,
+      },
     };
   }
 
@@ -203,7 +219,7 @@ export function generateBlogMeta(blogPost: {
     type: 'article',
     publishedTime: blogPost.publishedAt,
     modifiedTime: blogPost.updatedAt,
-    author: blogPost.author || 'Semixion Team',
+    author: blogPost.author || 'Semixon Team',
     section: blogPost.category,
     tags: blogPost.tags || [],
   });
@@ -258,6 +274,33 @@ export function generateIndustryMeta(industry: {
     image: industry.image,
     url: `/industries/${industry.slug}`,
     type: 'website',
+  });
+}
+
+// Utility function for product pages
+export function generateProductMeta(product: {
+  title: string;
+  description: string;
+  slug: string;
+  features?: string[];
+  category?: string;
+  image?: string;
+}): Metadata {
+  const keywords = [
+    product.title.toLowerCase(),
+    product.category?.toLowerCase() || '',
+    'semiconductor products',
+    'engineering solutions',
+    ...(product.features || []).map(f => f.toLowerCase())
+  ].filter(Boolean);
+
+  return generateMetadata({
+    title: product.title,
+    description: product.description,
+    keywords,
+    image: product.image,
+    url: `/products/${product.slug}`,
+    type: 'product',
   });
 }
 

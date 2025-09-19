@@ -17,7 +17,6 @@ export interface PerformanceCookies {
   lastVisit: string;
   pageLoadTime: number;
   userPreferences: {
-    theme: 'light' | 'dark' | 'system';
     language: string;
     reducedMotion: boolean;
   };
@@ -222,7 +221,6 @@ export class CookieManager {
     }
     
     return {
-      theme: 'system',
       language: 'en',
       reducedMotion: false,
     };

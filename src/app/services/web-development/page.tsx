@@ -6,7 +6,7 @@ import { ArrowRight, Code, Globe, Smartphone, Database, Shield, Zap, Users } fro
 import Link from 'next/link';
 
 export const metadata: Metadata = {
-  title: 'Web Development Services | Semixion',
+  title: 'Web Development Services | Semixon',
   description: 'Professional web development services including frontend, backend, full-stack development, and modern web applications for semiconductor and engineering companies.',
   keywords: [
     'web development',

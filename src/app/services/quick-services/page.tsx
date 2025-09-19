@@ -6,7 +6,7 @@ import { ArrowRight, Clock, DollarSign, Star, CheckCircle, Zap, Users, Target } 
 import Link from 'next/link';
 
 export const metadata: Metadata = {
-  title: 'Quick Services - Affordable Fiverr-style Gigs | Semixion',
+  title: 'Quick Services - Affordable Fiverr-style Gigs | Semixon',
   description: 'Affordable quick services including logo design, copywriting, video editing, and more. Fast delivery, professional quality, and budget-friendly pricing.',
   keywords: [
     'quick services',

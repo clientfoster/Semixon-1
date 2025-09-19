@@ -2,8 +2,8 @@ User-agent: *
 Allow: /
 
 # Sitemaps
-Sitemap: https://semixion.com/sitemap.xml
-Sitemap: https://semixion.com/sitemap-index.xml
+Sitemap: https://semixon.com/sitemap.xml
+Sitemap: https://semixon.com/sitemap-index.xml
 
 # Disallow admin areas
 Disallow: /admin/

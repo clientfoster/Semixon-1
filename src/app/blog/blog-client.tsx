@@ -32,7 +32,7 @@ export function BlogPageClient({ initialPosts }: BlogPageClientProps) {
 
   // Get unique categories and tags
   const categories = useMemo(() => {
-    const cats = [...new Set(posts.map(post => post.category).filter(Boolean))];
+    const cats = [...new Set(posts.map(post => post.category).filter((cat): cat is string => Boolean(cat)))];
     return cats.sort();
   }, [posts]);
 
@@ -60,15 +60,15 @@ export function BlogPageClient({ initialPosts }: BlogPageClientProps) {
     filtered.sort((a, b) => {
       switch (sortBy) {
         case 'newest':
-          return b.publishedAt.getTime() - a.publishedAt.getTime();
+          return (b.publishedAt?.getTime() || 0) - (a.publishedAt?.getTime() || 0);
         case 'oldest':
-          return a.publishedAt.getTime() - b.publishedAt.getTime();
+          return (a.publishedAt?.getTime() || 0) - (b.publishedAt?.getTime() || 0);
         case 'most-viewed':
-          return b.views - a.views;
+          return (b.viewCount || 0) - (a.viewCount || 0);
         case 'most-liked':
-          return b.likes - a.likes;
+          return (b.likeCount || 0) - (a.likeCount || 0);
         case 'reading-time':
-          return a.readTime - b.readTime;
+          return (a.readingTime || 0) - (b.readingTime || 0);
         default:
           return 0;
       }
@@ -79,121 +79,169 @@ export function BlogPageClient({ initialPosts }: BlogPageClientProps) {
 
   return (
     <div className="space-y-8">
-      {/* Filters */}
-      <Card>
-        <CardContent className="p-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            {/* Search */}
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 h-4 w-4" />
-              <Input
-                placeholder="Search posts..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10"
-              />
-            </div>
-
-            {/* Sort */}
-            <Select value={sortBy} onValueChange={setSortBy}>
-              <SelectTrigger>
-                <SelectValue placeholder="Sort by" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="newest">Newest First</SelectItem>
-                <SelectItem value="oldest">Oldest First</SelectItem>
-                <SelectItem value="most-viewed">Most Viewed</SelectItem>
-                <SelectItem value="most-liked">Most Liked</SelectItem>
-                <SelectItem value="reading-time">Reading Time</SelectItem>
-              </SelectContent>
-            </Select>
-
-            {/* Category Filter */}
-            <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-              <SelectTrigger>
-                <SelectValue placeholder="Category" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All Categories</SelectItem>
-                {categories.map(category => (
-                  <SelectItem key={category} value={category}>
-                    {category}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-
-            {/* Tag Filter */}
-            <Select value={selectedTag} onValueChange={setSelectedTag}>
-              <SelectTrigger>
-                <SelectValue placeholder="Tags" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All Tags</SelectItem>
-                {tags.map(tag => (
-                  <SelectItem key={tag} value={tag}>
-                    {tag}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+      {/* Filters Section */}
+      <div className="bg-gradient-to-r from-slate-800/50 to-slate-900/50 backdrop-blur-sm rounded-2xl p-6 border border-slate-700/50">
+        <div className="flex items-center gap-3 mb-6">
+          <div className="p-2 bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg">
+            <Filter className="h-5 w-5 text-white" />
           </div>
-        </CardContent>
-      </Card>
-
-      {/* Results Count */}
-      <div className="flex items-center justify-between">
-        <p className="text-slate-600">
-          Showing {filteredAndSortedPosts.length} of {posts.length} posts
-        </p>
-        <div className="flex items-center gap-2">
-          <Filter className="h-4 w-4 text-slate-400" />
-          <span className="text-sm text-slate-500">Filters Applied</span>
+          <h3 className="text-xl font-semibold text-white">Filter & Search</h3>
         </div>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          {/* Search */}
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 h-4 w-4" />
+            <Input
+              placeholder="Search posts..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="pl-10 bg-slate-700/50 border-slate-600 text-white placeholder:text-slate-400 focus:border-blue-500 focus:ring-blue-500/20"
+            />
+          </div>
+
+          {/* Sort */}
+          <Select value={sortBy} onValueChange={setSortBy}>
+            <SelectTrigger className="bg-slate-700/50 border-slate-600 text-white focus:border-blue-500 focus:ring-blue-500/20">
+              <SelectValue placeholder="Sort by" />
+            </SelectTrigger>
+            <SelectContent className="bg-slate-800 border-slate-700">
+              <SelectItem value="newest" className="text-white hover:bg-slate-700">Newest First</SelectItem>
+              <SelectItem value="oldest" className="text-white hover:bg-slate-700">Oldest First</SelectItem>
+              <SelectItem value="most-viewed" className="text-white hover:bg-slate-700">Most Viewed</SelectItem>
+              <SelectItem value="most-liked" className="text-white hover:bg-slate-700">Most Liked</SelectItem>
+              <SelectItem value="reading-time" className="text-white hover:bg-slate-700">Reading Time</SelectItem>
+            </SelectContent>
+          </Select>
+
+          {/* Category Filter */}
+          <Select value={selectedCategory} onValueChange={setSelectedCategory}>
+            <SelectTrigger className="bg-slate-700/50 border-slate-600 text-white focus:border-blue-500 focus:ring-blue-500/20">
+              <SelectValue placeholder="Category" />
+            </SelectTrigger>
+            <SelectContent className="bg-slate-800 border-slate-700">
+              <SelectItem value="all" className="text-white hover:bg-slate-700">All Categories</SelectItem>
+              {categories.map(category => (
+                <SelectItem key={category} value={category} className="text-white hover:bg-slate-700">
+                  {category}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+
+          {/* Tag Filter */}
+          <Select value={selectedTag} onValueChange={setSelectedTag}>
+            <SelectTrigger className="bg-slate-700/50 border-slate-600 text-white focus:border-blue-500 focus:ring-blue-500/20">
+              <SelectValue placeholder="Tags" />
+            </SelectTrigger>
+            <SelectContent className="bg-slate-800 border-slate-700">
+              <SelectItem value="all" className="text-white hover:bg-slate-700">All Tags</SelectItem>
+              {tags.map(tag => (
+                <SelectItem key={tag} value={tag} className="text-white hover:bg-slate-700">
+                  {tag}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+      </div>
+
+      {/* Results Count & Stats */}
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-600/20 to-purple-600/20 rounded-full border border-blue-500/30">
+            <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></div>
+            <span className="text-blue-200 text-sm font-medium">
+              Showing {filteredAndSortedPosts.length} of {posts.length} articles
+            </span>
+          </div>
+          {(searchTerm || selectedCategory !== 'all' || selectedTag !== 'all') && (
+            <Badge className="bg-gradient-to-r from-amber-500/20 to-orange-500/20 text-amber-300 border border-amber-500/30">
+              <Filter className="h-3 w-3 mr-1" />
+              Filtered
+            </Badge>
+          )}
+        </div>
+        
+        {(searchTerm || selectedCategory !== 'all' || selectedTag !== 'all') && (
+          <Button 
+            onClick={() => {
+              setSearchTerm('');
+              setSelectedCategory('all');
+              setSelectedTag('all');
+            }}
+            variant="outline"
+            size="sm"
+            className="bg-slate-700/50 border-slate-600 text-slate-300 hover:bg-slate-600/50 hover:text-white"
+          >
+            Clear All Filters
+          </Button>
+        )}
       </div>
 
       {/* Posts Grid */}
       {filteredAndSortedPosts.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredAndSortedPosts.map((post) => (
-            <BlogPostCard key={post.id} post={post} />
-          ))}
+        <div className="space-y-8">
+          <div className="text-center">
+            <h2 className="text-3xl font-bold text-white mb-4">
+              Latest Articles
+            </h2>
+            <div className="w-24 h-1 bg-gradient-to-r from-blue-400 to-purple-400 mx-auto rounded-full"></div>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {filteredAndSortedPosts.map((post, index) => (
+              <div 
+                key={post.id} 
+                className="animate-fade-in-up"
+                style={{ animationDelay: `${index * 0.1}s` }}
+              >
+                <BlogPostCard post={post} />
+              </div>
+            ))}
+          </div>
         </div>
       ) : (
-        <Card>
-          <CardContent className="p-12 text-center">
-            <div className="max-w-md mx-auto">
-              <div className="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Search className="h-8 w-8 text-slate-400" />
-              </div>
-              <h3 className="text-xl font-semibold text-slate-900 mb-2">
-                No posts found
-              </h3>
-              <p className="text-slate-600 mb-6">
-                Try adjusting your search terms or filters to find what you're looking for.
-              </p>
-              <Button 
-                onClick={() => {
-                  setSearchTerm('');
-                  setSelectedCategory('all');
-                  setSelectedTag('all');
-                }}
-                variant="outline"
-              >
-                Clear Filters
-              </Button>
+        <div className="text-center py-16">
+          <div className="max-w-md mx-auto">
+            <div className="w-20 h-20 bg-gradient-to-r from-slate-700 to-slate-600 rounded-full flex items-center justify-center mx-auto mb-6">
+              <Search className="h-10 w-10 text-slate-400" />
             </div>
-          </CardContent>
-        </Card>
+            <h3 className="text-2xl font-bold text-white mb-4">
+              No articles found
+            </h3>
+            <p className="text-slate-400 mb-8 leading-relaxed">
+              We couldn't find any articles matching your criteria. 
+              Try adjusting your search terms or filters to discover more content.
+            </p>
+            <Button 
+              onClick={() => {
+                setSearchTerm('');
+                setSelectedCategory('all');
+                setSelectedTag('all');
+              }}
+              className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white border-0 px-6 py-3"
+            >
+              Reset Filters
+            </Button>
+          </div>
+        </div>
       )}
 
-      {/* Load More Button */}
-      {filteredAndSortedPosts.length > 0 && (
-        <div className="text-center">
-          <Button variant="outline" size="lg" className="flex items-center gap-2">
-            Load More Posts
-            <ArrowRight className="h-4 w-4" />
-          </Button>
+      {/* Load More Section */}
+      {filteredAndSortedPosts.length > 0 && filteredAndSortedPosts.length >= 9 && (
+        <div className="text-center py-12">
+          <div className="space-y-4">
+            <p className="text-slate-400">Want to see more articles?</p>
+            <Button 
+              variant="outline" 
+              size="lg" 
+              className="bg-gradient-to-r from-slate-700/50 to-slate-800/50 border-slate-600 text-white hover:from-blue-600/20 hover:to-purple-600/20 hover:border-blue-500/50 transition-all duration-300 group"
+            >
+              Load More Articles
+              <ArrowRight className="h-4 w-4 ml-2 group-hover:translate-x-1 transition-transform" />
+            </Button>
+          </div>
         </div>
       )}
     </div>

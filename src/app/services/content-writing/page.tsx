@@ -6,7 +6,7 @@ import { ArrowRight, PenTool, FileText, Search, Users, Target, BookOpen, Globe }
 import Link from 'next/link';
 
 export const metadata: Metadata = {
-  title: 'Content Writing Services | Semixion',
+  title: 'Content Writing Services | Semixon',
   description: 'Professional content writing services including technical writing, blog posts, web content, and marketing copy for semiconductor and engineering companies.',
   keywords: [
     'content writing',

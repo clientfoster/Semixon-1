@@ -8,7 +8,6 @@ import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { Menu, ChevronDown } from 'lucide-react';
 import { Logo } from './icons';
-import { ThemeSwitcher } from './theme-switcher';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -139,7 +138,7 @@ const SiteHeader = memo(function SiteHeader() {
               <div className="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center group-hover:scale-110 transition-all duration-300 shadow-lg p-1 animate-glow-pulse">
                 <Logo className="h-6 w-6 group-hover:animate-wiggle" />
               </div>
-              <span className="text-2xl font-bold text-slate-900 group-hover:text-blue-600 transition-colors duration-300">Semixion</span>
+              <span className="text-2xl font-bold text-slate-900 group-hover:text-blue-600 transition-colors duration-300">Semixon</span>
             </Link>
           </div>
           
@@ -229,9 +228,8 @@ const SiteHeader = memo(function SiteHeader() {
             ))}
           </nav>
           
-          {/* Theme Switcher */}
-          <div className="flex items-center space-x-2">
-            <ThemeSwitcher />
+          {/* Mobile Menu */}
+          <div className="flex items-center">
             <Sheet open={isOpen} onOpenChange={setIsOpen}>
               <SheetTrigger asChild className="lg:hidden">
                 <Button variant="ghost" size="icon" className="text-slate-600 hover:bg-blue-50 hover:text-blue-600">
@@ -246,7 +244,7 @@ const SiteHeader = memo(function SiteHeader() {
                       <div className="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center p-1">
                         <Logo className="h-6 w-6" />
                       </div>
-                      <span className="text-2xl font-bold text-slate-900">Semixion</span>
+                      <span className="text-2xl font-bold text-slate-900">Semixon</span>
                     </Link>
                   </div>
                   <nav className="flex flex-col items-start space-y-2 mt-8 px-4 flex-1">
@@ -264,11 +262,6 @@ const SiteHeader = memo(function SiteHeader() {
                       </Link>
                     ))}
                   </nav>
-                  <div className="mt-auto px-4 pt-6 border-t border-slate-200">
-                    <div className="flex justify-center">
-                      <ThemeSwitcher />
-                    </div>
-                  </div>
                 </div>
               </SheetContent>
             </Sheet>

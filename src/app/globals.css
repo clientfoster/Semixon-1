@@ -8,42 +8,7 @@
   }
   
   :root {
-    --background: 220 25% 98%; /* Very light royal blue tint */
-    --foreground: 220 50% 8%; /* Deep royal blue text */
-    --card: 0 0% 100%;
-    --card-foreground: 220 50% 8%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 220 50% 8%;
-    --primary: 220 100% 25%; /* Royal blue primary */
-    --primary-foreground: 0 0% 98%;
-    --secondary: 220 30% 95%; /* Light royal blue */
-    --secondary-foreground: 220 50% 8%;
-    --muted: 220 20% 92%;
-    --muted-foreground: 220 15% 45%;
-    --accent: 220 85% 60%; /* Bright royal blue accent */
-    --accent-foreground: 0 0% 98%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 220 25% 88%;
-    --input: 220 25% 88%;
-    --ring: 220 85% 60%;
-    --radius: 0.75rem;
-    --chart-1: 220 85% 60%;
-    --chart-2: 200 85% 60%;
-    --chart-3: 240 85% 60%;
-    --chart-4: 180 85% 60%;
-    --chart-5: 160 85% 60%;
-    --sidebar-background: 220 25% 98%;
-    --sidebar-foreground: 220 50% 8%;
-    --sidebar-primary: 220 100% 25%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 220 30% 95%;
-    --sidebar-accent-foreground: 220 50% 8%;
-    --sidebar-border: 220 25% 88%;
-    --sidebar-ring: 220 85% 60%;
-  }
- 
-  .dark {
+    /* Use dark theme variables as the default */
     --background: 220 50% 5%; /* Very dark royal blue */
     --foreground: 220 20% 95%;
     --card: 220 40% 8%;
@@ -63,6 +28,7 @@
     --border: 220 30% 15%;
     --input: 220 30% 15%;
     --ring: 220 85% 60%;
+    --radius: 0.75rem;
     --chart-1: 220 85% 60%;
     --chart-2: 200 85% 60%;
     --chart-3: 240 85% 60%;

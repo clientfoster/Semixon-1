@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { Logo } from './icons';
+import { Facebook, Twitter, Linkedin, Instagram, Youtube, Github, Mail, ExternalLink } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import { useSiteSettings } from '@/hooks/use-site-settings';
 import { CookieSettingsButton } from '@/components/cookie-consent-banner';
@@ -29,16 +30,81 @@ export function SiteFooter() {
             <p className="text-slate-300 text-lg leading-relaxed mb-8 max-w-lg">
               {settings.siteDescription}
             </p>
-            <div className="flex space-x-4">
-              <div className="w-10 h-10 bg-slate-800 rounded-lg flex items-center justify-center hover:bg-blue-600 transition-all duration-300 cursor-pointer group">
-                <span className="text-white font-bold text-sm group-hover:scale-110 transition-transform duration-300">f</span>
-              </div>
-              <div className="w-10 h-10 bg-slate-800 rounded-lg flex items-center justify-center hover:bg-blue-600 transition-all duration-300 cursor-pointer group">
-                <span className="text-white font-bold text-sm group-hover:scale-110 transition-transform duration-300">t</span>
-              </div>
-              <div className="w-10 h-10 bg-slate-800 rounded-lg flex items-center justify-center hover:bg-blue-600 transition-all duration-300 cursor-pointer group">
-                <span className="text-white font-bold text-sm group-hover:scale-110 transition-transform duration-300">in</span>
-              </div>
+            <div className="flex space-x-3">
+              {/* Facebook Button */}
+              {settings.facebookUrl && (
+                <button
+                  onClick={() => window.open(settings.facebookUrl, '_blank')}
+                  className="group flex items-center justify-center w-11 h-11 bg-slate-800 hover:bg-blue-600 rounded-lg border border-slate-700 hover:border-blue-500 transition-all duration-300 shadow-lg hover:shadow-blue-600/25"
+                  aria-label="Follow us on Facebook"
+                >
+                  <Facebook className="w-5 h-5 text-slate-300 group-hover:text-white transition-colors duration-300" />
+                </button>
+              )}
+              
+              {/* Twitter Button */}
+              {settings.twitterUrl && (
+                <button
+                  onClick={() => window.open(settings.twitterUrl, '_blank')}
+                  className="group flex items-center justify-center w-11 h-11 bg-slate-800 hover:bg-blue-400 rounded-lg border border-slate-700 hover:border-blue-400 transition-all duration-300 shadow-lg hover:shadow-blue-400/25"
+                  aria-label="Follow us on Twitter"
+                >
+                  <Twitter className="w-5 h-5 text-slate-300 group-hover:text-white transition-colors duration-300" />
+                </button>
+              )}
+              
+              {/* LinkedIn Button */}
+              {settings.linkedinUrl && (
+                <button
+                  onClick={() => window.open(settings.linkedinUrl, '_blank')}
+                  className="group flex items-center justify-center w-11 h-11 bg-slate-800 hover:bg-blue-700 rounded-lg border border-slate-700 hover:border-blue-600 transition-all duration-300 shadow-lg hover:shadow-blue-700/25"
+                  aria-label="Connect with us on LinkedIn"
+                >
+                  <Linkedin className="w-5 h-5 text-slate-300 group-hover:text-white transition-colors duration-300" />
+                </button>
+              )}
+              
+              {/* Instagram Button */}
+              {settings.instagramUrl && (
+                <button
+                  onClick={() => window.open(settings.instagramUrl, '_blank')}
+                  className="group flex items-center justify-center w-11 h-11 bg-slate-800 hover:bg-pink-600 rounded-lg border border-slate-700 hover:border-pink-500 transition-all duration-300 shadow-lg hover:shadow-pink-600/25"
+                  aria-label="Follow us on Instagram"
+                >
+                  <Instagram className="w-5 h-5 text-slate-300 group-hover:text-white transition-colors duration-300" />
+                </button>
+              )}
+              
+              {/* YouTube Button */}
+              {settings.youtubeUrl && (
+                <button
+                  onClick={() => window.open(settings.youtubeUrl, '_blank')}
+                  className="group flex items-center justify-center w-11 h-11 bg-slate-800 hover:bg-red-600 rounded-lg border border-slate-700 hover:border-red-500 transition-all duration-300 shadow-lg hover:shadow-red-600/25"
+                  aria-label="Subscribe to our YouTube channel"
+                >
+                  <Youtube className="w-5 h-5 text-slate-300 group-hover:text-white transition-colors duration-300" />
+                </button>
+              )}
+              
+              {/* GitHub Button */}
+              {settings.githubUrl && (
+                <button
+                  onClick={() => window.open(settings.githubUrl, '_blank')}
+                  className="group flex items-center justify-center w-11 h-11 bg-slate-800 hover:bg-gray-700 rounded-lg border border-slate-700 hover:border-gray-600 transition-all duration-300 shadow-lg hover:shadow-gray-700/25"
+                  aria-label="Check out our GitHub"
+                >
+                  <Github className="w-5 h-5 text-slate-300 group-hover:text-white transition-colors duration-300" />
+                </button>
+              )}
+              
+              {/* Email Button */}
+              <button
+                onClick={() => window.open(`mailto:${settings.email}`, '_blank')}
+                className="group flex items-center justify-center w-11 h-11 bg-slate-800 hover:bg-green-600 rounded-lg border border-slate-700 hover:border-green-500 transition-all duration-300 shadow-lg hover:shadow-green-600/25"
+                aria-label="Send us an email"
+              >
+                <Mail className="w-5 h-5 text-slate-300 group-hover:text-white transition-colors duration-300" />
+              </button>
             </div>
           </div>
           <div>
@@ -94,9 +160,6 @@ export function SiteFooter() {
               </Link></li>
               <li><Link href="/terms-of-service" className="text-slate-300 hover:text-white transition-colors duration-300 text-base">
                 Terms of Service
-              </Link></li>
-              <li><Link href="/sitemap" className="text-slate-300 hover:text-white transition-colors duration-300 text-base">
-                Sitemap
               </Link></li>
             </ul>
           </div>

@@ -2,8 +2,8 @@ import { Metadata } from 'next';
 import { ContactInfo } from '@/components/contact-info';
 
 export const metadata: Metadata = {
-  title: 'Privacy Policy | Semixion',
-  description: 'Privacy Policy for Semixion - Learn how we collect, use, and protect your personal information.',
+  title: 'Privacy Policy | Semixon',
+  description: 'Privacy Policy for Semixon - Learn how we collect, use, and protect your personal information.',
 };
 
 export default function PrivacyPolicyPage() {

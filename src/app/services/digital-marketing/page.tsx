@@ -6,7 +6,7 @@ import { ArrowRight, Target, TrendingUp, Users, BarChart3, Search, Share2, Mail 
 import Link from 'next/link';
 
 export const metadata: Metadata = {
-  title: 'Digital Marketing Services | Semixion',
+  title: 'Digital Marketing Services | Semixon',
   description: 'Comprehensive digital marketing services including SEO, social media marketing, PPC advertising, and content marketing for semiconductor and engineering companies.',
   keywords: [
     'digital marketing',

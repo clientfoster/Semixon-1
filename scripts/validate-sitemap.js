@@ -10,7 +10,7 @@ const http = require('http');
 
 console.log('🔍 Validating Sitemap for Google Search Console...\n');
 
-const baseUrl = 'https://semixion.com';
+const baseUrl = 'https://semixon.com';
 const sitemapUrl = `${baseUrl}/sitemap.xml`;
 
 function validateSitemap(url) {

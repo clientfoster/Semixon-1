@@ -6,7 +6,7 @@ import { ArrowRight, Palette, PenTool, Image, Layers, Target, Users, Zap } from 
 import Link from 'next/link';
 
 export const metadata: Metadata = {
-  title: 'Branding & Design Services | Semixion',
+  title: 'Branding & Design Services | Semixon',
   description: 'Professional branding and design services including logo design, brand identity, graphic design, and visual communication for semiconductor and engineering companies.',
   keywords: [
     'branding design',

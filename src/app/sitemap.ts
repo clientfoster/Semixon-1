@@ -1,13 +1,71 @@
 import { MetadataRoute } from 'next'
+import { collection, getDocs, query, where, orderBy } from 'firebase/firestore'
+// @ts-ignore
+import { db } from '@/lib/firebase'
 
-export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://semixion.com'
+interface BlogPost {
+  slug: string;
+  status: string;
+  publishedAt?: any;
+  updatedAt?: any;
+}
+
+async function getBlogPosts(): Promise<BlogPost[]> {
+  try {
+    const postsQuery = query(
+      // @ts-ignore
+      collection(db, 'blogPosts'),
+      where('status', '==', 'published'),
+      orderBy('publishedAt', 'desc')
+    );
+    
+    const snapshot = await getDocs(postsQuery);
+    const posts: BlogPost[] = [];
+    
+    snapshot.docs.forEach((doc) => {
+      const data = doc.data();
+      if (data.slug && data.status === 'published') {
+        posts.push({
+          slug: data.slug,
+          status: data.status,
+          publishedAt: data.publishedAt,
+          updatedAt: data.updatedAt,
+        });
+      }
+    });
+    
+    return posts;
+  } catch (error) {
+    console.error('Error fetching blog posts for sitemap:', error);
+    // Return empty array if Firebase fails to ensure sitemap still works
+    return [];
+  }
+}
+
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const baseUrl = 'https://semixon.com'
   const currentDate = new Date().toISOString()
   
-  // Ensure we have a proper date format for Google
-  const formatDate = (date: Date) => {
-    return date.toISOString().split('T')[0] // YYYY-MM-DD format
+  // Get dynamic blog posts with error handling
+  let blogPosts: BlogPost[] = [];
+  try {
+    blogPosts = await getBlogPosts();
+  } catch (error) {
+    console.error('Failed to fetch blog posts for sitemap:', error);
+    // Continue with empty blog posts array
   }
+  
+  // Ensure we have a proper date format for Google
+  const formatDate = (date: any) => {
+    try {
+      if (!date) return currentDate;
+      const dateObject = date.toDate ? date.toDate() : new Date(date);
+      return dateObject.toISOString();
+    } catch (error) {
+      console.error('Error formatting date:', error);
+      return currentDate;
+    }
+  };
 
   // Static pages with proper Google Search Console optimization
   const staticPages = [
@@ -66,7 +124,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.3,
     },
     {
-      url: `${baseUrl}/sitemap`,
+      url: `${baseUrl}/site-map`,
       lastModified: currentDate,
       changeFrequency: 'monthly' as const,
       priority: 0.4,
@@ -130,36 +188,20 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.6,
   }))
 
-  // Admin pages (lower priority)
-  const adminPages = [
-    'admin',
-    'admin/login',
-    'admin/analytics',
-    'admin/blog',
-    'admin/content',
-    'admin/industries',
-    'admin/messages',
-    'admin/products',
-    'admin/seo',
-    'admin/services',
-    'admin/settings',
-    'admin/setup',
-    'admin/team',
-    'admin/themes',
-    'admin/users',
-  ]
-
-  const adminPagesSitemap = adminPages.map((admin) => ({
-    url: `${baseUrl}/${admin}`,
-    lastModified: currentDate,
-    changeFrequency: 'monthly' as const,
-    priority: 0.2,
-  }))
+  // Dynamic blog posts with validation
+  const blogPostsSitemap = blogPosts
+    .filter(post => post.slug && typeof post.slug === 'string' && post.slug.trim() !== '')
+    .map((post) => ({
+      url: `${baseUrl}/blog/${encodeURIComponent(post.slug)}`,
+      lastModified: formatDate(post.updatedAt || post.publishedAt),
+      changeFrequency: 'weekly' as const,
+      priority: 0.6,
+    }))
 
   return [
     ...staticPages,
     ...servicePagesSitemap,
     ...industryPagesSitemap,
-    ...adminPagesSitemap,
+    ...blogPostsSitemap,
   ]
 }

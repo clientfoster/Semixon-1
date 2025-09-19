@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { collection, getDocs, query, where, limit, orderBy } from 'firebase/firestore';
+import { collection, getDocs, query, where, limit as firestoreLimit, orderBy } from 'firebase/firestore';
+// @ts-ignore
 import { db } from '@/lib/firebase';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -13,8 +14,6 @@ import {
   User, 
   Clock,
   ArrowLeft,
-  Share2,
-  Heart,
   Eye,
   Tag,
   ArrowRight
@@ -22,6 +21,8 @@ import {
 import { BlogPost } from '@/lib/types';
 import { BlogPostCard } from '@/components/blog-post-card';
 import { MarkdownRenderer } from '@/components/markdown-renderer';
+import { NewsletterSignup } from '@/components/newsletter-signup';
+import { PostActions } from '@/components/post-actions';
 import { generateBlogMeta } from '@/lib/meta-utils';
 
 interface BlogPostPageProps {
@@ -33,9 +34,10 @@ interface BlogPostPageProps {
 async function getBlogPost(slug: string): Promise<BlogPost | null> {
   try {
     const postsQuery = query(
+      // @ts-ignore
       collection(db, 'blogPosts'),
       where('slug', '==', slug),
-      limit(1)
+      firestoreLimit(1)
     );
     
     const snapshot = await getDocs(postsQuery);
@@ -59,10 +61,12 @@ async function getBlogPost(slug: string): Promise<BlogPost | null> {
       updatedAt: data.updatedAt?.toDate?.() || new Date(),
       tags: data.tags || [],
       category: data.category,
-      readTime: data.readTime || 5,
+      readingTime: data.readTime || 5,
       status: data.status || 'published',
-      views: data.views || 0,
-      likes: data.likes || 0,
+      viewCount: data.views || 0,
+      likeCount: data.likes || 0,
+      isFeatured: data.isFeatured || false,
+      createdAt: data.createdAt?.toDate?.() || new Date(),
     };
   } catch (error) {
     console.error('Error fetching blog post:', error);
@@ -74,9 +78,10 @@ async function getRelatedPosts(category: string, currentSlug: string, limit: num
   try {
     // Simplified query to avoid composite index requirement
     const postsQuery = query(
+      // @ts-ignore
       collection(db, 'blogPosts'),
       orderBy('publishedAt', 'desc'),
-      limit(20) // Get more posts to filter on client side
+      firestoreLimit(20) // Get more posts to filter on client side
     );
     
     const snapshot = await getDocs(postsQuery);
@@ -99,10 +104,12 @@ async function getRelatedPosts(category: string, currentSlug: string, limit: num
           updatedAt: data.updatedAt?.toDate?.() || new Date(),
           tags: data.tags || [],
           category: data.category,
-          readTime: data.readTime || 5,
+          readingTime: data.readingTime || data.readTime || 5,
           status: data.status || 'published',
-          views: data.views || 0,
-          likes: data.likes || 0,
+          viewCount: data.views || 0,
+          likeCount: data.likes || 0,
+          isFeatured: data.isFeatured || false,
+          createdAt: data.createdAt?.toDate?.() || new Date(),
         };
         
         posts.push(post);
@@ -117,11 +124,12 @@ async function getRelatedPosts(category: string, currentSlug: string, limit: num
 }
 
 export async function generateMetadata({ params }: BlogPostPageProps): Promise<Metadata> {
-  const post = await getBlogPost(params.slug);
+  const { slug } = await params;
+  const post = await getBlogPost(slug);
   
   if (!post) {
     return {
-      title: 'Post Not Found | Semixion',
+      title: 'Post Not Found | Semixon',
       description: 'The requested blog post could not be found.',
     };
   }
@@ -131,23 +139,24 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
     excerpt: post.excerpt,
     content: post.content,
     slug: post.slug,
-    publishedAt: post.publishedAt.toISOString(),
+    publishedAt: post.publishedAt?.toISOString() || post.createdAt.toISOString(),
     updatedAt: post.updatedAt.toISOString(),
     tags: post.tags,
     category: post.category,
-    author: post.author,
+    author: post.author?.name || 'Unknown',
     featuredImage: post.featuredImage,
   });
 }
 
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
-  const post = await getBlogPost(params.slug);
+  const { slug } = await params;
+  const post = await getBlogPost(slug);
   
   if (!post) {
     notFound();
   }
 
-  const relatedPosts = await getRelatedPosts(post.category, post.slug);
+  const relatedPosts = await getRelatedPosts(post.category || '', slug);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
@@ -184,7 +193,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                 <div className="flex flex-wrap items-center gap-4 text-sm text-slate-600 mb-6">
                   <div className="flex items-center gap-2">
                     <Calendar className="h-4 w-4" />
-                    {post.publishedAt.toLocaleDateString('en-US', {
+                    {(post.publishedAt || post.createdAt).toLocaleDateString('en-US', {
                       year: 'numeric',
                       month: 'long',
                       day: 'numeric'
@@ -192,15 +201,15 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                   </div>
                   <div className="flex items-center gap-2">
                     <User className="h-4 w-4" />
-                    {post.author}
+                    {post.author?.name || 'Unknown Author'}
                   </div>
                   <div className="flex items-center gap-2">
                     <Clock className="h-4 w-4" />
-                    {post.readTime} min read
+                    {post.readingTime} min read
                   </div>
                   <div className="flex items-center gap-2">
                     <Eye className="h-4 w-4" />
-                    {post.views} views
+                    {post.viewCount} views
                   </div>
                 </div>
 
@@ -235,16 +244,11 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
                 {/* Actions */}
                 <div className="flex items-center justify-between mt-8 pt-6 border-t">
-                  <div className="flex items-center gap-4">
-                    <Button variant="outline" size="sm" className="flex items-center gap-2">
-                      <Heart className="h-4 w-4" />
-                      {post.likes} Likes
-                    </Button>
-                    <Button variant="outline" size="sm" className="flex items-center gap-2">
-                      <Share2 className="h-4 w-4" />
-                      Share
-                    </Button>
-                  </div>
+                  <PostActions 
+                    likeCount={post.likeCount}
+                    postTitle={post.title}
+                    postUrl={`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/blog/${post.slug}`}
+                  />
                 </div>
               </div>
             </article>
@@ -269,21 +273,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             )}
 
             {/* Newsletter Signup */}
-            <Card className="bg-gradient-to-br from-blue-500 to-blue-600 text-white">
-              <CardContent className="p-6">
-                <h3 className="text-lg font-bold mb-2">Stay Updated</h3>
-                <p className="text-blue-100 mb-4">
-                  Get the latest insights on semiconductor engineering and technology trends.
-                </p>
-                <Button 
-                  variant="secondary" 
-                  className="w-full"
-                  onClick={() => window.open('/contact', '_blank')}
-                >
-                  Subscribe to Newsletter
-                </Button>
-              </CardContent>
-            </Card>
+            <NewsletterSignup />
           </div>
         </div>
       </div>

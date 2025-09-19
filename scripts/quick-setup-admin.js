@@ -21,7 +21,7 @@ async function createDefaultAdmin() {
     const auth = getAuth(app);
     const db = getFirestore(app);
 
-    const email = 'admin@semixion.com';
+    const email = 'admin@semixon.com';
     const password = 'admin123456';
     const displayName = 'Super Admin';
 
@@ -71,7 +71,7 @@ async function createDefaultAdmin() {
     if (error.code === 'auth/email-already-in-use') {
       console.log('✅ Admin account already exists!');
       console.log('\n📋 Use these credentials:');
-      console.log('   Email: admin@semixion.com');
+      console.log('   Email: admin@semixon.com');
       console.log('   Password: admin123456');
       console.log('\n🔗 Login at: http://localhost:9002/admin/login');
     } else {

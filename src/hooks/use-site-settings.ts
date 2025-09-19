@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { doc, onSnapshot } from 'firebase/firestore';
+// @ts-ignore
 import { db } from '@/lib/firebase';
 
 export interface SiteSettings {
@@ -45,7 +46,6 @@ export interface SiteSettings {
   enableNewsletter: boolean;
   enableContactForm: boolean;
   enableLiveChat: boolean;
-  enableDarkMode: boolean;
   
   // Maintenance
   maintenanceMode: boolean;
@@ -106,7 +106,6 @@ const defaultSettings: SiteSettings = {
   enableNewsletter: true,
   enableContactForm: true,
   enableLiveChat: false,
-  enableDarkMode: true,
   
   // Maintenance
   maintenanceMode: false,
@@ -133,6 +132,7 @@ export function useSiteSettings() {
 
   useEffect(() => {
     try {
+      // @ts-ignore
       const settingsRef = doc(db, 'siteSettings', 'main');
       const unsubscribe = onSnapshot(settingsRef, 
         (docSnapshot) => {

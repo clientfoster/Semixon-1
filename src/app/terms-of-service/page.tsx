@@ -2,8 +2,8 @@ import { Metadata } from 'next';
 import { ContactInfo } from '@/components/contact-info';
 
 export const metadata: Metadata = {
-  title: 'Terms of Service | Semixion',
-  description: 'Terms of Service for Semixion - Read our terms and conditions for using our services.',
+  title: 'Terms of Service | Semixon',
+  description: 'Terms of Service for Semixon - Read our terms and conditions for using our services.',
 };
 
 export default function TermsOfServicePage() {
@@ -36,14 +36,14 @@ export default function TermsOfServicePage() {
                 <h2 className="text-2xl font-bold text-slate-900 mb-6">1. Acceptance of Terms</h2>
                 <div className="mb-8">
                   <p className="text-slate-600 leading-relaxed mb-4">
-                    By accessing and using Semixion's website and services, you accept and agree to be bound by the terms and provision of this agreement. If you do not agree to abide by the above, please do not use this service.
+                    By accessing and using Semixon's website and services, you accept and agree to be bound by the terms and provision of this agreement. If you do not agree to abide by the above, please do not use this service.
                   </p>
                 </div>
 
                 <h2 className="text-2xl font-bold text-slate-900 mb-6">2. Description of Service</h2>
                 <div className="mb-8">
                   <p className="text-slate-600 leading-relaxed mb-4">
-                    Semixion provides semiconductor and engineering services including but not limited to:
+                    Semixon provides semiconductor and engineering services including but not limited to:
                   </p>
                   <ul className="list-disc list-inside text-slate-600 space-y-2 mb-6">
                     <li>Semiconductor design and development</li>
@@ -58,7 +58,7 @@ export default function TermsOfServicePage() {
                 <h2 className="text-2xl font-bold text-slate-900 mb-6">3. Use License</h2>
                 <div className="mb-8">
                   <p className="text-slate-600 leading-relaxed mb-4">
-                    Permission is granted to temporarily download one copy of the materials on Semixion's website for personal, non-commercial transitory viewing only. This is the grant of a license, not a transfer of title, and under this license you may not:
+                    Permission is granted to temporarily download one copy of the materials on Semixon's website for personal, non-commercial transitory viewing only. This is the grant of a license, not a transfer of title, and under this license you may not:
                   </p>
                   <ul className="list-disc list-inside text-slate-600 space-y-2 mb-6">
                     <li>Modify or copy the materials</li>
@@ -96,7 +96,7 @@ export default function TermsOfServicePage() {
                 <h2 className="text-2xl font-bold text-slate-900 mb-6">6. Intellectual Property Rights</h2>
                 <div className="mb-8">
                   <p className="text-slate-600 leading-relaxed mb-4">
-                    The service and its original content, features, and functionality are and will remain the exclusive property of Semixion and its licensors. The service is protected by copyright, trademark, and other laws. Our trademarks and trade dress may not be used in connection with any product or service without our prior written consent.
+                    The service and its original content, features, and functionality are and will remain the exclusive property of Semixon and its licensors. The service is protected by copyright, trademark, and other laws. Our trademarks and trade dress may not be used in connection with any product or service without our prior written consent.
                   </p>
                 </div>
 
@@ -121,14 +121,14 @@ export default function TermsOfServicePage() {
                 <h2 className="text-2xl font-bold text-slate-900 mb-6">9. Limitation of Liability</h2>
                 <div className="mb-8">
                   <p className="text-slate-600 leading-relaxed mb-4">
-                    In no event shall Semixion, nor its directors, employees, partners, agents, suppliers, or affiliates, be liable for any indirect, incidental, special, consequential, or punitive damages, including without limitation, loss of profits, data, use, goodwill, or other intangible losses, resulting from your use of the service.
+                    In no event shall Semixon, nor its directors, employees, partners, agents, suppliers, or affiliates, be liable for any indirect, incidental, special, consequential, or punitive damages, including without limitation, loss of profits, data, use, goodwill, or other intangible losses, resulting from your use of the service.
                   </p>
                 </div>
 
                 <h2 className="text-2xl font-bold text-slate-900 mb-6">10. Indemnification</h2>
                 <div className="mb-8">
                   <p className="text-slate-600 leading-relaxed mb-4">
-                    You agree to defend, indemnify, and hold harmless Semixion and its licensee and licensors, and their employees, contractors, agents, officers and directors, from and against any and all claims, damages, obligations, losses, liabilities, costs or debt, and expenses (including but not limited to attorney's fees).
+                    You agree to defend, indemnify, and hold harmless Semixon and its licensee and licensors, and their employees, contractors, agents, officers and directors, from and against any and all claims, damages, obligations, losses, liabilities, costs or debt, and expenses (including but not limited to attorney's fees).
                   </p>
                 </div>
 

@@ -88,6 +88,7 @@ export interface BlogPost {
     bio?: string;
   };
   tags: string[];
+  category?: string;
   status: 'draft' | 'published' | 'archived';
   isFeatured: boolean;
   readingTime: number; // in minutes

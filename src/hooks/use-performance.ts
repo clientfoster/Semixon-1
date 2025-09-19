@@ -70,7 +70,7 @@ export function usePerformanceOptimization() {
     const preloaded = cookieManager.getCookie('criticalResourcesPreloaded');
     
     if (!preloaded) {
-      const criticalResources = [
+      const criticalResources: Array<{ href: string; as: string; type?: string }> = [
         // Only preload resources that actually exist
         // Add any actual critical resources here when they exist
       ];
@@ -129,29 +129,16 @@ export function usePerformanceOptimization() {
     });
   }, []);
 
-  // Optimize theme loading
-  const optimizeTheme = useCallback(() => {
-    const preferences = cookieManager.getUserPreferences();
-    const savedTheme = cookieManager.getCookie('theme');
-    
-    if (savedTheme) {
-      document.documentElement.setAttribute('data-theme', savedTheme);
-    } else if (preferences.theme !== 'system') {
-      document.documentElement.setAttribute('data-theme', preferences.theme);
-    }
-  }, []);
-
   // Initialize performance optimizations
   useEffect(() => {
     const cleanup = trackPageLoad();
     optimizeImages();
     preloadCriticalResources();
-    optimizeTheme();
     
     setIsOptimized(true);
     
     return cleanup;
-  }, [trackPageLoad, optimizeImages, preloadCriticalResources, optimizeTheme]);
+  }, [trackPageLoad, optimizeImages, preloadCriticalResources]);
 
   // Track page views
   useEffect(() => {
@@ -194,7 +181,7 @@ export function useCachedData<T>(key: string, fetcher: () => Promise<T>, ttl: nu
         setData(freshData);
         
         // Cache the data
-        cookieManager.cacheApiResponse(key, freshData, ttl);
+        cookieManager.setCachedData(key, freshData, ttl);
         
       } catch (err) {
         setError(err as Error);

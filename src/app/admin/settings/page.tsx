@@ -50,6 +50,7 @@ interface SiteSettings {
   address: string;
   
   // Social Media
+  facebookUrl: string;
   linkedinUrl: string;
   twitterUrl: string;
   githubUrl: string;
@@ -68,7 +69,6 @@ interface SiteSettings {
   // Appearance
   primaryColor: string;
   secondaryColor: string;
-  darkMode: boolean;
   
   // Performance
   cacheEnabled: boolean;
@@ -85,6 +85,7 @@ const defaultSettings: SiteSettings = {
   contactEmail: 'info@semixon.com',
   contactPhone: '+1 (555) 123-4567',
   address: '123 Tech Street, Silicon Valley, CA 94000',
+  facebookUrl: 'https://facebook.com/semixon',
   linkedinUrl: 'https://linkedin.com/company/semixon',
   twitterUrl: 'https://twitter.com/semixon',
   githubUrl: 'https://github.com/semixon',
@@ -97,7 +98,6 @@ const defaultSettings: SiteSettings = {
   newsletterEnabled: true,
   primaryColor: '#3b82f6',
   secondaryColor: '#8b5cf6',
-  darkMode: true,
   cacheEnabled: true,
   cdnEnabled: false,
   compressionEnabled: true,
@@ -350,6 +350,17 @@ export default function SiteSettingsPage() {
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="space-y-2">
+                <Label htmlFor="facebookUrl" className="text-slate-300">Facebook URL</Label>
+                <Input
+                  id="facebookUrl"
+                  value={settings.facebookUrl}
+                  onChange={(e) => handleInputChange('facebookUrl', e.target.value)}
+                  className="bg-slate-700 border-slate-600 text-white placeholder-slate-400"
+                  placeholder="https://facebook.com/semixon"
+                />
+              </div>
+              
+              <div className="space-y-2">
                 <Label htmlFor="linkedinUrl" className="text-slate-300">LinkedIn URL</Label>
                 <Input
                   id="linkedinUrl"
@@ -532,17 +543,6 @@ export default function SiteSettingsPage() {
                     />
                   </div>
                 </div>
-              </div>
-              
-              <div className="flex items-center justify-between">
-                <div className="space-y-1">
-                  <Label className="text-slate-300">Dark Mode</Label>
-                  <p className="text-sm text-slate-400">Enable dark theme by default</p>
-                </div>
-                <Switch
-                  checked={settings.darkMode}
-                  onCheckedChange={(checked) => handleInputChange('darkMode', checked)}
-                />
               </div>
             </CardContent>
           </Card>

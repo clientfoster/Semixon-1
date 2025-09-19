@@ -25,7 +25,7 @@ export default function Home() {
                 Pioneering Semiconductor Excellence
               </h2>
               <p className="text-slate-600 text-lg leading-relaxed">
-                At Semixion, we are pioneers in semiconductor technology. Our mission is to drive innovation and deliver excellence through our state-of-the-art products and expert engineering services. We are committed to building a sustainable future with technology that empowers progress.
+                At Semixon, we are pioneers in semiconductor technology. Our mission is to drive innovation and deliver excellence through our state-of-the-art products and expert engineering services. We are committed to building a sustainable future with technology that empowers progress.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Button asChild className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 text-lg font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300">
@@ -78,7 +78,7 @@ export default function Home() {
               Ready to Innovate With Us?
             </h2>
             <p className="text-base md:text-lg text-slate-300 mb-8 leading-relaxed">
-              Let's discuss how Semixion can help you achieve your technological goals. 
+              Let's discuss how Semixon can help you achieve your technological goals. 
               Get in touch with our experts today.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
