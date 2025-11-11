@@ -179,7 +179,7 @@ export function SiteFooter() {
                 className="text-blue-400 hover:text-blue-300 font-semibold transition-all duration-300 underline decoration-blue-400 hover:decoration-blue-300 underline-offset-2 hover:underline-offset-4"
                 aria-label="Visit AnansVerse Web Services website"
               >
-                AnansVerse Web Services
+                AnandVerse Web Services
               </button>
             </p>
           </div>
