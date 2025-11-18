@@ -2,8 +2,8 @@ import { Metadata } from 'next';
 import { ContactInfo } from '@/components/contact-info';
 
 export const metadata: Metadata = {
-  title: 'Terms of Service | Semixon',
-  description: 'Terms of Service for Semixon - Read our terms and conditions for using our services.',
+  title: 'Terms & Conditions | Semixon',
+  description: 'Terms & Conditions for Semixon - Read our terms and conditions for using our services.',
 };
 
 export default function TermsOfServicePage() {
@@ -14,13 +14,13 @@ export default function TermsOfServicePage() {
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
             <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">
-              Terms of Service
+              Terms & Conditions
             </h1>
             <p className="text-lg md:text-xl text-slate-300 leading-relaxed">
               Please read these terms and conditions carefully before using our services.
             </p>
             <p className="text-sm text-slate-400 mt-4">
-              Last updated: {new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+              Last updated: November 18 2025
             </p>
           </div>
         </div>
@@ -33,139 +33,40 @@ export default function TermsOfServicePage() {
             <div className="bg-white rounded-2xl shadow-lg p-8 md:p-12">
               <div className="prose prose-lg max-w-none">
                 
-                <h2 className="text-2xl font-bold text-slate-900 mb-6">1. Acceptance of Terms</h2>
                 <div className="mb-8">
                   <p className="text-slate-600 leading-relaxed mb-4">
-                    By accessing and using Semixon's website and services, you accept and agree to be bound by the terms and provision of this agreement. If you do not agree to abide by the above, please do not use this service.
+                    For the purpose of these Terms and Conditions, The term "we", "us", "our" used anywhere on this page shall mean SEMIXON TECHNOLOGIES PRIVATE LIMITED, whose registered/operational office is H.NO- 6-3-200/A PREM NAGAR Banjara Hills Hyderabad Khairatabad Telangana 500034 Banjara Hills TELANGANA 500034 . "you", "your", "user", "visitor" shall mean any natural or legal person who is visiting our website and/or agreed to purchase from us.
                   </p>
-                </div>
-
-                <h2 className="text-2xl font-bold text-slate-900 mb-6">2. Description of Service</h2>
-                <div className="mb-8">
+                  
                   <p className="text-slate-600 leading-relaxed mb-4">
-                    Semixon provides semiconductor and engineering services including but not limited to:
+                    Your use of the website and/or purchase from us are governed by following Terms and Conditions:
                   </p>
+                  
                   <ul className="list-disc list-inside text-slate-600 space-y-2 mb-6">
-                    <li>Semiconductor design and development</li>
-                    <li>Embedded systems engineering</li>
-                    <li>Software development and maintenance</li>
-                    <li>Technical consulting services</li>
-                    <li>Quality assurance and testing</li>
-                    <li>Project management and support</li>
+                    <li>The content of the pages of this website is subject to change without notice.</li>
+                    <li>Neither we nor any third parties provide any warranty or guarantee as to the accuracy, timeliness, performance, completeness or suitability of the information and materials found or offered on this website for any particular purpose. You acknowledge that such information and materials may contain inaccuracies or errors and we expressly exclude liability for any such inaccuracies or errors to the fullest extent permitted by law.</li>
+                    <li>Your use of any information or materials on our website and/or product pages is entirely at your own risk, for which we shall not be liable. It shall be your own responsibility to ensure that any products, services or information available through our website and/or product pages meet your specific requirements.</li>
+                    <li>Our website contains material which is owned by or licensed to us. This material includes, but are not limited to, the design, layout, look, appearance and graphics. Reproduction is prohibited other than in accordance with the copyright notice, which forms part of these terms and conditions.</li>
+                    <li>All trademarks reproduced in our website which are not the property of, or licensed to, the operator are acknowledged on the website.</li>
+                    <li>Unauthorized use of information provided by us shall give rise to a claim for damages and/or be a criminal offense.</li>
+                    <li>From time to time our website may also include links to other websites. These links are provided for your convenience to provide further information.</li>
+                    <li>You may not create a link to our website from another website or document without SEMIXON TECHNOLOGIES PRIVATE LIMITED's prior written consent.</li>
+                    <li>Any dispute arising out of use of our website and/or purchase with us and/or any engagement with us is subject to the laws of India .</li>
+                    <li>We, shall be under no liability whatsoever in respect of any loss or damage arising directly or indirectly out of the decline of authorization for any Transaction, on Account of the Cardholder having exceeded the preset limit mutually agreed by us with our acquiring bank from time to time</li>
                   </ul>
                 </div>
 
-                <h2 className="text-2xl font-bold text-slate-900 mb-6">3. Use License</h2>
                 <div className="mb-8">
+                  <h2 className="text-2xl font-bold text-slate-900 mb-6">Additional Terms</h2>
                   <p className="text-slate-600 leading-relaxed mb-4">
-                    Permission is granted to temporarily download one copy of the materials on Semixon's website for personal, non-commercial transitory viewing only. This is the grant of a license, not a transfer of title, and under this license you may not:
+                    The following additional terms and conditions apply to your use of our services:
                   </p>
                   <ul className="list-disc list-inside text-slate-600 space-y-2 mb-6">
-                    <li>Modify or copy the materials</li>
-                    <li>Use the materials for any commercial purpose or for any public display</li>
-                    <li>Attempt to reverse engineer any software contained on the website</li>
-                    <li>Remove any copyright or other proprietary notations from the materials</li>
+                    <li>These additional terms form part of our agreement with you and are supplemental to the main Terms and Conditions above.</li>
+                    <li>In the event of any conflict between these additional terms and the main Terms and Conditions, these additional terms shall prevail.</li>
+                    <li>We reserve the right to update these additional terms at any time without prior notice.</li>
+                    <li>Your continued use of our services after any changes to these additional terms constitutes your acceptance of the modified terms.</li>
                   </ul>
-                </div>
-
-                <h2 className="text-2xl font-bold text-slate-900 mb-6">4. User Accounts</h2>
-                <div className="mb-8">
-                  <p className="text-slate-600 leading-relaxed mb-4">
-                    When you create an account with us, you must provide information that is accurate, complete, and current at all times. You are responsible for safeguarding the password and for all activities that occur under your account.
-                  </p>
-                </div>
-
-                <h2 className="text-2xl font-bold text-slate-900 mb-6">5. Prohibited Uses</h2>
-                <div className="mb-8">
-                  <p className="text-slate-600 leading-relaxed mb-4">
-                    You may not use our service:
-                  </p>
-                  <ul className="list-disc list-inside text-slate-600 space-y-2 mb-6">
-                    <li>For any unlawful purpose or to solicit others to perform unlawful acts</li>
-                    <li>To violate any international, federal, provincial, or state regulations, rules, laws, or local ordinances</li>
-                    <li>To infringe upon or violate our intellectual property rights or the intellectual property rights of others</li>
-                    <li>To harass, abuse, insult, harm, defame, slander, disparage, intimidate, or discriminate</li>
-                    <li>To submit false or misleading information</li>
-                    <li>To upload or transmit viruses or any other type of malicious code</li>
-                    <li>To spam, phish, pharm, pretext, spider, crawl, or scrape</li>
-                    <li>For any obscene or immoral purpose</li>
-                    <li>To interfere with or circumvent the security features of the service</li>
-                  </ul>
-                </div>
-
-                <h2 className="text-2xl font-bold text-slate-900 mb-6">6. Intellectual Property Rights</h2>
-                <div className="mb-8">
-                  <p className="text-slate-600 leading-relaxed mb-4">
-                    The service and its original content, features, and functionality are and will remain the exclusive property of Semixon and its licensors. The service is protected by copyright, trademark, and other laws. Our trademarks and trade dress may not be used in connection with any product or service without our prior written consent.
-                  </p>
-                </div>
-
-                <h2 className="text-2xl font-bold text-slate-900 mb-6">7. Service Availability</h2>
-                <div className="mb-8">
-                  <p className="text-slate-600 leading-relaxed mb-4">
-                    We reserve the right to withdraw or amend our service, and any service or material we provide via the service, in our sole discretion without notice. We will not be liable if, for any reason, all or any part of the service is unavailable at any time or for any period.
-                  </p>
-                </div>
-
-                <h2 className="text-2xl font-bold text-slate-900 mb-6">8. Disclaimer</h2>
-                <div className="mb-8">
-                  <p className="text-slate-600 leading-relaxed mb-4">
-                    The information on this website is provided on an "as is" basis. To the fullest extent permitted by law, this Company:
-                  </p>
-                  <ul className="list-disc list-inside text-slate-600 space-y-2 mb-6">
-                    <li>Excludes all representations and warranties relating to this website and its contents</li>
-                    <li>Excludes all liability for damages arising out of or in connection with your use of this website</li>
-                  </ul>
-                </div>
-
-                <h2 className="text-2xl font-bold text-slate-900 mb-6">9. Limitation of Liability</h2>
-                <div className="mb-8">
-                  <p className="text-slate-600 leading-relaxed mb-4">
-                    In no event shall Semixon, nor its directors, employees, partners, agents, suppliers, or affiliates, be liable for any indirect, incidental, special, consequential, or punitive damages, including without limitation, loss of profits, data, use, goodwill, or other intangible losses, resulting from your use of the service.
-                  </p>
-                </div>
-
-                <h2 className="text-2xl font-bold text-slate-900 mb-6">10. Indemnification</h2>
-                <div className="mb-8">
-                  <p className="text-slate-600 leading-relaxed mb-4">
-                    You agree to defend, indemnify, and hold harmless Semixon and its licensee and licensors, and their employees, contractors, agents, officers and directors, from and against any and all claims, damages, obligations, losses, liabilities, costs or debt, and expenses (including but not limited to attorney's fees).
-                  </p>
-                </div>
-
-                <h2 className="text-2xl font-bold text-slate-900 mb-6">11. Termination</h2>
-                <div className="mb-8">
-                  <p className="text-slate-600 leading-relaxed mb-4">
-                    We may terminate or suspend your account and bar access to the service immediately, without prior notice or liability, under our sole discretion, for any reason whatsoever and without limitation, including but not limited to a breach of the Terms.
-                  </p>
-                </div>
-
-                <h2 className="text-2xl font-bold text-slate-900 mb-6">12. Governing Law</h2>
-                <div className="mb-8">
-                  <p className="text-slate-600 leading-relaxed mb-4">
-                    These Terms shall be interpreted and governed by the laws of the State of California, United States, without regard to its conflict of law provisions. Our failure to enforce any right or provision of these Terms will not be considered a waiver of those rights.
-                  </p>
-                </div>
-
-                <h2 className="text-2xl font-bold text-slate-900 mb-6">13. Changes to Terms</h2>
-                <div className="mb-8">
-                  <p className="text-slate-600 leading-relaxed mb-4">
-                    We reserve the right, at our sole discretion, to modify or replace these Terms at any time. If a revision is material, we will provide at least 30 days notice prior to any new terms taking effect.
-                  </p>
-                </div>
-
-                <h2 className="text-2xl font-bold text-slate-900 mb-6">14. Severability</h2>
-                <div className="mb-8">
-                  <p className="text-slate-600 leading-relaxed mb-4">
-                    If any provision of these Terms is held to be unenforceable or invalid, such provision will be changed and interpreted to accomplish the objectives of such provision to the greatest extent possible under applicable law and the remaining provisions will continue in full force and effect.
-                  </p>
-                </div>
-
-                <h2 className="text-2xl font-bold text-slate-900 mb-6">15. Contact Information</h2>
-                <div className="mb-8">
-                  <p className="text-slate-600 leading-relaxed mb-4">
-                    If you have any questions about these Terms of Service, please contact us:
-                  </p>
-                  <ContactInfo />
                 </div>
 
               </div>

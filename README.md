@@ -409,4 +409,4 @@ For support and questions:
 ---
 
 **Semixon** - Professional Semiconductor & Engineering Solutions
-Built with ❤️ using Next.js, Firebase, and modern web technologies.
+Built with ❤️ using Next.js, Firebase, and modern web technologies by Anand.

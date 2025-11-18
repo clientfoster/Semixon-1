@@ -161,6 +161,7 @@ function AdminSidebar() {
         { name: 'Products', href: '/admin/products', icon: Package, description: 'Product catalog' },
         { name: 'Industries', href: '/admin/industries', icon: Building2, description: 'Industry focus' },
         { name: 'Team', href: '/admin/team', icon: Users, description: 'Team members' },
+        { name: 'Employees', href: '/admin/employees', icon: Users, description: 'Employee management' },
         { name: 'About Management', href: '/admin/about', icon: FileText, description: 'About page & journey management' },
       ]
     },
