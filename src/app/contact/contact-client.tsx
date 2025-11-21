@@ -27,7 +27,7 @@ export function ContactPageClient() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <div className="flex items-center gap-2 text-blue-100">
                 <Phone className="h-5 w-5" />
-                <span>+1 (555) 123-4567</span>
+                <span>+91 9618055526</span>
               </div>
               <div className="flex items-center gap-2 text-blue-100">
                 <Mail className="h-5 w-5" />
@@ -79,7 +79,7 @@ export function ContactPageClient() {
                     </div>
                     <div>
                       <h3 className="font-semibold text-slate-900 mb-2">Phone</h3>
-                      <p className="text-slate-600 mb-2">+1 (555) 123-4567</p>
+                      <p className="text-slate-600 mb-2">+91 9618055526</p>
                       <p className="text-sm text-slate-500">Mon-Fri 9AM-6PM EST</p>
                     </div>
                   </div>
