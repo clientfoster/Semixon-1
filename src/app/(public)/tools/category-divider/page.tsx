@@ -292,12 +292,12 @@ export default function CategoryDividerPage() {
                                     </Button>
                                 </div>
 
-                                <Accordion type="multiple" defaultValue={files.map((_, i) => `item-${i}`)} className="space-y-4">
+                                <Accordion type="multiple" key={files.length} defaultValue={files.length === 1 ? ['item-0'] : []} className="space-y-4">
                                     {files.map((file, fileIndex) => (
                                         <AccordionItem key={fileIndex} value={`item-${fileIndex}`} className="bg-white border border-slate-200 shadow-sm rounded-lg overflow-hidden">
                                             <div className="flex items-center justify-between px-4 py-2 border-b border-slate-100 bg-slate-50/50">
                                                 <AccordionTrigger className="py-0 hover:no-underline flex-1">
-                                                    <div className="flex items-center justify-between w-full pr-4">
+                                                    <div className="flex items-center justify-between flex-1 pr-4">
                                                         <span className="font-semibold text-base text-black">{file.name}</span>
                                                         {selectedColumns[fileIndex] ? (
                                                             <span className="text-xs font-medium px-2.5 py-0.5 rounded-full bg-blue-100 text-blue-700 border border-blue-200 ml-auto mr-4">

@@ -317,7 +317,7 @@ export default function ColumnSelectorPage() {
                                     </Button>
                                 </div>
 
-                                <Accordion type="multiple" defaultValue={files.map((_, i) => `item-${i}`)} className="space-y-4">
+                                <Accordion type="multiple" key={files.length} defaultValue={files.length === 1 ? ['item-0'] : []} className="space-y-4">
                                     {files.map((file, fileIndex) => (
                                         <AccordionItem key={fileIndex} value={`item-${fileIndex}`} className="bg-white border border-slate-200 shadow-sm rounded-lg overflow-hidden">
                                             <div className="flex items-center justify-between px-4 py-2 border-b border-slate-100 bg-slate-50/50">
@@ -335,7 +335,7 @@ export default function ColumnSelectorPage() {
                                                     </div>
                                                     <div className="h-4 w-px bg-slate-300 mx-2" />
                                                     <AccordionTrigger className="py-0 hover:no-underline flex-1">
-                                                        <div className="flex items-center justify-between w-full pr-4">
+                                                        <div className="flex items-center justify-between flex-1 pr-4">
                                                             <span className="font-semibold text-base text-black">{file.name}</span>
                                                             <span className="text-xs font-medium px-2.5 py-0.5 rounded-full bg-blue-50 text-blue-700 border border-blue-100 ml-auto mr-4">
                                                                 {selectedColumns[fileIndex]?.length || 0} / {file.headers.length}
