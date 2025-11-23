@@ -7,8 +7,9 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Upload, FileSpreadsheet, X, Download, RefreshCw, CheckCircle2, Split } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 interface FileData {
     name: string;
@@ -291,43 +292,46 @@ export default function CategoryDividerPage() {
                                     </Button>
                                 </div>
 
-                                <div className="grid gap-6">
+                                <Accordion type="multiple" defaultValue={files.map((_, i) => `item-${i}`)} className="space-y-4">
                                     {files.map((file, fileIndex) => (
-                                        <Card key={fileIndex} className="bg-white shadow-sm hover:shadow-md transition-all duration-200 border-0">
-                                            <CardHeader className="pb-4 border-b border-slate-100 bg-white/50">
-                                                <div className="flex items-center justify-between">
-                                                    <div className="flex items-center gap-3">
-                                                        <Label className="font-semibold text-base text-black">
-                                                            {file.name}
-                                                        </Label>
+                                        <AccordionItem key={fileIndex} value={`item-${fileIndex}`} className="bg-white border border-slate-200 shadow-sm rounded-lg overflow-hidden">
+                                            <div className="flex items-center justify-between px-4 py-2 border-b border-slate-100 bg-slate-50/50">
+                                                <AccordionTrigger className="py-0 hover:no-underline flex-1">
+                                                    <div className="flex items-center justify-between w-full pr-4">
+                                                        <span className="font-semibold text-base text-black">{file.name}</span>
+                                                        {selectedColumns[fileIndex] ? (
+                                                            <span className="text-xs font-medium px-2.5 py-0.5 rounded-full bg-blue-100 text-blue-700 border border-blue-200 ml-auto mr-4">
+                                                                Selected: {selectedColumns[fileIndex]}
+                                                            </span>
+                                                        ) : (
+                                                            <span className="text-xs font-medium px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-500 border border-slate-200 ml-auto mr-4">
+                                                                No selection
+                                                            </span>
+                                                        )}
                                                     </div>
+                                                </AccordionTrigger>
+                                            </div>
+                                            <AccordionContent className="p-4">
+                                                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+                                                    {file.headers.map((header) => (
+                                                        <div
+                                                            key={header}
+                                                            onClick={() => handleColumnSelect(fileIndex, header)}
+                                                            className={cn(
+                                                                "flex items-center justify-center p-3 border rounded-lg cursor-pointer transition-all text-sm font-medium text-center break-words h-full min-h-[3rem]",
+                                                                selectedColumns[fileIndex] === header
+                                                                    ? "bg-blue-50 border-blue-600 text-blue-700 shadow-sm ring-1 ring-blue-600"
+                                                                    : "bg-white border-slate-200 text-gray-700 hover:border-blue-400 hover:shadow-sm hover:text-black"
+                                                            )}
+                                                        >
+                                                            {header}
+                                                        </div>
+                                                    ))}
                                                 </div>
-                                            </CardHeader>
-                                            <CardContent className="pt-6">
-                                                <div className="max-w-md">
-                                                    <Label className="mb-2 block text-sm text-slate-500">
-                                                        Choose which column contains the categories to split this file by
-                                                    </Label>
-                                                    <Select
-                                                        value={selectedColumns[fileIndex] || ''}
-                                                        onValueChange={(value) => handleColumnSelect(fileIndex, value)}
-                                                    >
-                                                        <SelectTrigger className="w-full border-slate-200 focus:ring-blue-500">
-                                                            <SelectValue placeholder="Select a column" />
-                                                        </SelectTrigger>
-                                                        <SelectContent>
-                                                            {file.headers.map((header) => (
-                                                                <SelectItem key={header} value={header}>
-                                                                    {header}
-                                                                </SelectItem>
-                                                            ))}
-                                                        </SelectContent>
-                                                    </Select>
-                                                </div>
-                                            </CardContent>
-                                        </Card>
+                                            </AccordionContent>
+                                        </AccordionItem>
                                     ))}
-                                </div>
+                                </Accordion>
                             </div>
                         ) : (
                             <div className="space-y-6 animate-in fade-in zoom-in-95 duration-500">

@@ -9,6 +9,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Upload, FileSpreadsheet, X, Download, RefreshCw, CheckCircle2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -316,36 +317,42 @@ export default function ColumnSelectorPage() {
                                     </Button>
                                 </div>
 
-                                <div className="grid gap-6">
+                                <Accordion type="multiple" defaultValue={files.map((_, i) => `item-${i}`)} className="space-y-4">
                                     {files.map((file, fileIndex) => (
-                                        <Card key={fileIndex} className="bg-white shadow-sm hover:shadow-md transition-all duration-200 border-0">
-                                            <CardHeader className="pb-4 border-b border-slate-100 bg-white/50">
-                                                <div className="flex items-center justify-between">
-                                                    <div className="flex items-center gap-3">
+                                        <AccordionItem key={fileIndex} value={`item-${fileIndex}`} className="bg-white border border-slate-200 shadow-sm rounded-lg overflow-hidden">
+                                            <div className="flex items-center justify-between px-4 py-2 border-b border-slate-100 bg-slate-50/50">
+                                                <div className="flex items-center gap-4 flex-1">
+                                                    <div className="flex items-center gap-2" onClick={(e) => e.stopPropagation()}>
                                                         <Checkbox
                                                             id={`select-all-${fileIndex}`}
                                                             checked={selectedColumns[fileIndex]?.length === file.headers.length}
                                                             onCheckedChange={(checked) => toggleAllColumns(fileIndex, checked as boolean)}
-                                                            className="data-[state=checked]:bg-blue-600 data-[state=checked]:border-blue-600"
+                                                            className="rounded-none data-[state=checked]:bg-blue-600 data-[state=checked]:border-blue-600"
                                                         />
-                                                        <Label htmlFor={`select-all-${fileIndex}`} className="font-semibold text-base cursor-pointer text-black">
-                                                            {file.name}
+                                                        <Label htmlFor={`select-all-${fileIndex}`} className="text-sm font-semibold cursor-pointer text-black">
+                                                            Select All
                                                         </Label>
                                                     </div>
-                                                    <span className="text-xs font-medium px-3 py-1 rounded-full bg-blue-50 text-blue-700 border border-blue-100">
-                                                        {selectedColumns[fileIndex]?.length || 0} / {file.headers.length}
-                                                    </span>
+                                                    <div className="h-4 w-px bg-slate-300 mx-2" />
+                                                    <AccordionTrigger className="py-0 hover:no-underline flex-1">
+                                                        <div className="flex items-center justify-between w-full pr-4">
+                                                            <span className="font-semibold text-base text-black">{file.name}</span>
+                                                            <span className="text-xs font-medium px-2.5 py-0.5 rounded-full bg-blue-50 text-blue-700 border border-blue-100 ml-auto mr-4">
+                                                                {selectedColumns[fileIndex]?.length || 0} / {file.headers.length}
+                                                            </span>
+                                                        </div>
+                                                    </AccordionTrigger>
                                                 </div>
-                                            </CardHeader>
-                                            <CardContent className="pt-6">
-                                                <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                                            </div>
+                                            <AccordionContent className="p-4">
+                                                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
                                                     {file.headers.map((header) => (
-                                                        <div key={header} className="flex items-center space-x-3 p-2.5 rounded-lg hover:bg-blue-50/50 transition-colors border border-transparent hover:border-blue-100 group">
+                                                        <div key={header} className="flex items-center space-x-3 p-3 border border-slate-200 hover:border-blue-400 hover:shadow-sm transition-all bg-white group">
                                                             <Checkbox
                                                                 id={`col-${fileIndex}-${header}`}
                                                                 checked={selectedColumns[fileIndex]?.includes(header)}
                                                                 onCheckedChange={() => toggleColumn(fileIndex, header)}
-                                                                className="data-[state=checked]:bg-blue-600 data-[state=checked]:border-blue-600"
+                                                                className="rounded-none data-[state=checked]:bg-blue-600 data-[state=checked]:border-blue-600"
                                                             />
                                                             <Label
                                                                 htmlFor={`col-${fileIndex}-${header}`}
@@ -357,10 +364,10 @@ export default function ColumnSelectorPage() {
                                                         </div>
                                                     ))}
                                                 </div>
-                                            </CardContent>
-                                        </Card>
+                                            </AccordionContent>
+                                        </AccordionItem>
                                     ))}
-                                </div>
+                                </Accordion>
                             </div>
                         ) : (
                             <Card className="border-0 bg-gradient-to-br from-green-50 to-emerald-50 animate-in fade-in zoom-in-95 duration-500 shadow-royal-lg">
