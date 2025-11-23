@@ -214,9 +214,9 @@ export default function CategoryDividerPage() {
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
                     {/* Left Column: File Upload */}
                     <div className="lg:col-span-1 space-y-6 sticky top-24 z-10">
-                        <Card className="card-gradient-royal shadow-royal border-0">
+                        <Card className="bg-white shadow-royal border-0">
                             <CardHeader>
-                                <CardTitle className="text-slate-800">Upload Files</CardTitle>
+                                <CardTitle className="text-black">Upload Files</CardTitle>
                                 <CardDescription>Select one or multiple files to split</CardDescription>
                             </CardHeader>
                             <CardContent className="space-y-6">
@@ -225,7 +225,7 @@ export default function CategoryDividerPage() {
                                     <div className="p-3 bg-white rounded-full shadow-royal-sm mb-4 group-hover:scale-110 transition-transform duration-300">
                                         <Upload className="h-8 w-8 text-blue-600" />
                                     </div>
-                                    <p className="text-sm font-medium text-slate-900">Click to upload files</p>
+                                    <p className="text-sm font-medium text-black">Click to upload files</p>
                                     <p className="text-xs text-slate-500 mt-1">CSV, XLSX, XLS supported</p>
                                     <Input
                                         ref={fileInputRef}
@@ -240,7 +240,7 @@ export default function CategoryDividerPage() {
                                 {files.length > 0 && (
                                     <div className="space-y-3">
                                         <div className="flex items-center justify-between">
-                                            <h3 className="text-sm font-medium text-slate-900">Uploaded Files ({files.length})</h3>
+                                            <h3 className="text-sm font-medium text-black">Uploaded Files ({files.length})</h3>
                                             <Button variant="ghost" size="sm" onClick={handleReset} className="text-xs text-slate-500 hover:text-red-600 h-auto p-0 hover:bg-transparent">
                                                 Clear All
                                             </Button>
@@ -251,7 +251,7 @@ export default function CategoryDividerPage() {
                                                     <div className="flex items-center gap-3 overflow-hidden">
                                                         <FileSpreadsheet className="h-5 w-5 text-blue-600 flex-shrink-0" />
                                                         <div className="min-w-0">
-                                                            <p className="text-sm font-medium text-slate-900 truncate" title={file.name}>{file.name}</p>
+                                                            <p className="text-sm font-medium text-black truncate" title={file.name}>{file.name}</p>
                                                             <p className="text-xs text-slate-500">{file.data.length} rows</p>
                                                         </div>
                                                     </div>
@@ -283,7 +283,7 @@ export default function CategoryDividerPage() {
                             <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
                                 <div className="flex items-center justify-between bg-white p-6 rounded-xl shadow-royal border border-slate-100">
                                     <div>
-                                        <h2 className="text-xl font-bold text-slate-900">Select Category Column</h2>
+                                        <h2 className="text-xl font-bold text-black">Select Category Column</h2>
                                         <p className="text-sm text-slate-500 mt-1">Choose the column to split by for each file</p>
                                     </div>
                                     <Button onClick={handleProcess} className="btn-gradient-royal shadow-lg hover:shadow-xl transition-all">
@@ -293,11 +293,11 @@ export default function CategoryDividerPage() {
 
                                 <div className="grid gap-6">
                                     {files.map((file, fileIndex) => (
-                                        <Card key={fileIndex} className="card-gradient-royal shadow-sm hover:shadow-md transition-all duration-200 border-0">
+                                        <Card key={fileIndex} className="bg-white shadow-sm hover:shadow-md transition-all duration-200 border-0">
                                             <CardHeader className="pb-4 border-b border-slate-100 bg-white/50">
                                                 <div className="flex items-center justify-between">
                                                     <div className="flex items-center gap-3">
-                                                        <Label className="font-semibold text-base text-slate-800">
+                                                        <Label className="font-semibold text-base text-black">
                                                             {file.name}
                                                         </Label>
                                                     </div>
@@ -337,8 +337,8 @@ export default function CategoryDividerPage() {
                                             <CheckCircle2 className="h-12 w-12 text-green-500" />
                                         </div>
                                         <div className="space-y-2">
-                                            <h3 className="text-3xl font-bold text-slate-900">Files Split Successfully!</h3>
-                                            <p className="text-lg text-slate-600 mt-2">
+                                            <h3 className="text-3xl font-bold text-black">Files Split Successfully!</h3>
+                                            <p className="text-lg text-gray-700 mt-2">
                                                 Created {Object.keys(categoriesData).length} separate files based on categories.
                                             </p>
                                         </div>
@@ -357,14 +357,14 @@ export default function CategoryDividerPage() {
 
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     {Object.entries(categoriesData).map(([name, data]) => (
-                                        <Card key={name} className="card-gradient-royal border-0 hover:shadow-royal transition-all duration-300">
+                                        <Card key={name} className="bg-white border-0 hover:shadow-royal transition-all duration-300">
                                             <CardContent className="p-4 flex items-center justify-between">
                                                 <div className="flex items-center gap-3 overflow-hidden">
                                                     <div className="p-2 bg-blue-50 rounded-lg">
                                                         <Split className="h-5 w-5 text-blue-600 flex-shrink-0" />
                                                     </div>
                                                     <div className="min-w-0">
-                                                        <p className="text-sm font-medium text-slate-900 truncate" title={name}>{name}</p>
+                                                        <p className="text-sm font-medium text-black truncate" title={name}>{name}</p>
                                                         <p className="text-xs text-slate-500">{data.data.length} rows</p>
                                                     </div>
                                                 </div>
@@ -373,7 +373,8 @@ export default function CategoryDividerPage() {
                                     ))}
                                 </div>
                             </div>
-                        )}
+                        )
+                        }
                     </div>
                 </div>
             </div>

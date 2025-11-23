@@ -239,9 +239,9 @@ export default function ColumnSelectorPage() {
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
                     {/* Left Column: File Upload */}
                     <div className="lg:col-span-1 space-y-6 sticky top-24 z-10">
-                        <Card className="card-gradient-royal shadow-royal border-0">
+                        <Card className="bg-white shadow-royal border-0">
                             <CardHeader>
-                                <CardTitle className="text-slate-800">Upload Files</CardTitle>
+                                <CardTitle className="text-black">Upload Files</CardTitle>
                                 <CardDescription>Select one or multiple files to process</CardDescription>
                             </CardHeader>
                             <CardContent className="space-y-6">
@@ -250,7 +250,7 @@ export default function ColumnSelectorPage() {
                                     <div className="p-3 bg-white rounded-full shadow-royal-sm mb-4 group-hover:scale-110 transition-transform duration-300">
                                         <Upload className="h-8 w-8 text-blue-600" />
                                     </div>
-                                    <p className="text-sm font-medium text-slate-900">Click to upload files</p>
+                                    <p className="text-sm font-medium text-black">Click to upload files</p>
                                     <p className="text-xs text-slate-500 mt-1">CSV, XLSX, XLS supported</p>
                                     <Input
                                         ref={fileInputRef}
@@ -265,7 +265,7 @@ export default function ColumnSelectorPage() {
                                 {files.length > 0 && (
                                     <div className="space-y-3">
                                         <div className="flex items-center justify-between">
-                                            <h3 className="text-sm font-medium text-slate-900">Uploaded Files ({files.length})</h3>
+                                            <h3 className="text-sm font-medium text-black">Uploaded Files ({files.length})</h3>
                                             <Button variant="ghost" size="sm" onClick={handleReset} className="text-xs text-slate-500 hover:text-red-600 h-auto p-0 hover:bg-transparent">
                                                 Clear All
                                             </Button>
@@ -276,7 +276,7 @@ export default function ColumnSelectorPage() {
                                                     <div className="flex items-center gap-3 overflow-hidden">
                                                         <FileSpreadsheet className="h-5 w-5 text-blue-600 flex-shrink-0" />
                                                         <div className="min-w-0">
-                                                            <p className="text-sm font-medium text-slate-900 truncate" title={file.name}>{file.name}</p>
+                                                            <p className="text-sm font-medium text-black truncate" title={file.name}>{file.name}</p>
                                                             <p className="text-xs text-slate-500">{file.data.length} rows</p>
                                                         </div>
                                                     </div>
@@ -308,7 +308,7 @@ export default function ColumnSelectorPage() {
                             <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
                                 <div className="flex items-center justify-between bg-white p-6 rounded-xl shadow-royal border border-slate-100">
                                     <div>
-                                        <h2 className="text-xl font-bold text-slate-900">Select Columns</h2>
+                                        <h2 className="text-xl font-bold text-black">Select Columns</h2>
                                         <p className="text-sm text-slate-500 mt-1">Choose columns to keep from each file</p>
                                     </div>
                                     <Button onClick={handleProcess} className="btn-gradient-royal shadow-lg hover:shadow-xl transition-all">
@@ -318,7 +318,7 @@ export default function ColumnSelectorPage() {
 
                                 <div className="grid gap-6">
                                     {files.map((file, fileIndex) => (
-                                        <Card key={fileIndex} className="card-gradient-royal shadow-sm hover:shadow-md transition-all duration-200 border-0">
+                                        <Card key={fileIndex} className="bg-white shadow-sm hover:shadow-md transition-all duration-200 border-0">
                                             <CardHeader className="pb-4 border-b border-slate-100 bg-white/50">
                                                 <div className="flex items-center justify-between">
                                                     <div className="flex items-center gap-3">
@@ -328,7 +328,7 @@ export default function ColumnSelectorPage() {
                                                             onCheckedChange={(checked) => toggleAllColumns(fileIndex, checked as boolean)}
                                                             className="data-[state=checked]:bg-blue-600 data-[state=checked]:border-blue-600"
                                                         />
-                                                        <Label htmlFor={`select-all-${fileIndex}`} className="font-semibold text-base cursor-pointer text-slate-800">
+                                                        <Label htmlFor={`select-all-${fileIndex}`} className="font-semibold text-base cursor-pointer text-black">
                                                             {file.name}
                                                         </Label>
                                                     </div>
@@ -349,7 +349,7 @@ export default function ColumnSelectorPage() {
                                                             />
                                                             <Label
                                                                 htmlFor={`col-${fileIndex}-${header}`}
-                                                                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer truncate w-full text-slate-600 group-hover:text-slate-900"
+                                                                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer truncate w-full text-gray-700 group-hover:text-black"
                                                                 title={header}
                                                             >
                                                                 {header}
@@ -369,8 +369,8 @@ export default function ColumnSelectorPage() {
                                         <CheckCircle2 className="h-12 w-12 text-green-500" />
                                     </div>
                                     <div className="space-y-2">
-                                        <h3 className="text-3xl font-bold text-slate-900">Ready to Download!</h3>
-                                        <p className="text-lg text-slate-600 max-w-md mx-auto">
+                                        <h3 className="text-3xl font-bold text-black">Ready to Download!</h3>
+                                        <p className="text-lg text-gray-700 max-w-md mx-auto">
                                             Your files have been processed successfully. You can now download the result.
                                         </p>
                                     </div>
