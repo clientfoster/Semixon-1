@@ -250,7 +250,7 @@ export default function DataCleanerPage() {
                                                     onChange={(e) => setRemoveBlankRows(e.target.checked)}
                                                     className="w-5 h-5 text-blue-600 rounded focus:ring-blue-500"
                                                 />
-                                                <Label htmlFor="removeBlankRows" className="cursor-pointer">
+                                                <Label htmlFor="removeBlankRows" className="cursor-pointer text-black">
                                                     Remove rows with any empty cells
                                                 </Label>
                                             </div>
@@ -263,7 +263,7 @@ export default function DataCleanerPage() {
                                                     onChange={(e) => setRemoveEmptyColumns(e.target.checked)}
                                                     className="w-5 h-5 text-blue-600 rounded focus:ring-blue-500"
                                                 />
-                                                <Label htmlFor="removeEmptyColumns" className="cursor-pointer">
+                                                <Label htmlFor="removeEmptyColumns" className="cursor-pointer text-black">
                                                     Remove completely empty columns
                                                 </Label>
                                             </div>

@@ -240,7 +240,7 @@ export default function FileSplitterPage() {
                                     </CardHeader>
                                     <CardContent className="space-y-6">
                                         <div className="space-y-2">
-                                            <Label htmlFor="splitCount">Rows per file</Label>
+                                            <Label htmlFor="splitCount" className="text-black">Rows per file</Label>
                                             <Input
                                                 id="splitCount"
                                                 type="number"
@@ -253,15 +253,15 @@ export default function FileSplitterPage() {
 
                                         <div className="bg-blue-50 p-4 rounded-lg border border-blue-200 space-y-2">
                                             <div className="flex justify-between">
-                                                <span className="text-sm font-medium">Total rows:</span>
+                                                <span className="text-sm font-medium text-black">Total rows:</span>
                                                 <span className="text-sm font-semibold text-blue-700">{totalRows}</span>
                                             </div>
                                             <div className="flex justify-between">
-                                                <span className="text-sm font-medium">Files to be created:</span>
+                                                <span className="text-sm font-medium text-black">Files to be created:</span>
                                                 <span className="text-sm font-semibold text-blue-700">{fileCount}</span>
                                             </div>
                                             <div className="flex justify-between">
-                                                <span className="text-sm font-medium">Rows in last file:</span>
+                                                <span className="text-sm font-medium text-black">Rows in last file:</span>
                                                 <span className="text-sm font-semibold text-blue-700">{lastFileRows}</span>
                                             </div>
                                         </div>
@@ -313,7 +313,7 @@ export default function FileSplitterPage() {
                                                 <div key={index} className="flex items-center justify-between p-3 bg-slate-50 hover:bg-slate-100 rounded-lg transition-colors border-l-4 border-blue-600">
                                                     <div className="flex items-center gap-3">
                                                         <FileText className="h-5 w-5 text-blue-600" />
-                                                        <span className="text-sm font-medium">{file.name}</span>
+                                                        <span className="text-sm font-medium text-black">{file.name}</span>
                                                     </div>
                                                     <span className="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded-full">
                                                         {file.rowCount} rows

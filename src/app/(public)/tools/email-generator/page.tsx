@@ -303,38 +303,38 @@ export default function EmailGeneratorPage() {
                                     </CardHeader>
                                     <CardContent className="space-y-6">
                                         <div className="space-y-2">
-                                            <Label htmlFor="firstName">First Name Column</Label>
+                                            <Label htmlFor="firstName" className="text-black">First Name Column</Label>
                                             <select
                                                 id="firstName"
                                                 value={firstNameCol}
                                                 onChange={(e) => setFirstNameCol(e.target.value)}
-                                                className="w-full p-3 border-2 border-slate-200 rounded-lg focus:border-blue-600 focus:outline-none"
+                                                className="w-full p-3 border-2 border-slate-200 rounded-lg focus:border-blue-600 focus:outline-none text-black"
                                             >
                                                 <option value="">Select Column</option>
-                                                {csvHeaders.map(h => <option key={h} value={h}>{h}</option>)}
+                                                {csvHeaders.map((h, i) => <option key={i} value={h}>{h}</option>)}
                                             </select>
                                         </div>
 
                                         <div className="space-y-2">
-                                            <Label htmlFor="lastName">Last Name Column</Label>
+                                            <Label htmlFor="lastName" className="text-black">Last Name Column</Label>
                                             <select
                                                 id="lastName"
                                                 value={lastNameCol}
                                                 onChange={(e) => setLastNameCol(e.target.value)}
-                                                className="w-full p-3 border-2 border-slate-200 rounded-lg focus:border-blue-600 focus:outline-none"
+                                                className="w-full p-3 border-2 border-slate-200 rounded-lg focus:border-blue-600 focus:outline-none text-black"
                                             >
                                                 <option value="">Select Column</option>
-                                                {csvHeaders.map(h => <option key={h} value={h}>{h}</option>)}
+                                                {csvHeaders.map((h, i) => <option key={i} value={h}>{h}</option>)}
                                             </select>
                                         </div>
 
                                         <div className="space-y-2">
-                                            <Label htmlFor="domain">Domain Name</Label>
+                                            <Label htmlFor="domain" className="text-black">Domain Name</Label>
                                             <select
                                                 id="domain"
                                                 value={domainType}
                                                 onChange={(e) => setDomainType(e.target.value)}
-                                                className="w-full p-3 border-2 border-slate-200 rounded-lg focus:border-blue-600 focus:outline-none"
+                                                className="w-full p-3 border-2 border-slate-200 rounded-lg focus:border-blue-600 focus:outline-none text-black"
                                             >
                                                 <option value="">Choose Domain</option>
                                                 <option value="@gmail.com">@gmail.com</option>
@@ -358,10 +358,10 @@ export default function EmailGeneratorPage() {
                                             <select
                                                 value={domainColumn}
                                                 onChange={(e) => setDomainColumn(e.target.value)}
-                                                className="w-full p-3 border-2 border-slate-200 rounded-lg focus:border-blue-600 focus:outline-none"
+                                                className="w-full p-3 border-2 border-slate-200 rounded-lg focus:border-blue-600 focus:outline-none text-black"
                                             >
                                                 <option value="">Select Column</option>
-                                                {csvHeaders.map(h => <option key={h} value={h}>{h}</option>)}
+                                                {csvHeaders.map((h, i) => <option key={i} value={h}>{h}</option>)}
                                             </select>
                                         )}
                                     </CardContent>
@@ -389,7 +389,7 @@ export default function EmailGeneratorPage() {
                                                         onChange={() => togglePattern(index)}
                                                         className="w-5 h-5 text-blue-600 rounded focus:ring-blue-500"
                                                     />
-                                                    <label htmlFor={`pattern-${index}`} className="flex-1 cursor-pointer text-sm">
+                                                    <label htmlFor={`pattern-${index}`} className="flex-1 cursor-pointer text-sm text-black">
                                                         <span className="font-medium">{format.label}</span>
                                                         <span className="text-slate-500"> ({format.example}@domain.com)</span>
                                                     </label>
