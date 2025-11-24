@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
-import { Upload, FileSpreadsheet, X, Download, CheckCircle2 } from 'lucide-react';
+import { Upload, FileSpreadsheet, X, Download, CheckCircle2, Sparkles } from 'lucide-react';
 
 interface EmailFormat {
     fn: (f: string, l: string, fi: string, li: string) => string;
@@ -219,176 +219,222 @@ export default function EmailGeneratorPage() {
                     </p>
                 </div>
 
-                <div className="grid grid-cols-1 gap-8">
-                    <Card className="bg-white shadow-royal border-0">
-                        <CardHeader>
-                            <CardTitle className="text-black">Upload CSV File</CardTitle>
-                            <CardDescription>Select a CSV file with name columns</CardDescription>
-                        </CardHeader>
-                        <CardContent className="space-y-6">
-                            <div className="flex flex-col items-center justify-center p-8 border-2 border-dashed border-blue-200 rounded-xl bg-blue-50/30 hover:bg-blue-50/50 transition-colors cursor-pointer group"
-                                onClick={() => fileInputRef.current?.click()}>
-                                <div className="p-3 bg-white rounded-full shadow-royal-sm mb-4 group-hover:scale-110 transition-transform duration-300">
-                                    <Upload className="h-8 w-8 text-blue-600" />
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+                    {/* Left Column: File Upload */}
+                    <div className="lg:col-span-1 space-y-6 sticky top-24 z-10">
+                        <Card className="bg-white shadow-royal border-0">
+                            <CardHeader>
+                                <CardTitle className="text-black">Upload CSV File</CardTitle>
+                                <CardDescription>Select a CSV file with name columns</CardDescription>
+                            </CardHeader>
+                            <CardContent className="space-y-6">
+                                <div className="flex flex-col items-center justify-center p-8 border-2 border-dashed border-blue-200 rounded-xl bg-blue-50/30 hover:bg-blue-50/50 transition-colors cursor-pointer group"
+                                    onClick={() => fileInputRef.current?.click()}>
+                                    <div className="p-3 bg-white rounded-full shadow-royal-sm mb-4 group-hover:scale-110 transition-transform duration-300">
+                                        <Upload className="h-8 w-8 text-blue-600" />
+                                    </div>
+                                    <p className="text-sm font-medium text-black">Click to upload CSV file</p>
+                                    <p className="text-xs text-slate-500 mt-1">CSV files up to 100MB</p>
+                                    <Input
+                                        ref={fileInputRef}
+                                        type="file"
+                                        className="hidden"
+                                        accept=".csv"
+                                        onChange={handleFileUpload}
+                                    />
                                 </div>
-                                <p className="text-sm font-medium text-black">Click to upload CSV file</p>
-                                <p className="text-xs text-slate-500 mt-1">CSV files up to 100MB</p>
-                                <Input
-                                    ref={fileInputRef}
-                                    type="file"
-                                    className="hidden"
-                                    accept=".csv"
-                                    onChange={handleFileUpload}
-                                />
-                            </div>
 
-                            {fileName && (
-                                <div className="p-3 bg-blue-50 border border-blue-200 rounded-lg">
-                                    <p className="text-sm font-medium text-blue-700">Selected: {fileName}</p>
-                                </div>
-                            )}
-                        </CardContent>
-                    </Card>
-
-                    {csvHeaders.length > 0 && (
-                        <>
-                            <Card className="bg-white shadow-royal border-0">
-                                <CardHeader>
-                                    <CardTitle className="text-black">Map Columns</CardTitle>
-                                    <CardDescription>Select which columns contain the name data</CardDescription>
-                                </CardHeader>
-                                <CardContent className="space-y-6">
-                                    <div className="space-y-2">
-                                        <Label htmlFor="firstName">First Name Column</Label>
-                                        <select
-                                            id="firstName"
-                                            value={firstNameCol}
-                                            onChange={(e) => setFirstNameCol(e.target.value)}
-                                            className="w-full p-3 border-2 border-slate-200 rounded-lg focus:border-blue-600 focus:outline-none"
-                                        >
-                                            <option value="">Select Column</option>
-                                            {csvHeaders.map(h => <option key={h} value={h}>{h}</option>)}
-                                        </select>
+                                {fileName && (
+                                    <div className="p-3 bg-blue-50 border border-blue-200 rounded-lg">
+                                        <p className="text-sm font-medium text-blue-700">Selected: {fileName}</p>
                                     </div>
+                                )}
+                            </CardContent>
+                        </Card>
 
-                                    <div className="space-y-2">
-                                        <Label htmlFor="lastName">Last Name Column</Label>
-                                        <select
-                                            id="lastName"
-                                            value={lastNameCol}
-                                            onChange={(e) => setLastNameCol(e.target.value)}
-                                            className="w-full p-3 border-2 border-slate-200 rounded-lg focus:border-blue-600 focus:outline-none"
-                                        >
-                                            <option value="">Select Column</option>
-                                            {csvHeaders.map(h => <option key={h} value={h}>{h}</option>)}
-                                        </select>
-                                    </div>
-
-                                    <div className="space-y-2">
-                                        <Label htmlFor="domain">Domain Name</Label>
-                                        <select
-                                            id="domain"
-                                            value={domainType}
-                                            onChange={(e) => setDomainType(e.target.value)}
-                                            className="w-full p-3 border-2 border-slate-200 rounded-lg focus:border-blue-600 focus:outline-none"
-                                        >
-                                            <option value="">Choose Domain</option>
-                                            <option value="@gmail.com">@gmail.com</option>
-                                            <option value="@yahoo.com">@yahoo.com</option>
-                                            <option value="custom">Custom Domain</option>
-                                            <option value="map-from-sheet">Map From Sheet</option>
-                                        </select>
-                                    </div>
-
-                                    {domainType === 'custom' && (
-                                        <Input
-                                            type="text"
-                                            value={customDomain}
-                                            onChange={(e) => setCustomDomain(e.target.value)}
-                                            placeholder="@company.com"
-                                            className="w-full"
-                                        />
-                                    )}
-
-                                    {domainType === 'map-from-sheet' && (
-                                        <select
-                                            value={domainColumn}
-                                            onChange={(e) => setDomainColumn(e.target.value)}
-                                            className="w-full p-3 border-2 border-slate-200 rounded-lg focus:border-blue-600 focus:outline-none"
-                                        >
-                                            <option value="">Select Column</option>
-                                            {csvHeaders.map(h => <option key={h} value={h}>{h}</option>)}
-                                        </select>
-                                    )}
-                                </CardContent>
-                            </Card>
-
-                            <Card className="bg-white shadow-royal border-0">
-                                <CardHeader>
-                                    <CardTitle className="text-black">Email Patterns</CardTitle>
-                                    <CardDescription>Select which email formats to generate</CardDescription>
-                                </CardHeader>
-                                <CardContent className="space-y-6">
-                                    <div className="flex gap-3 flex-wrap">
-                                        <Button onClick={selectAll} variant="outline" size="sm">Select All</Button>
-                                        <Button onClick={deselectAll} variant="outline" size="sm">Deselect All</Button>
-                                        <Button onClick={invertSelection} variant="outline" size="sm">Invert Selection</Button>
-                                    </div>
-
-                                    <div className="max-h-96 overflow-y-auto space-y-2 pr-2">
-                                        {EMAIL_FORMATS.map((format, index) => (
-                                            <div key={index} className="flex items-center gap-3 p-3 bg-slate-50 hover:bg-slate-100 rounded-lg transition-colors">
-                                                <input
-                                                    type="checkbox"
-                                                    id={`pattern-${index}`}
-                                                    checked={selectedPatterns[index]}
-                                                    onChange={() => togglePattern(index)}
-                                                    className="w-5 h-5 text-blue-600 rounded focus:ring-blue-500"
-                                                />
-                                                <label htmlFor={`pattern-${index}`} className="flex-1 cursor-pointer text-sm">
-                                                    <span className="font-medium">{format.label}</span>
-                                                    <span className="text-slate-500"> ({format.example}@domain.com)</span>
-                                                </label>
-                                            </div>
-                                        ))}
-                                    </div>
-
-                                    <Button
-                                        onClick={handleGenerate}
-                                        disabled={isProcessing || !firstNameCol || !lastNameCol || !domainType}
-                                        className="w-full btn-gradient-royal shadow-lg hover:shadow-xl transition-all"
-                                    >
-                                        {isProcessing ? 'Generating...' : 'Generate Emails'}
-                                    </Button>
-                                </CardContent>
-                            </Card>
-                        </>
-                    )}
-
-                    {showResults && (
-                        <Card className="border-0 bg-gradient-to-br from-green-50 to-emerald-50 shadow-royal-lg">
-                            <CardContent className="p-8">
-                                <div className="flex items-center justify-between">
-                                    <div className="flex items-center gap-4">
-                                        <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-royal">
-                                            <CheckCircle2 className="h-8 w-8 text-green-500" />
-                                        </div>
-                                        <div>
-                                            <h3 className="text-2xl font-bold text-black">Emails Generated!</h3>
-                                            <p className="text-slate-600">Ready to download</p>
-                                        </div>
-                                    </div>
-                                    <Button
-                                        onClick={handleDownload}
-                                        className="bg-green-600 hover:bg-green-700 shadow-lg hover:shadow-xl transition-all text-white"
-                                    >
-                                        <Download className="h-5 w-5 mr-2" />
-                                        Download CSV
-                                    </Button>
+                        <Card className="bg-blue-50/30 border border-blue-100">
+                            <CardContent className="p-6">
+                                <div className="space-y-3">
+                                    <h3 className="text-sm font-semibold text-black flex items-center gap-2">
+                                        <span className="text-blue-600">ℹ️</span>
+                                        How it works
+                                    </h3>
+                                    <ul className="space-y-2 text-sm text-slate-600">
+                                        <li className="flex items-start gap-2">
+                                            <span className="text-blue-600 mt-0.5">•</span>
+                                            <span>Upload a CSV file with name columns</span>
+                                        </li>
+                                        <li className="flex items-start gap-2">
+                                            <span className="text-blue-600 mt-0.5">•</span>
+                                            <span>Map first name, last name, and domain</span>
+                                        </li>
+                                        <li className="flex items-start gap-2">
+                                            <span className="text-blue-600 mt-0.5">•</span>
+                                            <span>Select from 24+ email format patterns</span>
+                                        </li>
+                                        <li className="flex items-start gap-2">
+                                            <span className="text-blue-600 mt-0.5">•</span>
+                                            <span>All processing happens locally in your browser</span>
+                                        </li>
+                                    </ul>
                                 </div>
                             </CardContent>
                         </Card>
-                    )}
+                    </div>
+
+                    {/* Right Column: Options & Results */}
+                    <div className="lg:col-span-2 space-y-6">
+                        {csvHeaders.length === 0 ? (
+                            <Card className="border-dashed border-2 border-slate-200 bg-slate-50/30 h-[400px] flex items-center justify-center">
+                                <div className="text-center text-slate-400">
+                                    <div className="w-20 h-20 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                                        <Sparkles className="h-10 w-10 opacity-50" />
+                                    </div>
+                                    <p className="text-lg font-medium text-slate-500">No file uploaded</p>
+                                    <p className="text-sm">Upload a CSV file to generate emails</p>
+                                </div>
+                            </Card>
+                        ) : !showResults ? (
+                            <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                                <Card className="bg-white shadow-royal border-0">
+                                    <CardHeader>
+                                        <CardTitle className="text-black">Map Columns</CardTitle>
+                                        <CardDescription>Select which columns contain the name data</CardDescription>
+                                    </CardHeader>
+                                    <CardContent className="space-y-6">
+                                        <div className="space-y-2">
+                                            <Label htmlFor="firstName">First Name Column</Label>
+                                            <select
+                                                id="firstName"
+                                                value={firstNameCol}
+                                                onChange={(e) => setFirstNameCol(e.target.value)}
+                                                className="w-full p-3 border-2 border-slate-200 rounded-lg focus:border-blue-600 focus:outline-none"
+                                            >
+                                                <option value="">Select Column</option>
+                                                {csvHeaders.map(h => <option key={h} value={h}>{h}</option>)}
+                                            </select>
+                                        </div>
+
+                                        <div className="space-y-2">
+                                            <Label htmlFor="lastName">Last Name Column</Label>
+                                            <select
+                                                id="lastName"
+                                                value={lastNameCol}
+                                                onChange={(e) => setLastNameCol(e.target.value)}
+                                                className="w-full p-3 border-2 border-slate-200 rounded-lg focus:border-blue-600 focus:outline-none"
+                                            >
+                                                <option value="">Select Column</option>
+                                                {csvHeaders.map(h => <option key={h} value={h}>{h}</option>)}
+                                            </select>
+                                        </div>
+
+                                        <div className="space-y-2">
+                                            <Label htmlFor="domain">Domain Name</Label>
+                                            <select
+                                                id="domain"
+                                                value={domainType}
+                                                onChange={(e) => setDomainType(e.target.value)}
+                                                className="w-full p-3 border-2 border-slate-200 rounded-lg focus:border-blue-600 focus:outline-none"
+                                            >
+                                                <option value="">Choose Domain</option>
+                                                <option value="@gmail.com">@gmail.com</option>
+                                                <option value="@yahoo.com">@yahoo.com</option>
+                                                <option value="custom">Custom Domain</option>
+                                                <option value="map-from-sheet">Map From Sheet</option>
+                                            </select>
+                                        </div>
+
+                                        {domainType === 'custom' && (
+                                            <Input
+                                                type="text"
+                                                value={customDomain}
+                                                onChange={(e) => setCustomDomain(e.target.value)}
+                                                placeholder="@company.com"
+                                                className="w-full"
+                                            />
+                                        )}
+
+                                        {domainType === 'map-from-sheet' && (
+                                            <select
+                                                value={domainColumn}
+                                                onChange={(e) => setDomainColumn(e.target.value)}
+                                                className="w-full p-3 border-2 border-slate-200 rounded-lg focus:border-blue-600 focus:outline-none"
+                                            >
+                                                <option value="">Select Column</option>
+                                                {csvHeaders.map(h => <option key={h} value={h}>{h}</option>)}
+                                            </select>
+                                        )}
+                                    </CardContent>
+                                </Card>
+
+                                <Card className="bg-white shadow-royal border-0">
+                                    <CardHeader>
+                                        <CardTitle className="text-black">Email Patterns</CardTitle>
+                                        <CardDescription>Select which email formats to generate</CardDescription>
+                                    </CardHeader>
+                                    <CardContent className="space-y-6">
+                                        <div className="flex gap-3 flex-wrap">
+                                            <Button onClick={selectAll} variant="outline" size="sm">Select All</Button>
+                                            <Button onClick={deselectAll} variant="outline" size="sm">Deselect All</Button>
+                                            <Button onClick={invertSelection} variant="outline" size="sm">Invert Selection</Button>
+                                        </div>
+
+                                        <div className="max-h-96 overflow-y-auto space-y-2 pr-2">
+                                            {EMAIL_FORMATS.map((format, index) => (
+                                                <div key={index} className="flex items-center gap-3 p-3 bg-slate-50 hover:bg-slate-100 rounded-lg transition-colors">
+                                                    <input
+                                                        type="checkbox"
+                                                        id={`pattern-${index}`}
+                                                        checked={selectedPatterns[index]}
+                                                        onChange={() => togglePattern(index)}
+                                                        className="w-5 h-5 text-blue-600 rounded focus:ring-blue-500"
+                                                    />
+                                                    <label htmlFor={`pattern-${index}`} className="flex-1 cursor-pointer text-sm">
+                                                        <span className="font-medium">{format.label}</span>
+                                                        <span className="text-slate-500"> ({format.example}@domain.com)</span>
+                                                    </label>
+                                                </div>
+                                            ))}
+                                        </div>
+
+                                        <Button
+                                            onClick={handleGenerate}
+                                            disabled={isProcessing || !firstNameCol || !lastNameCol || !domainType}
+                                            className="w-full btn-gradient-royal shadow-lg hover:shadow-xl transition-all"
+                                        >
+                                            {isProcessing ? 'Generating...' : 'Generate Emails'}
+                                        </Button>
+                                    </CardContent>
+                                </Card>
+                            </div>
+                        ) : (
+                            <div className="space-y-6 animate-in fade-in zoom-in-95 duration-500">
+                                <Card className="border-0 bg-gradient-to-br from-green-50 to-emerald-50 shadow-royal-lg">
+                                    <CardContent className="p-12 text-center space-y-8">
+                                        <div className="mx-auto w-24 h-24 bg-white rounded-full flex items-center justify-center shadow-royal-lg mb-6">
+                                            <CheckCircle2 className="h-12 w-12 text-green-500" />
+                                        </div>
+                                        <div className="space-y-2">
+                                            <h3 className="text-3xl font-bold text-black">Emails Generated Successfully!</h3>
+                                            <p className="text-lg text-gray-700 max-w-md mx-auto">
+                                                Your email addresses have been generated. Download the CSV file below.
+                                            </p>
+                                        </div>
+
+                                        <div className="flex flex-col sm:flex-row justify-center gap-4 pt-4">
+                                            <Button variant="outline" size="lg" onClick={() => setShowResults(false)} className="border-slate-200 hover:bg-white hover:text-blue-600">
+                                                Back to Options
+                                            </Button>
+                                            <Button size="lg" onClick={handleDownload} className="bg-green-600 hover:bg-green-700 shadow-lg hover:shadow-xl transition-all text-white px-8">
+                                                <Download className="h-5 w-5 mr-2" />
+                                                Download CSV
+                                            </Button>
+                                        </div>
+                                    </CardContent>
+                                </Card>
+                            </div>
+                        )}
+                    </div>
                 </div>
             </div>
         </div>
