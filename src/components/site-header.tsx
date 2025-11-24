@@ -100,6 +100,7 @@ const navLinks = [
         items: [
           { href: '/tools/column-selector', label: 'Column Selector' },
           { href: '/tools/category-divider', label: 'Category Divider' },
+          { href: '/tools/csv-merger', label: 'CSV/XLSX Merger' },
         ]
       }
     ]

@@ -94,7 +94,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="scroll-smooth dark">
+    <html lang="en" className="scroll-smooth dark" suppressHydrationWarning>
       <head>
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
         <link rel="shortcut icon" href="/favicon.svg" />
@@ -103,8 +103,8 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://pagead2.googlesyndication.com" />
         <link rel="dns-prefetch" href="https://www.google-analytics.com" />
-        <link 
-          href="https://fonts.googleapis.com/css2?family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" 
+        <link
+          href="https://fonts.googleapis.com/css2?family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
           rel="stylesheet"
         />
         <noscript>
@@ -126,7 +126,7 @@ export default function RootLayout({
               "industry": "Semiconductor Engineering",
               "services": [
                 "IC Design",
-                "Wafer Fabrication", 
+                "Wafer Fabrication",
                 "Reliability Testing",
                 "ASIC Design",
                 "FPGA Design",
@@ -178,29 +178,28 @@ export default function RootLayout({
           }}
         />
       </head>
-            <body className="font-body antialiased">
-              <PerformanceProvider>
-                <PerformanceMonitor />
-                <div className="relative flex min-h-screen flex-col bg-background">
-                  <SiteHeader />
-                  <MaintenanceBanner />
-                  <main className="flex-1">{children}</main>
-                  <SiteFooter />
-                </div>
-                <Toaster />
-              </PerformanceProvider>
-              <SpeedInsights />
-              {/* Debug - Remove after testing */}
-              {process.env.NODE_ENV === 'development' && (
-                <script
-                  dangerouslySetInnerHTML={{
-                    __html: `console.log('Speed Insights & Google Analytics loaded');`
-                  }}
-                />
-              )}
-            </body>
+      <body className="font-body antialiased">
+        <PerformanceProvider>
+          <PerformanceMonitor />
+          <div className="relative flex min-h-screen flex-col bg-background">
+            <SiteHeader />
+            <MaintenanceBanner />
+            <main className="flex-1">{children}</main>
+            <SiteFooter />
+          </div>
+          <Toaster />
+        </PerformanceProvider>
+        <SpeedInsights />
+        {/* Debug - Remove after testing */}
+        {process.env.NODE_ENV === 'development' && (
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `console.log('Speed Insights & Google Analytics loaded');`
+            }}
+          />
+        )}
+      </body>
     </html>
   );
 }
 
-    
