@@ -21,12 +21,12 @@ export function SiteFooter() {
       <div className="container mx-auto py-16 px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-12">
           <div className="sm:col-span-2 lg:col-span-2">
-             <Link href="/" className="flex items-center space-x-3 group mb-6">
-                <div className="w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center group-hover:scale-110 transition-all duration-300 shadow-lg">
-                  <Logo className="h-6 w-6 text-white" />
-                </div>
-                <span className="text-3xl font-bold text-white group-hover:text-blue-400 transition-colors duration-300">{settings.siteName}</span>
-             </Link>
+            <Link href="/" className="flex items-center space-x-3 group mb-6">
+              <div className="w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center group-hover:scale-110 transition-all duration-300 shadow-lg">
+                <Logo className="h-6 w-6 text-white" />
+              </div>
+              <span className="text-3xl font-bold text-white group-hover:text-blue-400 transition-colors duration-300">{settings.siteName}</span>
+            </Link>
             <p className="text-slate-300 text-lg leading-relaxed mb-8 max-w-lg">
               {settings.siteDescription}
             </p>
@@ -41,7 +41,7 @@ export function SiteFooter() {
                   <Facebook className="w-5 h-5 text-slate-300 group-hover:text-white transition-colors duration-300" />
                 </button>
               )}
-              
+
               {/* Twitter Button */}
               {settings.twitterUrl && (
                 <button
@@ -52,7 +52,7 @@ export function SiteFooter() {
                   <Twitter className="w-5 h-5 text-slate-300 group-hover:text-white transition-colors duration-300" />
                 </button>
               )}
-              
+
               {/* LinkedIn Button */}
               {settings.linkedinUrl && (
                 <button
@@ -63,7 +63,7 @@ export function SiteFooter() {
                   <Linkedin className="w-5 h-5 text-slate-300 group-hover:text-white transition-colors duration-300" />
                 </button>
               )}
-              
+
               {/* Instagram Button */}
               {settings.instagramUrl && (
                 <button
@@ -74,7 +74,7 @@ export function SiteFooter() {
                   <Instagram className="w-5 h-5 text-slate-300 group-hover:text-white transition-colors duration-300" />
                 </button>
               )}
-              
+
               {/* YouTube Button */}
               {settings.youtubeUrl && (
                 <button
@@ -85,7 +85,7 @@ export function SiteFooter() {
                   <Youtube className="w-5 h-5 text-slate-300 group-hover:text-white transition-colors duration-300" />
                 </button>
               )}
-              
+
               {/* GitHub Button */}
               {settings.githubUrl && (
                 <button
@@ -96,7 +96,7 @@ export function SiteFooter() {
                   <Github className="w-5 h-5 text-slate-300 group-hover:text-white transition-colors duration-300" />
                 </button>
               )}
-              
+
               {/* Email Button */}
               <button
                 onClick={() => window.open(`mailto:${settings.email}`, '_blank')}
@@ -175,11 +175,11 @@ export function SiteFooter() {
             <p className="text-slate-400 text-sm">
               Site developed by{' '}
               <button
-                onClick={() => window.open('https://anandverse.space', '_blank')}
+                onClick={() => window.open('https://semixon.com', '_blank')}
                 className="text-blue-400 hover:text-blue-300 font-semibold transition-all duration-300 underline decoration-blue-400 hover:decoration-blue-300 underline-offset-2 hover:underline-offset-4"
-                aria-label="Visit AnansVerse Web Services website"
+                aria-label="Visit Semixon Technologies website"
               >
-                AnandVerse Web Services
+                Semixon Technologies Web Services
               </button>
             </p>
           </div>

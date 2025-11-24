@@ -8,7 +8,8 @@ import {
     Scissors,
     Sparkles,
     FileText,
-    ArrowRight
+    ArrowRight,
+    Calendar
 } from 'lucide-react';
 
 const tools = [
@@ -67,6 +68,14 @@ const tools = [
         href: '/tools/data-cleaner',
         color: 'from-pink-500 to-rose-500',
         features: ['Remove blank rows', 'Remove empty columns', 'Cleaning statistics', 'Data optimization']
+    },
+    {
+        name: 'Date Range Generator',
+        description: 'Generate a list of dates between a start and end date. Download as CSV or XLSX with customizable formatting.',
+        icon: Calendar,
+        href: '/tools/date-range-generator',
+        color: 'from-amber-500 to-orange-500',
+        features: ['Date range selection', 'CSV & XLSX export', 'Date preview', 'Custom file naming']
     }
 ];
 
@@ -92,7 +101,7 @@ export default function ToolsPage() {
                             <div className="text-blue-100">Client-Side Processing</div>
                         </div>
                         <div>
-                            <div className="text-3xl font-bold mb-2">7</div>
+                            <div className="text-3xl font-bold mb-2">8</div>
                             <div className="text-blue-100">Powerful Tools</div>
                         </div>
                         <div>
