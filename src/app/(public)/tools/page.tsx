@@ -76,6 +76,14 @@ const tools = [
         href: '/tools/date-range-generator',
         color: 'from-amber-500 to-orange-500',
         features: ['Date range selection', 'CSV & XLSX export', 'Date preview', 'Custom file naming']
+    },
+    {
+        name: 'Reliable CSV Merge',
+        description: 'Group CSV data by company and merge director information with proper column repetition for complex data structures.',
+        icon: Merge,
+        href: '/tools/reliable-csv-merge',
+        color: 'from-emerald-500 to-teal-500',
+        features: ['Group by company column', 'Repeat director info', 'Smart column naming', 'Handles 2000+ rows']
     }
 ];
 
@@ -101,7 +109,7 @@ export default function ToolsPage() {
                             <div className="text-blue-100">Client-Side Processing</div>
                         </div>
                         <div>
-                            <div className="text-3xl font-bold mb-2">8</div>
+                            <div className="text-3xl font-bold mb-2">9+</div>
                             <div className="text-blue-100">Powerful Tools</div>
                         </div>
                         <div>

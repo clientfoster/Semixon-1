@@ -101,6 +101,7 @@ const navLinks = [
           { href: '/tools/column-selector', label: 'Column Selector' },
           { href: '/tools/category-divider', label: 'Category Divider' },
           { href: '/tools/csv-merger', label: 'CSV/XLSX Merger' },
+          { href: '/tools/reliable-csv-merge', label: 'Reliable CSV Merge' },
           { href: '/tools/date-range-generator', label: 'Date Range Generator' },
           { href: '/tools/email-extractor', label: 'Email Extractor' },
           { href: '/tools/email-generator', label: 'Email Generator' },
