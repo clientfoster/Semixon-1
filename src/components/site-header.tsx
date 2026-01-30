@@ -153,11 +153,8 @@ const SiteHeader = memo(function SiteHeader() {
         <div className="flex h-20 items-center justify-between">
           {/* Logo */}
           <div className="flex items-center">
-            <Link href="/" className="flex items-center space-x-3 group">
-              <div className="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center group-hover:scale-110 transition-all duration-300 shadow-lg p-1 animate-glow-pulse">
-                <Logo className="h-6 w-6 group-hover:animate-wiggle" />
-              </div>
-              <span className="text-2xl font-bold text-slate-900 group-hover:text-blue-600 transition-colors duration-300">Semixon</span>
+            <Link href="/" className="flex items-center">
+              <Logo className="h-10 w-auto" />
             </Link>
           </div>
 
@@ -259,11 +256,8 @@ const SiteHeader = memo(function SiteHeader() {
               <SheetContent side="left" className="w-80 bg-white border-r border-slate-200">
                 <div className="flex flex-col h-full py-6">
                   <div className="px-4 pb-6 border-b border-slate-200">
-                    <Link href="/" className="flex items-center space-x-3" onClick={() => setIsOpen(false)}>
-                      <div className="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center p-1">
-                        <Logo className="h-6 w-6" />
-                      </div>
-                      <span className="text-2xl font-bold text-slate-900">Semixon</span>
+                    <Link href="/" className="flex items-center" onClick={() => setIsOpen(false)}>
+                      <Logo className="h-8 w-auto" />
                     </Link>
                   </div>
                   <nav className="flex flex-col items-start space-y-2 mt-8 px-4 flex-1">
