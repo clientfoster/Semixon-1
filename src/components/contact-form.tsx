@@ -122,7 +122,7 @@ export function ContactForm() {
             <FormItem>
               <FormLabel className="text-slate-700">Full Name</FormLabel>
               <FormControl>
-                <Input placeholder="John Doe" {...field} />
+                <Input className="bg-white text-black placeholder:text-slate-500" placeholder="John Doe" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -135,7 +135,7 @@ export function ContactForm() {
             <FormItem>
               <FormLabel className="text-slate-700">Email Address</FormLabel>
               <FormControl>
-                <Input type="email" placeholder="john.doe@example.com" {...field} />
+                <Input className="bg-white text-black placeholder:text-slate-500" type="email" placeholder="john.doe@example.com" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -148,7 +148,7 @@ export function ContactForm() {
             <FormItem>
               <FormLabel className="text-slate-700">Phone Number (Optional)</FormLabel>
               <FormControl>
-                <Input placeholder="+91 XXXXX XXXXX" {...field} />
+                <Input className="bg-white text-black placeholder:text-slate-500" placeholder="+91 XXXXX XXXXX" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -161,7 +161,7 @@ export function ContactForm() {
             <FormItem>
               <FormLabel className="text-slate-700">Company (Optional)</FormLabel>
               <FormControl>
-                <Input placeholder="Your Company Name" {...field} />
+                <Input className="bg-white text-black placeholder:text-slate-500" placeholder="Your Company Name" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -174,7 +174,7 @@ export function ContactForm() {
             <FormItem>
               <FormLabel className="text-slate-700">Subject</FormLabel>
               <FormControl>
-                <Input placeholder="What is this about?" {...field} />
+                <Input className="bg-white text-black placeholder:text-slate-500" placeholder="What is this about?" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -187,7 +187,7 @@ export function ContactForm() {
             <FormItem>
               <FormLabel className="text-slate-700">Your Message</FormLabel>
               <FormControl>
-                <Textarea placeholder="How can we help you?" {...field} rows={5} />
+                <Textarea className="bg-white text-black placeholder:text-slate-500" placeholder="How can we help you?" {...field} rows={5} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -197,7 +197,7 @@ export function ContactForm() {
           control={form.control}
           name="communicationConsent"
           render={({ field }) => (
-            <FormItem className="rounded-md border border-slate-200 bg-slate-50 p-3">
+            <FormItem className="rounded-md border border-slate-200 bg-white p-3">
               <div className="flex items-start space-x-2">
                 <FormControl>
                   <Checkbox
