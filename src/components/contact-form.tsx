@@ -16,15 +16,52 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
+import { Checkbox } from '@/components/ui/checkbox';
 import { useToast } from '@/hooks/use-toast';
+
+function isValidIndianPhone(value: string) {
+  const digits = value.replace(/\D/g, '');
+
+  if (digits.length === 10) {
+    return /^[6-9]\d{9}$/.test(digits);
+  }
+
+  if (digits.length === 12 && digits.startsWith('91')) {
+    return /^[6-9]\d{9}$/.test(digits.slice(2));
+  }
+
+  return false;
+}
+
+function normalizeIndianPhone(value: string) {
+  const digits = value.replace(/\D/g, '');
+
+  if (digits.length === 10) {
+    return `+91${digits}`;
+  }
+
+  if (digits.length === 12 && digits.startsWith('91')) {
+    return `+${digits}`;
+  }
+
+  return value;
+}
 
 const formSchema = z.object({
   name: z.string().min(2, { message: 'Name must be at least 2 characters.' }),
   email: z.string().email({ message: 'Please enter a valid email address.' }),
-  phone: z.string().optional(),
+  phone: z
+    .string()
+    .optional()
+    .refine((value) => !value || isValidIndianPhone(value), {
+      message: 'Please enter a valid Indian phone number.',
+    }),
   company: z.string().optional(),
   subject: z.string().min(1, { message: 'Subject is required.' }),
   message: z.string().min(10, { message: 'Message must be at least 10 characters.' }),
+  communicationConsent: z.literal(true, {
+    errorMap: () => ({ message: 'This consent is required.' }),
+  }),
 });
 
 export function ContactForm() {
@@ -38,6 +75,7 @@ export function ContactForm() {
       company: '',
       subject: '',
       message: '',
+      communicationConsent: false,
     },
   });
 
@@ -48,7 +86,7 @@ export function ContactForm() {
       await addDoc(collection(db, 'contactMessages'), {
         name: values.name,
         email: values.email,
-        phone: values.phone || '',
+        phone: values.phone ? normalizeIndianPhone(values.phone) : '',
         company: values.company || '',
         subject: values.subject,
         message: values.message,
@@ -82,7 +120,7 @@ export function ContactForm() {
           name="name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Full Name</FormLabel>
+              <FormLabel className="text-slate-700">Full Name</FormLabel>
               <FormControl>
                 <Input placeholder="John Doe" {...field} />
               </FormControl>
@@ -95,7 +133,7 @@ export function ContactForm() {
           name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Email Address</FormLabel>
+              <FormLabel className="text-slate-700">Email Address</FormLabel>
               <FormControl>
                 <Input type="email" placeholder="john.doe@example.com" {...field} />
               </FormControl>
@@ -108,9 +146,9 @@ export function ContactForm() {
           name="phone"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Phone Number (Optional)</FormLabel>
+              <FormLabel className="text-slate-700">Phone Number (Optional)</FormLabel>
               <FormControl>
-                <Input placeholder="+1 (555) 123-4567" {...field} />
+                <Input placeholder="+91 XXXXX XXXXX" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -121,7 +159,7 @@ export function ContactForm() {
           name="company"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Company (Optional)</FormLabel>
+              <FormLabel className="text-slate-700">Company (Optional)</FormLabel>
               <FormControl>
                 <Input placeholder="Your Company Name" {...field} />
               </FormControl>
@@ -134,7 +172,7 @@ export function ContactForm() {
           name="subject"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Subject</FormLabel>
+              <FormLabel className="text-slate-700">Subject</FormLabel>
               <FormControl>
                 <Input placeholder="What is this about?" {...field} />
               </FormControl>
@@ -147,10 +185,31 @@ export function ContactForm() {
           name="message"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Your Message</FormLabel>
+              <FormLabel className="text-slate-700">Your Message</FormLabel>
               <FormControl>
                 <Textarea placeholder="How can we help you?" {...field} rows={5} />
               </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="communicationConsent"
+          render={({ field }) => (
+            <FormItem className="rounded-md border border-slate-200 bg-slate-50 p-3">
+              <div className="flex items-start space-x-2">
+                <FormControl>
+                  <Checkbox
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
+                    className="mt-0.5 border-slate-500 data-[state=checked]:border-blue-600 data-[state=checked]:bg-blue-600"
+                  />
+                </FormControl>
+                <FormLabel className="text-sm font-normal leading-6 text-slate-800">
+                  You agree to receive communication messages via RCS, SMS, WhatsApp, Voice Call & Email.
+                </FormLabel>
+              </div>
               <FormMessage />
             </FormItem>
           )}
