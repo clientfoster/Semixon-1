@@ -68,6 +68,7 @@ export default function PrivacyPolicyPage() {
                     <li>Internal record keeping.</li>
                     <li>We may use the information to improve our products and services.</li>
                     <li>We may periodically send promotional emails about new products, special offers or other information which we think you may find interesting using the email address which you have provided.</li>
+                    <li>We may send you updates and promotional communications through RCS and other channels to the mobile number you have registered with us.</li>
                     <li>From time to time, we may also use your information to contact you for market research purposes. We may contact you by email, phone, fax or mail. We may use the information to customise the website according to your interests.</li>
                   </ul>
                 </div>
